@@ -91,8 +91,8 @@ class ProductSearch extends React.Component {
     return new URLSearchParams(location.search);
   }
 
-  sortHandle(e) {
-    const { value } = e.target;
+  sortHandle(event) {
+    const { value } = event.target;
     const { keyword, page } = this.state;
     const { history } = this.props;
 

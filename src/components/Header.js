@@ -272,6 +272,10 @@ class Header extends React.Component {
     const { keyword } = this.state;
     const { history } = this.props;
 
+    if (!keyword) {
+      return false;
+    }
+
     return history.push(`/products/search?s=${keyword}`);
   }
 
@@ -468,7 +472,11 @@ class Header extends React.Component {
                       data-border="rounded"
                     />
                     <div className="c-searchbar__button">
-                      <button onClick={this.searchProduct} className="c-searchbar__button-icon">
+                      <button onClick={this.searchProduct} className="c-searchbar__button-icon"
+                              style={{
+                                border: 'none',
+                                background: 'transparent'
+                              }}>
                         <FontAwesomeIcon icon="search" className="medium" />
                       </button>
                       <input type="submit" defaultValue="Go" />
