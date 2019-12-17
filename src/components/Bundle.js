@@ -116,11 +116,8 @@ class Bundle extends React.Component {
     ));
 
     const productList = bundleProducts.map((product) => (
-      <>
-        <li
-          key={product.asin}
-          className="o-list-bare__item u-pos-relative  u-txt-truncate-1"
-        >
+      <React.Fragment key={product.asin}>
+        <li className="o-list-bare__item u-pos-relative  u-txt-truncate-1">
           <input
             type="checkbox"
             id={product._id}
@@ -153,7 +150,7 @@ class Bundle extends React.Component {
           </Desktop>
 
         </li>
-      </>
+      </React.Fragment>
     ));
 
     return (

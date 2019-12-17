@@ -41,6 +41,8 @@ class Header extends React.Component {
     this.closeModal = this.closeModal.bind(this);
 
     this.openCart = this.openCart.bind(this);
+    this.openCartMobile = this.openCartMobile.bind(this);
+    this.closeCart = this.closeCart.bind(this);
     this.deleteCartItem = this.deleteCartItem.bind(this);
 
     this.openMenu = this.openMenu.bind(this);
@@ -283,6 +285,18 @@ class Header extends React.Component {
     });
   }
 
+  openCartMobile() {
+    this.setState({
+      isCartOpen: true,
+    });
+  }
+
+  closeCart() {
+    this.setState({
+      isCartOpen: false,
+    });
+  }
+
   searchProduct(event) {
     event.preventDefault();
 
@@ -297,7 +311,9 @@ class Header extends React.Component {
   }
 
   render() {
-    const { categories, isLoginModalOpen, isCartOpen, isMenuOpen } = this.state;
+    const {
+      categories, isLoginModalOpen, isCartOpen, isMenuOpen,
+    } = this.state;
     const { cart } = this.props;
     let { cartCounter } = this.state;
 
@@ -350,7 +366,8 @@ class Header extends React.Component {
       return (
         <div
           key={index.toString()}
-          className="cart-product o-layout o-layout--flush u-d-flex u-ai--center u-pv-12">
+          className="cart-product o-layout o-layout--flush u-d-flex u-ai--center u-pv-12"
+        >
 
           <div
             className="cart-counter o-layout__item u-txt-12 u-1/6 u-txt-align-center u-txt-underline">
@@ -388,9 +405,9 @@ class Header extends React.Component {
               className="c-btn--fake"
               onClick={this.deleteCartItem}
             >
-            <span>
-              <FontAwesomeIcon size="1x" icon="times" />
-            </span>
+                <span>
+                  <FontAwesomeIcon size="1x" icon="times" />
+                </span>
             </button>
           </div>
 
@@ -583,13 +600,13 @@ class Header extends React.Component {
                     >
                       <FontAwesomeIcon icon="shopping-cart" className="large" />
                       <span className="c-header__nav-tool-text">
-                Cart
+                        Cart
                         {' '}
                         <span className="u-txt--bold">{cartCounter}</span>
                         {
                           isCartOpen ? <span className="cart-caret" /> : ''
                         }
-              </span>
+                        </span>
                     </button>
 
                     {/* #CART VIEW */}
@@ -696,17 +713,28 @@ class Header extends React.Component {
                 <nav className="c-header__topnav">
                   <div className="c-header__topnav-wrapper">
                     <ul className="c-header__topnav-list">
-                      <li className="c-header__topnav-item"><a href="/"><span>Sell</span></a></li>
-                      <li className="c-header__topnav-item"><a href="/"><span>Registry</span></a>
+                      <li className="c-header__topnav-item">
+                        <a href="/"><span>Sell</span></a>
                       </li>
-                      <li className="c-header__topnav-item"><a href="/"><span>Gift Cards</span></a>
+                      <li className="c-header__topnav-item">
+                        <a href="/"><span>Registry</span></a>
                       </li>
-                      <li className="c-header__topnav-item"><a href="/"><span>Buy Again</span></a>
+                      <li className="c-header__topnav-item">
+                        <a href="/"><span>Gift Cards</span></a>
                       </li>
-                      <li className="c-header__topnav-item"><a href="/"><span>Account</span></a>
+                      <li className="c-header__topnav-item">
+                        <a href="/"><span>Buy Again</span></a>
                       </li>
-                      <li className="c-header__topnav-item"><a
-                        href="/"><span>Today's Deals</span></a></li>
+                      <li className="c-header__topnav-item">
+                        <a href="/">
+                          <span>Account</span>
+                        </a>
+                      </li>
+                      <li className="c-header__topnav-item">
+                        <a href="/">
+                          <span>Today&apos;s Deals</span>
+                        </a>
+                      </li>
                     </ul>
                   </div>
                 </nav>
@@ -720,7 +748,6 @@ class Header extends React.Component {
                     <button
                       onClick={this.openMenu}
                       type="button"
-                      className="c-header__cart"
                     >
                       <FontAwesomeIcon icon="bars" className="large" />
                     </button>
@@ -743,9 +770,9 @@ class Header extends React.Component {
                     isOpen={isMenuOpen}
                     onRequestClose={this.closeMenu}
                   >
-                    <div className="ReactMenu-Topbar" />
+                    <div className="ReactModal-Topbar" />
 
-                    <div className="ReactMenu-Wrapper">
+                    <div className="ReactModal-Wrapper">
 
                       <button
                         type="button"
@@ -825,15 +852,136 @@ class Header extends React.Component {
 
                   {/* #CART */}
                   <div className="o-layout__item c-header__nav-tool u-1/6 right">
-                    <Link
-                      to="/"
+                    <button
+                      onClick={this.openCartMobile}
+                      type="button"
                       className="c-header__cart"
-                      data-display="inline-flex"
-                      data-hover="darkblue"
                     >
                       <FontAwesomeIcon icon="shopping-cart" className="large" />
-                    </Link>
+                    </button>
                   </div>
+
+
+                  <Modal
+                    className="ReactCart__Content"
+                    style={{
+                      content: {
+                        position: 'absolute',
+                        backgroundColor: 'rgba(255, 255, 255)',
+                        right: 0,
+                        height: '100%',
+                        overflowY: 'auto',
+                      },
+                      overlay: {
+                        backgroundColor: 'rgba(0, 0, 0, .7)',
+                      },
+                    }}
+                    isOpen={isCartOpen}
+                    onRequestClose={this.closeCart}
+                  >
+                    <div className="ReactModal-Topbar" />
+
+                    {/* #MODAL WRAPPER */}
+                    <div className="ReactModal-Wrapper">
+
+                      {/* #CLOSE BUTTON */}
+                      <div className="u-txt-align-right">
+                        <button
+                          type="button"
+                          onClick={this.closeCart}
+                          className="ReactCart-Close u-mb-12"
+                        >
+                          <FontAwesomeIcon icon="times" size="2x" />
+                        </button>
+                      </div>
+                      {/* /Close Button */}
+
+                      <hr />
+
+                      {/* #MODAL HEADER */}
+                      <div className="u-mv-24 u-d-flex u-ai--fe">
+
+                        <Link
+                          to="/checkout"
+                          className="u-txt--light u-txt-16 u-txt-underline"
+                        >
+                          Proceed to Checkout
+                        </Link>
+
+                        <div className="u-txt-20 u-line u-txt-align-center u-txt--bold u-ml-auto">
+                          {cartCounter}
+                          <div className="u-txt-16 u-txt--blur u-txt--light">
+                            items
+                          </div>
+                        </div>
+
+                      </div>
+                      {/* /Modal Header */}
+
+
+                      {/* #PRODUCTS LIST */}
+                      <div className="">
+                        {
+                          cart.map((item, index) => {
+                            cartCounter += item.quantity;
+
+                            return (
+                              <div
+                                key={index.toString()}
+                                className="ReactCart__Product o-layout o-layout--flush u-d-flex u-pv-12 u-ph-6"
+                              >
+
+                                {/* #DELETE BUTTON */}
+                                <div className="o-layout__item u-1/10">
+                                  <button
+                                    data-product={item.product.asin}
+                                    type="button"
+                                    onClick={this.deleteCartItem}
+                                  >
+                                    <span>
+                                      <FontAwesomeIcon size="1x" icon="times" />
+                                    </span>
+                                  </button>
+                                </div>
+                                {/* /Delete Button */}
+
+
+                                {/* #PRODUCT INFORMATION */}
+                                <Link
+                                  to={`/products/${item.product.asin}`}
+                                  className="o-layout__item u-4/6"
+                                >
+                                  <div className="o-media o-media--tiny">
+                                    <img
+                                      className="o-media__img u-2/5"
+                                      src={item.product.imUrl}
+                                      alt={item.product.title}
+                                    />
+                                    <div className="o-media__body">
+                                      <div className="u-txt-14 u-txt-truncate-3 u-txt--light">
+                                        {item.product.title}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </Link>
+                                {/* /PRODUCT INFORMATION */}
+
+                                <div
+                                  className="o-layout__item u-txt-16 u-as--center u-txt-align-center u-1/6">
+                                  {item.quantity}
+                                </div>
+                                ;
+                              </div>
+                            );
+                          })
+                        }
+                      </div>
+
+                    </div>
+                    {/* /Modal Wrapper */}
+
+                  </Modal>
+
                   {/* /Cart */}
 
 

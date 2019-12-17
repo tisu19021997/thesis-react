@@ -1,5 +1,5 @@
 import React from 'react';
-import { Desktop, Mobile } from '../helper/mediaQuery';
+import { Desktop } from '../helper/mediaQuery';
 
 const Footer = () => (
   <footer className="c-footer">

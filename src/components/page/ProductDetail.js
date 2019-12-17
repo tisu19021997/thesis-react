@@ -8,6 +8,7 @@ import {
 } from 'react-tabs';
 import axios from 'axios';
 import array from 'lodash/array';
+import Slider from 'react-slick';
 import local from '../../helper/localStorage';
 import { toProductModel } from '../../helper/data';
 import Wrapper from '../Wrapper';
@@ -21,8 +22,6 @@ import NextArrow from '../slider/NextArrow';
 import { saveHistory } from '../../helper/request';
 import { UserContext } from '../../context/user';
 import { Desktop, Mobile } from '../../helper/mediaQuery';
-import Product from '../Product';
-import Slider from 'react-slick';
 
 
 class ProductDetail extends React.Component {
@@ -227,9 +226,7 @@ class ProductDetail extends React.Component {
       arrows: false,
     };
 
-    const bundleIds = bundleProducts.products.map((bundleProduct) => {
-      return bundleProduct._id;
-    });
+    const bundleIds = bundleProducts.products.map((bundleProduct) => bundleProduct._id);
 
     return (
       <UserContext.Consumer>
@@ -254,8 +251,10 @@ class ProductDetail extends React.Component {
                       <div className="o-layout [ o-layout--small ]">
 
                         {/* #PRODUCT IMAGE ZOOM */}
-                        <section className="o-layout__item u-3/10 u-margin-top"
-                                 data-section="Product Images">
+                        <section
+                          className="o-layout__item u-3/10 u-margin-top"
+                          data-section="Product Images"
+                        >
                           <ProductZoom
                             // array of imUrl for demo-ing, need to change
                             productImages={[
@@ -269,20 +268,23 @@ class ProductDetail extends React.Component {
 
 
                         {/* #PRODUCT DETAIL */}
-                        <section className="o-layout__item u-4/10 u-push-1/20"
-                                 data-section="Product Detail">
+                        <section
+                          className="o-layout__item u-4/10 u-push-1/20"
+                          data-section="Product Detail"
+                        >
 
                           <div
-                            className="[ u-txt--title u-txt--dark u-txt--bold ] u-margin-bottom-small">
+                            className="[ u-txt--title u-txt--dark u-txt--bold ] u-margin-bottom-small"
+                          >
                             {product.title}
                           </div>
 
                           <div className="u-margin-top-small u-margin-bottom-tiny u-cf">
 
-                  <span className="[ u-txt--tiny ]">
+                            <span className="[ u-txt--tiny ]">
                     Brand:
-                    <span className="[ u-txt--bright u-txt--xbold ]">{product.brand}</span>
-                  </span>
+                              <span className="[ u-txt--bright u-txt--xbold ]">{product.brand}</span>
+                            </span>
 
                             <div className="[ u-float-right u-d-flex u-fd--column ]">
                               <span className="[ u-txt--tiny u-txt--light ]">12,345 ratings</span>
@@ -300,8 +302,11 @@ class ProductDetail extends React.Component {
                                 className="o-layout o-carousel [ o-carousel--8col o-carousel--tiny ] c-option__control"
                               >
                                 <li className="o-layout__item o-carousel__item ">
-                                  <img className="c-option__img" src={product.imUrl}
-                                       alt={product.title} />
+                                  <img
+                                    className="c-option__img"
+                                    src={product.imUrl}
+                                    alt={product.title}
+                                  />
                                 </li>
 
                               </ul>
@@ -317,10 +322,10 @@ class ProductDetail extends React.Component {
                                 </li>
                               </ul>
                               <a href="/" className="u-float-left u-txt-10 u-txt-underline">
-                      <span>
-                        <i className="fas fa-caret-down" />
+                                <span>
+                                  <i className="fas fa-caret-down" />
                         More
-                      </span>
+                                </span>
                               </a>
                             </section>
                             {/* /Product information */}
@@ -332,8 +337,10 @@ class ProductDetail extends React.Component {
 
 
                         {/* #CTA */}
-                        <section className="o-layout__item u-2/10 u-push-1/10"
-                                 data-section="Call to Action">
+                        <section
+                          className="o-layout__item u-2/10 u-push-1/10"
+                          data-section="Call to Action"
+                        >
 
                           <div className="o-list-inline">
                             <div className="o-list-inline__item t-price u-txt--larger">
@@ -697,7 +704,7 @@ class ProductDetail extends React.Component {
                             id="qty"
                             type="number"
                             min="0"
-                            value="1"
+                            defaultValue="1"
                           />
                           <span
                             className="c-option__btn js-option-control"

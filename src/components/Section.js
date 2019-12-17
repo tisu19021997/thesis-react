@@ -9,13 +9,21 @@ const Section = (props) => {
   return (
     <section className={`c-section ${className}`} data-section={data}>
 
-      <div className={`c-section__title ${titleClass}`}>
-        {title}
-      </div>
+      {title
+        ? (
+          <div className={`c-section__title ${titleClass}`}>
+            {title}
+          </div>
+        )
+        : ' '}
 
-      <div className="c-section__sub-title u-txt-underline">
-        {subTitle}
-      </div>
+      {subTitle
+        ? (
+          <div className="c-section__sub-title u-txt-underline">
+            {subTitle}
+          </div>
+        )
+        : ''}
 
       <div className={`c-section__content ${contentClass}`}>
         {children}
@@ -28,7 +36,7 @@ const Section = (props) => {
 Section.propTypes = {
   className: PropTypes.string,
   data: PropTypes.string,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   subTitle: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
@@ -41,6 +49,7 @@ Section.propTypes = {
 Section.defaultProps = {
   className: '',
   data: 'Default Section Data',
+  title: '',
   subTitle: '',
   titleClass: '',
   contentClass: '',
