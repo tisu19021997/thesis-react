@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import local from '../helper/localStorage';
 import { UserContext } from '../context/user';
+import { Mobile, Desktop } from '../helper/mediaQuery';
 
 // bind modal to root, see http://reactcommunity.org/react-modal/accessibility/
 Modal.setAppElement('#root');
@@ -31,6 +32,7 @@ class Header extends React.Component {
     this.state = {
       categories: [],
       isLoginModalOpen: false,
+      isMenuOpen: false,
       isCartOpen: false,
       cartCounter: 0,
     };
@@ -40,6 +42,9 @@ class Header extends React.Component {
 
     this.openCart = this.openCart.bind(this);
     this.deleteCartItem = this.deleteCartItem.bind(this);
+
+    this.openMenu = this.openMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
 
     this.searchProduct = this.searchProduct.bind(this);
 
@@ -258,6 +263,18 @@ class Header extends React.Component {
     });
   }
 
+  openMenu() {
+    this.setState({
+      isMenuOpen: true,
+    });
+  }
+
+  closeMenu() {
+    this.setState({
+      isMenuOpen: false,
+    });
+  }
+
   openCart() {
     const { isCartOpen } = this.state;
 
@@ -280,32 +297,51 @@ class Header extends React.Component {
   }
 
   render() {
-    const { categories, isLoginModalOpen, isCartOpen } = this.state;
+    const { categories, isLoginModalOpen, isCartOpen, isMenuOpen } = this.state;
     const { cart } = this.props;
     let { cartCounter } = this.state;
 
     const categoriesItem = categories.map((category, index) => (
-      <li
-        className="o-carousel__item c-cat-list__item u-txt-align-center"
-        key={index.toString()}
-      >
-        <Link
-          to={`/categories/${category._id}`}
-          className="c-cat-list__item-detail"
-        >
-          <FontAwesomeIcon icon={category.iconClass} className="large" size="lg" />
-          {category.name}
-        </Link>
-      </li>
+      <React.Fragment key={index.toString()}>
+        <Desktop>
+          <li
+            className="o-carousel__item c-cat-list__item u-txt-align-center"
+            key={index.toString()}
+          >
+            <Link
+              to={`/categories/${category._id}`}
+              className="c-cat-list__item-detail"
+            >
+              <FontAwesomeIcon icon={category.iconClass} className="large" size="lg" />
+              {category.name}
+            </Link>
+          </li>
+        </Desktop>
+
+        <Mobile>
+          <li className="o-col__item">
+            <Link
+              to={`/categories/${category._id}`}
+              className=" u-txt-14"
+            >
+              {category.name}
+            </Link>
+          </li>
+
+        </Mobile>
+
+      </React.Fragment>
     ));
 
-    const categoryList = (<section className="c-section" data-section="Category List">
-      <div className="c-cat-list c-cat-list--horizontal c-cat-list--dark">
-        <ul className="o-carousel o-carousel--8col o-carousel--small u-mb-0">
-          {categoriesItem}
-        </ul>
-      </div>
-    </section>);
+    const categoryList = (
+      <section className="c-section" data-section="Category List">
+        <div className="c-cat-list c-cat-list--horizontal c-cat-list--dark">
+          <ul className="o-carousel o-carousel--8col o-carousel--small u-mb-0">
+            {categoriesItem}
+          </ul>
+        </div>
+      </section>
+    );
 
 
     const cartProductList = cart.map((item, index) => {
@@ -398,246 +434,465 @@ class Header extends React.Component {
     return (
       <UserContext.Consumer>
         {({ currentUser }) => (
-          <header className="c-header">
+          <>
+            <Desktop>
+              <header className="c-header">
 
-            <nav className="c-header__topnav">
-              <div className="c-header__topnav-wrapper">
-                <ul className="c-header__topnav-list">
-                  <li className="c-header__topnav-item">
-                    <Link to="/sell"><span>Sell</span></Link>
-                  </li>
-                  <li className="c-header__topnav-item">
-                    <Link to="/registry"><span>Registry</span></Link>
-                  </li>
-                  <li className="c-header__topnav-item">
-                    <Link to="/gift-cards"><span>Gift Cards</span></Link>
-                  </li>
-                  <li className="c-header__topnav-item">
-                    <Link to="/buy-again"><span>Buy Again</span></Link>
-                  </li>
-                  <li className="c-header__topnav-item">
-                    <Link to="/account"><span>Account</span></Link>
-                  </li>
-                  <li className="c-header__topnav-item">
-                    <Link to="/faq"><span>FAQ</span></Link>
-                  </li>
-                  <li className="c-header__topnav-item">
-                    <Link to="/history"><span>History</span></Link>
-                  </li>
-                  <li className="c-header__topnav-item">
-                    <Link to="/registry"><span>Registry</span></Link>
-                  </li>
-                  <li className="c-header__topnav-item">
-                    <Link to="/deals"><span>Today Deals</span></Link>
-                  </li>
-                </ul>
-              </div>
-            </nav>
-
-
-            <div className="o-layout c-header__nav">
-              <div className="o-layout__item c-header__nav-logo u-1/10 left">
-
-                <Link to="/">
-                  <svg
-                    className="c-header__nav-logo-img"
-                    viewBox="0 0 256 315"
-                    version="1.1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                    preserveAspectRatio="xMidYMid"
-                  >
-                    <g>
-                      <path
-                        d="M213.803394,167.030943 C214.2452,214.609646 255.542482,230.442639 256,230.644727 C255.650812,231.761357 249.401383,253.208293 234.24263,275.361446 C221.138555,294.513969 207.538253,313.596333 186.113759,313.991545 C165.062051,314.379442 158.292752,301.507828 134.22469,301.507828 C110.163898,301.507828 102.642899,313.596301 82.7151126,314.379442 C62.0350407,315.16201 46.2873831,293.668525 33.0744079,274.586162 C6.07529317,235.552544 -14.5576169,164.286328 13.147166,116.18047 C26.9103111,92.2909053 51.5060917,77.1630356 78.2026125,76.7751096 C98.5099145,76.3877456 117.677594,90.4371851 130.091705,90.4371851 C142.497945,90.4371851 165.790755,73.5415029 190.277627,76.0228474 C200.528668,76.4495055 229.303509,80.1636878 247.780625,107.209389 C246.291825,108.132333 213.44635,127.253405 213.803394,167.030988 M174.239142,50.1987033 C185.218331,36.9088319 192.607958,18.4081019 190.591988,0 C174.766312,0.636050225 155.629514,10.5457909 144.278109,23.8283506 C134.10507,35.5906758 125.195775,54.4170275 127.599657,72.4607932 C145.239231,73.8255433 163.259413,63.4970262 174.239142,50.1987249"
-                        fill="#000000"
-                      />
-                    </g>
-                  </svg>
-                </Link>
-
-              </div>
-
-
-              <div className="o-layout__item c-header__nav-search u-6/10">
-                <form className="c-searchbar" method="get" onSubmit={this.searchProduct}
-                      role="search" acceptCharset="utf-8">
-                  <div className="c-searchbar__box">
-                    <input
-                      type="search"
-                      name="keyword"
-                      onChange={this.handleInputChange}
-                      placeholder="Search anything..."
-                      aria-label="Search"
-                      data-border="rounded"
-                    />
-                    <div className="c-searchbar__button">
-                      <button onClick={this.searchProduct} className="c-searchbar__button-icon"
-                              style={{
-                                border: 'none',
-                                background: 'transparent'
-                              }}>
-                        <FontAwesomeIcon icon="search" className="medium" />
-                      </button>
-                      <input type="submit" defaultValue="Go" />
-                    </div>
+                <nav className="c-header__topnav">
+                  <div className="c-header__topnav-wrapper">
+                    <ul className="c-header__topnav-list">
+                      <li className="c-header__topnav-item">
+                        <Link to="/sell"><span>Sell</span></Link>
+                      </li>
+                      <li className="c-header__topnav-item">
+                        <Link to="/registry"><span>Registry</span></Link>
+                      </li>
+                      <li className="c-header__topnav-item">
+                        <Link to="/gift-cards"><span>Gift Cards</span></Link>
+                      </li>
+                      <li className="c-header__topnav-item">
+                        <Link to="/buy-again"><span>Buy Again</span></Link>
+                      </li>
+                      <li className="c-header__topnav-item">
+                        <Link to="/account"><span>Account</span></Link>
+                      </li>
+                      <li className="c-header__topnav-item">
+                        <Link to="/faq"><span>FAQ</span></Link>
+                      </li>
+                      <li className="c-header__topnav-item">
+                        <Link to="/history"><span>History</span></Link>
+                      </li>
+                      <li className="c-header__topnav-item">
+                        <Link to="/registry"><span>Registry</span></Link>
+                      </li>
+                      <li className="c-header__topnav-item">
+                        <Link to="/deals"><span>Today Deals</span></Link>
+                      </li>
+                    </ul>
                   </div>
-                </form>
-              </div>
+                </nav>
 
 
-              <div className="o-layout__item c-header__nav-tool u-3/10 right">
-                <a
-                  href="/"
-                  className="u-margin-horizontal-tiny"
-                  data-display="inline-flex"
-                  data-hover="darkblue"
-                >
-                  <FontAwesomeIcon icon="globe" className="large" />
-                  <span className="c-header__nav-tool-text">English</span>
-                </a>
+                <div className="o-layout c-header__nav">
+                  <div className="o-layout__item c-header__nav-logo u-1/10 left">
 
-                <div
-                  className="u-margin-horizontal-tiny"
-                  data-display="inline-flex"
-                  data-hover="darkblue"
-                >
-                  <FontAwesomeIcon icon="user" className="large" />
-                  {!currentUser
-                    ? (
-                      <button
-                        type="button"
-                        className="c-btn--fake"
-                        onClick={this.openModal}
+                    <Link to="/">
+                      <svg
+                        className="c-header__nav-logo-img"
+                        viewBox="0 0 256 315"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                        preserveAspectRatio="xMidYMid"
                       >
-                        <span className="c-header__nav-tool-text">Log-in</span>
-                      </button>
-                    )
-                    : (
-                      <>
-                        <div className="c-header__nav-tool-text">{`Hello, ${currentUser}`}</div>
-                        <button
-                          type="button"
-                          onClick={this.logout}
-                          className="c-header__nav-tool-text u-txt-underline c-btn--fake"
-                        >
-                          Log-out
-                        </button>
-                      </>
-                    )}
+                        <g>
+                          <path
+                            d="M213.803394,167.030943 C214.2452,214.609646 255.542482,230.442639 256,230.644727 C255.650812,231.761357 249.401383,253.208293 234.24263,275.361446 C221.138555,294.513969 207.538253,313.596333 186.113759,313.991545 C165.062051,314.379442 158.292752,301.507828 134.22469,301.507828 C110.163898,301.507828 102.642899,313.596301 82.7151126,314.379442 C62.0350407,315.16201 46.2873831,293.668525 33.0744079,274.586162 C6.07529317,235.552544 -14.5576169,164.286328 13.147166,116.18047 C26.9103111,92.2909053 51.5060917,77.1630356 78.2026125,76.7751096 C98.5099145,76.3877456 117.677594,90.4371851 130.091705,90.4371851 C142.497945,90.4371851 165.790755,73.5415029 190.277627,76.0228474 C200.528668,76.4495055 229.303509,80.1636878 247.780625,107.209389 C246.291825,108.132333 213.44635,127.253405 213.803394,167.030988 M174.239142,50.1987033 C185.218331,36.9088319 192.607958,18.4081019 190.591988,0 C174.766312,0.636050225 155.629514,10.5457909 144.278109,23.8283506 C134.10507,35.5906758 125.195775,54.4170275 127.599657,72.4607932 C145.239231,73.8255433 163.259413,63.4970262 174.239142,50.1987249"
+                            fill="/00000"
+                          />
+                        </g>
+                      </svg>
+                    </Link>
+
+                  </div>
+
+
+                  <div className="o-layout__item c-header__nav-search u-6/10">
+                    <form
+                      className="c-searchbar"
+                      method="get"
+                      onSubmit={this.searchProduct}
+                      role="search"
+                      acceptCharset="utf-8"
+                    >
+                      <div className="c-searchbar__box">
+                        <input
+                          type="search"
+                          name="keyword"
+                          onChange={this.handleInputChange}
+                          placeholder="Search anything..."
+                          aria-label="Search"
+                          data-border="rounded"
+                        />
+                        <div className="c-searchbar__button">
+                          <button
+                            type="button"
+                            onClick={this.searchProduct}
+                            className="c-searchbar__button-icon"
+                            style={{
+                              border: 'none',
+                              background: 'transparent',
+                            }}
+                          >
+                            <FontAwesomeIcon icon="search" className="medium" />
+                          </button>
+                          <input type="submit" defaultValue="Go" />
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+
+                  <div className="o-layout__item c-header__nav-tool u-3/10 right">
+                    <a
+                      href="/"
+                      className="u-margin-horizontal-tiny"
+                      data-display="inline-flex"
+                      data-hover="darkblue"
+                    >
+                      <FontAwesomeIcon icon="globe" className="large" />
+                      <span className="c-header__nav-tool-text">English</span>
+                    </a>
+
+                    <div
+                      className="u-margin-horizontal-tiny"
+                      data-display="inline-flex"
+                      data-hover="darkblue"
+                    >
+                      <FontAwesomeIcon icon="user" className="large" />
+                      {!currentUser
+                        ? (
+                          <button
+                            type="button"
+                            className="c-btn--fake"
+                            onClick={this.openModal}
+                          >
+                            <span className="c-header__nav-tool-text">Log-in</span>
+                          </button>
+                        )
+                        : (
+                          <>
+                            <div className="c-header__nav-tool-text">{`Hello, ${currentUser}`}</div>
+                            <button
+                              type="button"
+                              onClick={this.logout}
+                              className="c-header__nav-tool-text u-txt-underline c-btn--fake"
+                            >
+                              Log-out
+                            </button>
+                          </>
+                        )}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={this.openCart}
+                      className="c-header__cart c-btn--fake"
+                      data-display="inline-flex"
+                      data-hover="darkblue"
+                    >
+                      <FontAwesomeIcon icon="shopping-cart" className="large" />
+                      <span className="c-header__nav-tool-text">
+                Cart
+                        {' '}
+                        <span className="u-txt--bold">{cartCounter}</span>
+                        {
+                          isCartOpen ? <span className="cart-caret" /> : ''
+                        }
+              </span>
+                    </button>
+
+                    {/* #CART VIEW */}
+                    {isCartOpen
+                      ? cartView
+                      : ''}
+                    {/* /CART VIEW */}
+
+                  </div>
+
                 </div>
 
-                <button
-                  type="button"
-                  onClick={this.openCart}
-                  className="c-header__cart c-btn--fake"
-                  data-display="inline-flex"
-                  data-hover="darkblue"
-                >
-                  <FontAwesomeIcon icon="shopping-cart" className="large" />
-                  <span className="c-header__nav-tool-text">
-                Cart
-                    {' '}
-                    <span className="u-txt--bold">{cartCounter}</span>
-                    {
-                      isCartOpen ? <span className="cart-caret" /> : ''
-                    }
-              </span>
-                </button>
+                {!currentUser
+                  ? (
+                    <Modal
+                      style={modalStyles}
+                      isOpen={isLoginModalOpen}
+                      onRequestClose={this.closeModal}
+                    >
+                      <div className="o-layout o-layout--flush">
 
-                {/* #CART VIEW */}
-                {isCartOpen
-                  ? cartView
+                        {/* #LOG-IN FORM */}
+                        <div className="o-layout__item u-1/2">
+                          <div
+                            className="modal-title u-txt-40 u-txt--hairline u-mt-12 u-mb-36">Log-in
+                          </div>
+                          <form onSubmit={this.login}>
+                            <input
+                              type="text"
+                              name="usernameLogin"
+                              placeholder="username"
+                              className="u-d-block u-mb-12 u-w--60"
+                              required
+                              onChange={this.handleInputChange}
+                            />
+                            <input
+                              type="password"
+                              name="passwordLogin"
+                              placeholder="password"
+                              className="u-d-block u-mb-6 u-w--60"
+                              required
+                              onChange={this.handleInputChange}
+                            />
+                            <Link to="/forget">
+                              <span className="u-txt-underline u-txt-8">Forget your password?</span>
+                            </Link>
+                            <input
+                              type="submit"
+                              className="c-btn c-btn--primary c-btn--rounded u-d-block u-txt-12 u-mt-36 u-1/3"
+                              value="Log-in"
+                            />
+                          </form>
+                        </div>
+                        {/* /LOG-IN FORM */}
+
+                        {/* #SIGN-UP FORM */}
+                        <div className="o-layout__item u-1/2">
+                          <div className="modal-title u-txt-40 u-txt--hairline u-mt-12 u-mb-36">
+                            Sign-up
+                          </div>
+                          <form onSubmit={this.register}>
+                            <input
+                              type="text"
+                              name="usernameRegister"
+                              placeholder="username"
+                              required
+                              className="u-d-block u-mb-12 u-w--70"
+                              onChange={this.handleInputChange}
+                            />
+                            <input
+                              type="password"
+                              name="passwordRegister"
+                              placeholder="password"
+                              required
+                              className="u-d-block u-mb-6 u-w--70"
+                              onChange={this.handleInputChange}
+                            />
+                            <input
+                              type="submit"
+                              className="c-btn c-btn--primary c-btn--rounded u-d-block u-txt-12 u-mt-36 u-1/3"
+                              value="Sign-up"
+                            />
+                          </form>
+                        </div>
+                        {/* /SIGN-UP FORM */}
+
+                      </div>
+
+                    </Modal>
+                  )
                   : ''}
-                {/* /CART VIEW */}
 
-              </div>
 
-            </div>
+                {categoryList}
+              </header>
+            </Desktop>
 
-            {!currentUser
-              ? (
-                <Modal
-                  style={modalStyles}
-                  isOpen={isLoginModalOpen}
-                  onRequestClose={this.closeModal}
-                  contentLabel="Example Modal"
-                >
-                  <div className="o-layout o-layout--flush">
 
-                    {/* #LOG-IN FORM */}
-                    <div className="o-layout__item u-1/2">
-                      <div className="modal-title u-txt-40 u-txt--hairline u-mt-12 u-mb-36">Log-in
-                      </div>
-                      <form onSubmit={this.login}>
-                        <input
-                          type="text"
-                          name="usernameLogin"
-                          placeholder="username"
-                          className="u-d-block u-mb-12 u-w--60"
-                          required
-                          onChange={this.handleInputChange}
-                        />
-                        <input
-                          type="password"
-                          name="passwordLogin"
-                          placeholder="password"
-                          className="u-d-block u-mb-6 u-w--60"
-                          required
-                          onChange={this.handleInputChange}
-                        />
-                        <Link to="/forget">
-                          <span className="u-txt-underline u-txt-8">Forget your password?</span>
-                        </Link>
-                        <input
-                          type="submit"
-                          className="c-btn c-btn--primary c-btn--rounded u-d-block u-txt-12 u-mt-36 u-1/3"
-                          value="Log-in"
-                        />
-                      </form>
-                    </div>
-                    {/* /LOG-IN FORM */}
+            <Mobile>
 
-                    {/* #SIGN-UP FORM */}
-                    <div className="o-layout__item u-1/2">
-                      <div className="modal-title u-txt-40 u-txt--hairline u-mt-12 u-mb-36">
-                        Sign-up
-                      </div>
-                      <form onSubmit={this.register}>
-                        <input
-                          type="text"
-                          name="usernameRegister"
-                          placeholder="username"
-                          required
-                          className="u-d-block u-mb-12 u-w--70"
-                          onChange={this.handleInputChange}
-                        />
-                        <input
-                          type="password"
-                          name="passwordRegister"
-                          placeholder="password"
-                          required
-                          className="u-d-block u-mb-6 u-w--70"
-                          onChange={this.handleInputChange}
-                        />
-                        <input
-                          type="submit"
-                          className="c-btn c-btn--primary c-btn--rounded u-d-block u-txt-12 u-mt-36 u-1/3"
-                          value="Sign-up"
-                        />
-                      </form>
-                    </div>
-                    {/* /SIGN-UP FORM */}
+              <header className="c-header">
 
+                {/* #NAV-TOP */}
+                <nav className="c-header__topnav">
+                  <div className="c-header__topnav-wrapper">
+                    <ul className="c-header__topnav-list">
+                      <li className="c-header__topnav-item"><a href="/"><span>Sell</span></a></li>
+                      <li className="c-header__topnav-item"><a href="/"><span>Registry</span></a>
+                      </li>
+                      <li className="c-header__topnav-item"><a href="/"><span>Gift Cards</span></a>
+                      </li>
+                      <li className="c-header__topnav-item"><a href="/"><span>Buy Again</span></a>
+                      </li>
+                      <li className="c-header__topnav-item"><a href="/"><span>Account</span></a>
+                      </li>
+                      <li className="c-header__topnav-item"><a
+                        href="/"><span>Today's Deals</span></a></li>
+                    </ul>
+                  </div>
+                </nav>
+                {/* /Nav Top */}
+
+                {/* #NAV-MAIN */}
+                <div className="o-layout [ o-layout--flush ] c-header__nav u-ai--center">
+
+                  {/* #HAMBURGER MENU */}
+                  <div className="o-layout__item c-header__nav-bars u-1/6 left">
+                    <button
+                      onClick={this.openMenu}
+                      type="button"
+                      className="c-header__cart"
+                    >
+                      <FontAwesomeIcon icon="bars" className="large" />
+                    </button>
                   </div>
 
-                </Modal>
-              )
-              : ''}
+                  <Modal
+                    className="ReactMenu__Content"
+                    style={{
+                      content: {
+                        position: 'absolute',
+                        backgroundColor: 'rgba(255, 255, 255)',
+                        inset: 0,
+                        height: '100%',
+                        overflowY: 'auto',
+                      },
+                      overlay: {
+                        backgroundColor: 'rgba(0, 0, 0, .7)',
+                      },
+                    }}
+                    isOpen={isMenuOpen}
+                    onRequestClose={this.closeMenu}
+                  >
+                    <div className="ReactMenu-Topbar" />
+
+                    <div className="ReactMenu-Wrapper">
+
+                      <button
+                        type="button"
+                        onClick={this.closeMenu}
+                        className="ReactMenu-Close u-mb-12"
+                      >
+                        <FontAwesomeIcon icon="times" size="2x" />
+                      </button>
+
+                      <div className="ReactMenu-Content">
+
+                        <div className="ReactMenu-Item">
+                          <div className="u-txt--bold u-txt-underline u-txt-24 u-mb-12">
+                            Account
+                          </div>
+                          <div className="u-txt-16 u-txt--light">
+                            <div className="u-ml-6 u-mb-6">Log-in</div>
+                            <div className="u-ml-6 u-mb-6">Sign-up</div>
+                            <div className="u-ml-6 u-mb-6">Order</div>
+                            <div className="u-ml-6 u-mb-6">History</div>
+                          </div>
+                        </div>
+
+                        <div className="ReactMenu-Item">
+                          <div className="u-txt--bold u-txt-underline u-txt-24 u-mb-12">
+                            Shop
+                          </div>
+                          <div className="u-txt-16 u-txt--light">
+                            <div className="u-ml-6 u-mb-6">Shop by Departments</div>
+                            <div className="u-ml-6 u-mb-6">Today&apos;s Deals</div>
+                            <div className="u-ml-6 u-mb-6">Last-minute Deals</div>
+                            <div className="u-ml-6 u-mb-6">Recommendations</div>
+                          </div>
+                        </div>
+
+                        <div className="ReactMenu-Item">
+                          <div className="u-txt--bold u-txt-underline u-txt-24 u-mb-12">
+                            Help & Settings
+                          </div>
+                          <div className="u-txt-16 u-txt--light">
+                            <div className="u-ml-6 u-mb-6">Q&A</div>
+                            <div className="u-ml-6 u-mb-6">Customer Service</div>
+                            <div className="u-ml-6 u-mb-6">Policy & Privacy</div>
+                            <div className="u-ml-6 u-mb-6">Shipping</div>
+                          </div>
+                        </div>
+
+                      </div>
 
 
-            {categoryList}
-          </header>
+                    </div>
+                  </Modal>
+
+                  {/* /Hamburger Menu */}
+
+
+                  {/* #LOGO */}
+                  <div className="o-layout__item c-header__nav-logo u-4/6">
+                    <Link to="/">
+                      <svg
+                        className="c-header__nav-logo-img"
+                        viewBox="0 0 256 315"
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlnsXlink="http://www.w3.org/1999/xlink"
+                        preserveAspectRatio="xMidYMid">
+                        <g>
+                          <path
+                            d="M213.803394,167.030943 C214.2452,214.609646 255.542482,230.442639 256,230.644727 C255.650812,231.761357 249.401383,253.208293 234.24263,275.361446 C221.138555,294.513969 207.538253,313.596333 186.113759,313.991545 C165.062051,314.379442 158.292752,301.507828 134.22469,301.507828 C110.163898,301.507828 102.642899,313.596301 82.7151126,314.379442 C62.0350407,315.16201 46.2873831,293.668525 33.0744079,274.586162 C6.07529317,235.552544 -14.5576169,164.286328 13.147166,116.18047 C26.9103111,92.2909053 51.5060917,77.1630356 78.2026125,76.7751096 C98.5099145,76.3877456 117.677594,90.4371851 130.091705,90.4371851 C142.497945,90.4371851 165.790755,73.5415029 190.277627,76.0228474 C200.528668,76.4495055 229.303509,80.1636878 247.780625,107.209389 C246.291825,108.132333 213.44635,127.253405 213.803394,167.030988 M174.239142,50.1987033 C185.218331,36.9088319 192.607958,18.4081019 190.591988,0 C174.766312,0.636050225 155.629514,10.5457909 144.278109,23.8283506 C134.10507,35.5906758 125.195775,54.4170275 127.599657,72.4607932 C145.239231,73.8255433 163.259413,63.4970262 174.239142,50.1987249"
+                            fill="#000000" />
+                        </g>
+                      </svg>
+                    </Link>
+                  </div>
+                  {/* /Logo */}
+
+
+                  {/* #CART */}
+                  <div className="o-layout__item c-header__nav-tool u-1/6 right">
+                    <Link
+                      to="/"
+                      className="c-header__cart"
+                      data-display="inline-flex"
+                      data-hover="darkblue"
+                    >
+                      <FontAwesomeIcon icon="shopping-cart" className="large" />
+                    </Link>
+                  </div>
+                  {/* /Cart */}
+
+
+                  {/* #SEARCH BAR */}
+                  <div className="o-layout__item c-header__nav-search">
+                    <form
+                      className="c-searchbar"
+                      method="get"
+                      onSubmit={this.searchProduct}
+                      role="search"
+                      acceptCharset="utf-8"
+                    >
+                      <div className="c-searchbar__box">
+
+                        <input
+                          type="search"
+                          name="keyword"
+                          onChange={this.handleInputChange}
+                          placeholder="Search anything..."
+                          aria-label="Search"
+                          data-border="rounded"
+                        />
+                        <div className="c-searchbar__button">
+                          <button
+                            type="button"
+                            onClick={this.searchProduct}
+                            style={{
+                              border: 'none',
+                              background: 'transparent',
+                            }}
+                            className="c-searchbar__button-icon"
+                          >
+                            <FontAwesomeIcon icon="search" className="medium" />
+                          </button>
+                          <input type="submit" tabIndex={0} defaultValue="Go" />
+                        </div>
+
+                      </div>
+                    </form>
+                  </div>
+                  {/* /Search Bar */}
+
+                </div>
+                {/* #Nav-Main */}
+
+              </header>
+
+
+              {/* #CATEGORY SLIDER */}
+              <ul
+                className="o-col [ o-col--small o-col--scrollable ] u-m-0 u-bg-darkblue u-txt--white"
+              >
+                {categoriesItem}
+              </ul>
+              {/* /Category Slider */}
+
+            </Mobile>
+
+          </>
         )}
       </UserContext.Consumer>
     );

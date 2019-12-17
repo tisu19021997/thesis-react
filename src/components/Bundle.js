@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { includes } from 'lodash';
+import { Desktop, Mobile } from '../helper/mediaQuery';
 
 class Bundle extends React.Component {
   constructor(props) {
@@ -115,99 +116,150 @@ class Bundle extends React.Component {
     ));
 
     const productList = bundleProducts.map((product) => (
-      <li
-        key={product.asin}
-        className="o-list-bare__item u-pos-relative"
-      >
-        <input
-          type="checkbox"
-          id={product._id}
-          name="bundle"
-          defaultChecked
-          onChange={this.updateBundle}
-          value={product.price}
-        />
+      <>
+        <li
+          key={product.asin}
+          className="o-list-bare__item u-pos-relative  u-txt-truncate-1"
+        >
+          <input
+            type="checkbox"
+            id={product._id}
+            name="bundle"
+            defaultChecked
+            onChange={this.updateBundle}
+            value={product.price}
+          />
 
-        <label htmlFor={product.asin} className="u-txt-14 u-txt-truncate-1">
+          <span className="u-txt-14">
 
-          {product.asin === currentProduct.asin
-            ? (
-              <span className="u-txt--bold">
+            {product.asin === currentProduct.asin
+              ? (
+                <span className="u-txt--bold">
               Current:
-                {' '}
+                  {' '}
               </span>
-            )
-            : ''}
-          {product.title}
-          <span className="c-price c-price--small u-pos-absolute u-pos-left-100">
-            <span className="c-price__price">
-              <span className="c-price__currency">$</span>
-              {product.price}
-            </span>
+              )
+              : ''}
+            {product.title}
           </span>
-        </label>
 
-      </li>
+          <Desktop>
+            <span className="c-price c-price--small u-pos-absolute u-pos-right-0">
+              <span className="c-price__price">
+                <span className="c-price__currency">$</span>
+                {product.price}
+              </span>
+            </span>
+          </Desktop>
+
+        </li>
+      </>
     ));
 
     return (
       <>
+        <Desktop>
+          <div className="o-layout [ o-layout--tiny ]">
+            {/* #BUNDLE IMAGES */}
+            <div className="o-layout__item u-2/3">
+              <ul className="c-bundle u-m-0">
+                <div className="o-layout o-layout--flush">
+                  {productImgList}
+                </div>
+              </ul>
+            </div>
+            {/* /BUNDLE IMAGES */}
 
-        <div className="o-layout [ o-layout--tiny ]">
-          {/* #BUNDLE IMAGES */}
-          <div className="o-layout__item u-2/3">
-            <ul className="c-bundle u-m-0">
-              <div className="o-layout o-layout--flush">
-                {productImgList}
-              </div>
-            </ul>
-          </div>
-          {/* /BUNDLE IMAGES */}
 
+            {/* #BUNDLE CTA */}
+            <div className="o-layout__item u-1/3">
 
-          {/* #BUNDLE CTA */}
-          <div className="o-layout__item u-1/3">
-
-            {/* /#TOAL PRICE */}
-            <div className="u-txt--bold u-txt-14">
-              Total:
-              {' '}
-              <span className="c-price [ c-price--small ]">
+              {/* /#TOAL PRICE */}
+              <div className="u-txt--bold u-txt-14">
+                Total:
+                {' '}
+                <span className="c-price [ c-price--small ]">
                 <span className="c-price__price">
                   <span className="c-price__currency">$</span>
                   {totalPrice}
                 </span>
               </span>
+              </div>
+              {/* /#TOAL PRICE */}
+
+
+              {/* #CTA BUTTON */}
+              <button
+                type="button"
+                onClick={this.purchaseAll}
+                className="c-btn [ c-btn--cta c-btn--rounded c-btn--type-large c-btn--stretch ] u-mt-12">
+                Add All to Cart
+              </button>
+              {/* #CTA BUTTON */}
+
             </div>
-            {/* /#TOAL PRICE */}
-
-
-            {/* #CTA BUTTON */}
-            <button
-              type="button"
-              onClick={this.purchaseAll}
-              className="c-btn [ c-btn--cta c-btn--rounded c-btn--type-large c-btn--stretch ] u-mt-12">
-              Add All to Cart
-            </button>
-            {/* #CTA BUTTON */}
-
+            {/* #BUNDLE CTA */}
           </div>
-          {/* #BUNDLE CTA */}
-        </div>
 
 
-        {/* #BUNDLE NAME AND PRICE */}
-        <div className="o-layout [ tiny ] u-mt-12">
-          <div className="o-layout__item u-2/3">
+          {/* #BUNDLE NAME AND PRICE */}
+          <div className="o-layout [ tiny ] u-mt-12">
+            <div className="o-layout__item">
 
-            <ul className="o-list-bare">
-              {productList}
-            </ul>
+              <ul className="o-list-bare">
+                {productList}
+              </ul>
 
+            </div>
           </div>
-        </div>
-        {/* /BUNDLE NAME AND PRICE */}
+          {/* /BUNDLE NAME AND PRICE */}
+        </Desktop>
 
+
+        <Mobile>
+
+          <ul className="c-bundle u-m-0">
+
+            {/* #BUNDLE IMAGES */}
+            <div className="o-layout o-layout--flush">
+              {productImgList}
+            </div>
+            {/* /Product Image */}
+
+
+            {/* #BUNDLE CHECKBOX */}
+            <div className="u-mt-12 u-ml-6">
+
+              <ul className="o-list-bare">
+                {productList}
+              </ul>
+
+              <div className="u-txt-bold u-txt-14 u-ml-6 u-mt-12">
+                Total:
+                <span className="c-price">
+                  <span className="c-price__price">
+                    <span className="c-price__currency">$</span>
+                    {totalPrice}
+                  </span>
+                </span>
+
+                <button
+                  type="button"
+                  className="c-btn [ c-btn--cta c-btn--rounded ] u-w--50 u-float-right"
+                  onClick={this.purchaseAll}
+                >
+                  Add All to Cart
+                </button>
+
+              </div>
+
+            </div>
+            {/* /Bundle Checkbox */}
+
+          </ul>
+
+
+        </Mobile>
 
       </>
     );

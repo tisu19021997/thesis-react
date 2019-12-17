@@ -36,6 +36,7 @@ class ProductSearch extends React.Component {
           value: 'sale',
         },
       ],
+      ready: false,
     };
 
     this.useQuery = this.useQuery.bind(this);
@@ -79,6 +80,7 @@ class ProductSearch extends React.Component {
           prevPage,
           nextPage,
           page: parseInt(page, 10),
+          ready: true,
         });
       })
       .catch((error) => {
@@ -104,7 +106,11 @@ class ProductSearch extends React.Component {
   }
 
   render() {
-    const { products, keyword } = this.state;
+    const { products, keyword, ready } = this.state;
+
+    if (!ready) {
+      return false;
+    }
 
     if (!products.length) {
       return (

@@ -690,12 +690,60 @@ dd, ol, ul {
   margin-left: 24px;
 }
 
-/* line 1, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/generic/_generic.react.scss */
+/* ==========================================================================
+   #REACTJS FIX
+   ========================================================================== */
+/* Modal */
+/* line 7, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/generic/_generic.react.scss */
 .ReactModal__Body--open {
   overflow: hidden;
   position: fixed;
   width: 100%;
   height: 100%;
+}
+
+/* line 13, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/generic/_generic.react.scss */
+.ReactModal__Body--open .o-col--scrollable {
+  overflow: hidden;
+}
+
+/* line 18, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/generic/_generic.react.scss */
+.ReactMenu__Content {
+  width: 0;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+
+/* line 27, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/generic/_generic.react.scss */
+.ReactMenu__Content.ReactModal__Content--after-open {
+  width: 66.66667%;
+}
+
+/* line 33, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/generic/_generic.react.scss */
+.ReactMenu-Wrapper {
+  padding: 24px;
+}
+
+/* line 37, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/generic/_generic.react.scss */
+.ReactMenu-Topbar {
+  height: 24px;
+  background-color: #232f3e;
+}
+
+/* line 42, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/generic/_generic.react.scss */
+.ReactMenu-Item {
+  padding-top: 18px;
+  border-top: 0.5px solid #dfe1e5;
+}
+
+/* Button */
+/* line 52, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/generic/_generic.react.scss */
+[type="button"] {
+  border: none;
+  background: transparent;
 }
 
 /* ==========================================================================
@@ -827,6 +875,7 @@ html {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+  color: #232f3e;
   /*background-color: #efefef;*/
 }
 
@@ -2904,8 +2953,8 @@ progress::-moz-progress-bar {
 /* line 65, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.header.scss */
 .c-header__topnav-item {
   display: inline-block;
-  font-size: 8px;
-  font-size: 0.5rem;
+  font-size: 12px;
+  font-size: 0.75rem;
   line-height: 1;
   color: #fff;
   padding: 6px;
@@ -3498,6 +3547,13 @@ progress::-moz-progress-bar {
   height: auto;
 }
 
+@media (max-width: 46.24em) {
+  /* line 64, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  .c-product__img > img {
+    height: 100px;
+  }
+}
+
 @media (min-width: 61.25em) {
   /* line 64, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__img > img {
@@ -3505,12 +3561,12 @@ progress::-moz-progress-bar {
   }
 }
 
-/* line 74, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 77, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__img .c-btn {
   opacity: 0;
 }
 
-/* line 79, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 82, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__img:hover .c-btn {
   opacity: 1;
   transition: opacity 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -3520,19 +3576,19 @@ progress::-moz-progress-bar {
   -o-transition: opacity 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-/* line 91, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 94, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__rating {
   line-height: 1;
 }
 
 @media (max-width: 61.24em) {
-  /* line 94, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 97, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__rating > span {
     display: block;
   }
 }
 
-/* line 102, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 105, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__discount,
 .c-product__date {
   position: absolute;
@@ -3543,7 +3599,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 102, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 105, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__discount,
   .c-product__date {
     visibility: hidden;
@@ -3557,7 +3613,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 20em) {
-  /* line 102, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 105, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__discount,
   .c-product__date {
     padding: 2px 4px;
@@ -3568,7 +3624,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 46.25em) {
-  /* line 102, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 105, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__discount,
   .c-product__date {
     padding: 6px 12px;
@@ -3579,24 +3635,24 @@ progress::-moz-progress-bar {
 }
 
 /* Direction variations */
-/* line 138, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 141, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--horizontal {
   margin-top: 12px;
 }
 
-/* line 141, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 144, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--horizontal .c-product__name {
   margin-top: 0;
 }
 
 /* Position variations */
-/* line 151, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 154, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--secondary {
   margin-top: 12px;
 }
 
 @media (min-width: 61.25em) {
-  /* line 154, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 157, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product--secondary .c-product__name {
     font-size: 12px;
     line-height: 1.25;
@@ -3605,13 +3661,13 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 163, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 166, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product--secondary .c-product__img {
     height: auto;
   }
 }
 
-/* line 170, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 173, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--secondary .c-product__rating [class^="fa"] {
   font-size: 10px;
 }
@@ -4770,21 +4826,26 @@ progress::-moz-progress-bar {
 }
 
 /* line 24, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
+.u-pos-right-0 {
+  right: 0;
+}
+
+/* line 28, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
 .u-pos-left-100 {
   left: 100%;
 }
 
-/* line 27, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
+/* line 31, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
 .u-pos-left-0 {
   left: 0;
 }
 
-/* line 31, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
+/* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
 .u-pos-bot-0 {
   bottom: 0;
 }
 
-/* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
+/* line 39, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
 .u-pos-center {
   position: absolute;
   right: 50%;
@@ -4796,14 +4857,14 @@ progress::-moz-progress-bar {
   -o-transform: translate(50%, 50%);
 }
 
-/* line 39, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
+/* line 43, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
 .u-pos-topleft {
   position: absolute;
   left: 0;
   top: 0;
 }
 
-/* line 45, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
+/* line 49, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
 .u-pos-fixed-white-bottom {
   position: fixed;
   bottom: 0;
@@ -4811,12 +4872,12 @@ progress::-moz-progress-bar {
   background-color: #fff;
 }
 
-/* line 53, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
+/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
 .u-float-right {
   float: right;
 }
 
-/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
+/* line 61, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.position.scss */
 .u-float-left {
   float: left;
 }

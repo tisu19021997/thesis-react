@@ -1,40 +1,43 @@
 import React from 'react';
+import { Desktop, Mobile } from '../helper/mediaQuery';
 
 const Footer = () => (
-    <footer className="c-footer">
-      <div className="c-footer__content">
+  <footer className="c-footer">
+    <div className="c-footer__content">
 
-        <div className="o-col [ o-col--small o-col--center ] c-footer__nav">
+      <div className="o-col [ o-col--small o-col--center ] c-footer__nav">
 
-          <div className="o-col__item">
-            <ul className="o-list-bare">
-              <li className="c-footer__nav-item parent">
-                Get to know us
-              </li>
-              <li className="c-footer__nav-item child">Career</li>
-              <li className="c-footer__nav-item child">Blog</li>
-              <li className="c-footer__nav-item child">About Us</li>
-              <li className="c-footer__nav-item child">Investion Relations</li>
-              <li className="c-footer__nav-item child">Our Devices</li>
-              <li className="c-footer__nav-item child">Our Tours</li>
-            </ul>
-          </div>
+        <div className="o-col__item">
+          <ul className="o-list-bare">
+            <li className="c-footer__nav-item parent">
+              Get to know us
+            </li>
+            <li className="c-footer__nav-item child">Career</li>
+            <li className="c-footer__nav-item child">Blog</li>
+            <li className="c-footer__nav-item child">About Us</li>
+            <li className="c-footer__nav-item child">Investion Relations</li>
+            <li className="c-footer__nav-item child">Our Devices</li>
+            <li className="c-footer__nav-item child">Our Tours</li>
+          </ul>
+        </div>
 
-          <div className="o-col__item o-col__separator" />
+        <div className="o-col__item o-col__separator" />
 
-          <div className="o-col__item">
-            <ul className="o-list-bare">
-              <li className="c-footer__nav-item parent">Make Money With Us</li>
+        <div className="o-col__item">
+          <ul className="o-list-bare">
+            <li className="c-footer__nav-item parent">Make Money With Us</li>
 
-              <li className="c-footer__nav-item child">Sell on Xyz</li>
-              <li className="c-footer__nav-item child">Sell Your Services on Xyz</li>
-              <li className="c-footer__nav-item child">Sell on Xyz Business</li>
-              <li className="c-footer__nav-item child">Sell Your Apps on Xyz</li>
-              <li className="c-footer__nav-item child">Advertise Your Products</li>
-              <li className="c-footer__nav-item child">Self-Publish With Us</li>
-            </ul>
-          </div>
+            <li className="c-footer__nav-item child">Sell on Xyz</li>
+            <li className="c-footer__nav-item child">Sell Your Services on Xyz</li>
+            <li className="c-footer__nav-item child">Sell on Xyz Business</li>
+            <li className="c-footer__nav-item child">Sell Your Apps on Xyz</li>
+            <li className="c-footer__nav-item child">Advertise Your Products</li>
+            <li className="c-footer__nav-item child">Self-Publish With Us</li>
+          </ul>
+        </div>
 
+
+        <Desktop>
           <div className="o-col__item o-col__separator" />
 
           <div className="o-col__item">
@@ -62,18 +65,20 @@ const Footer = () => (
               <li className="c-footer__nav-item child">Manage Your Content and Devices</li>
             </ul>
           </div>
+        </Desktop>
 
-        </div>
+
       </div>
+    </div>
 
 
-      <div className="c-footer__bottom">
-        <div className="c-footer__copyright u-txt--blur">© 1996-2019, Xyz.com, Inc. or its
-          affiliates
-        </div>
+    <div className="c-footer__bottom">
+      <div className="c-footer__copyright u-txt--blur">© 1996-2019, Xyz.com, Inc. or its
+        affiliates
       </div>
+    </div>
 
-    </footer>
-  );
+  </footer>
+);
 
 export default Footer;

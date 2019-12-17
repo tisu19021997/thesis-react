@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Section = (props) => {
   const {
-    className, data, title, titleClass, contentClass, children,
+    className, data, title, subTitle, titleClass, contentClass, children,
   } = props;
 
   return (
@@ -11,6 +11,10 @@ const Section = (props) => {
 
       <div className={`c-section__title ${titleClass}`}>
         {title}
+      </div>
+
+      <div className="c-section__sub-title u-txt-underline">
+        {subTitle}
       </div>
 
       <div className={`c-section__content ${contentClass}`}>
@@ -25,6 +29,10 @@ Section.propTypes = {
   className: PropTypes.string,
   data: PropTypes.string,
   title: PropTypes.string.isRequired,
+  subTitle: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+  ]),
   titleClass: PropTypes.string,
   contentClass: PropTypes.string,
   children: PropTypes.node.isRequired,
@@ -33,6 +41,7 @@ Section.propTypes = {
 Section.defaultProps = {
   className: '',
   data: 'Default Section Data',
+  subTitle: '',
   titleClass: '',
   contentClass: '',
 };

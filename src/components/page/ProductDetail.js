@@ -20,6 +20,9 @@ import PrevArrow from '../slider/PrevArrow';
 import NextArrow from '../slider/NextArrow';
 import { saveHistory } from '../../helper/request';
 import { UserContext } from '../../context/user';
+import { Desktop, Mobile } from '../../helper/mediaQuery';
+import Product from '../Product';
+import Slider from 'react-slick';
 
 
 class ProductDetail extends React.Component {
@@ -215,6 +218,15 @@ class ProductDetail extends React.Component {
       nextArrow: <NextArrow />,
     };
 
+    const sliderMobileSettings = {
+      slidesToShow: 2.5,
+      slidesToScroll: 3,
+      infinite: false,
+      lazyLoad: 'ondemand',
+      dots: false,
+      arrows: false,
+    };
+
     const bundleIds = bundleProducts.products.map((bundleProduct) => {
       return bundleProduct._id;
     });
@@ -222,219 +234,554 @@ class ProductDetail extends React.Component {
     return (
       <UserContext.Consumer>
         {
-          ({ currentUser, token }) => (
-            <Wrapper className="u-ph-0">
-              <main>
-
-                {/* #PRODUCT PREVIEW */}
-                <section className="c-section" data-section="Product Preview">
-
-                  {/* #BREADCRUMB */}
-                  <Breadcrumb breadcrumbItems={categories} />
-                  {/* /BREADCRUMB */}
+          ({ currentUser }) => (
+            <>
+              <Desktop>
+                <Wrapper className="u-ph-0">
 
 
-                  {/* #PRODUCT VIEW BLOCK */}
-                  <div className="o-layout [ o-layout--small ]">
+                  <main>
 
-                    {/* #PRODUCT IMAGE ZOOM */}
-                    <section className="o-layout__item u-3/10 u-margin-top"
-                             data-section="Product Images">
-                      <ProductZoom
-                        // array of imUrl for demo-ing, need to change
-                        productImages={[
-                          product.imUrl,
-                          product.imUrl,
-                          product.imUrl,
-                        ]}
-                      />
-                    </section>
-                    {/* /PRODUCT IMAGE ZOOM */}
+                    {/* #PRODUCT PREVIEW */}
+                    <section className="c-section" data-section="Product Preview">
+
+                      {/* #BREADCRUMB */}
+                      <Breadcrumb breadcrumbItems={categories} />
+                      {/* /BREADCRUMB */}
 
 
-                    {/* #PRODUCT DETAIL */}
-                    <section className="o-layout__item u-4/10 u-push-1/20"
-                             data-section="Product Detail">
+                      {/* #PRODUCT VIEW BLOCK */}
+                      <div className="o-layout [ o-layout--small ]">
 
-                      <div
-                        className="[ u-txt--title u-txt--dark u-txt--bold ] u-margin-bottom-small">
-                        {product.title}
-                      </div>
+                        {/* #PRODUCT IMAGE ZOOM */}
+                        <section className="o-layout__item u-3/10 u-margin-top"
+                                 data-section="Product Images">
+                          <ProductZoom
+                            // array of imUrl for demo-ing, need to change
+                            productImages={[
+                              product.imUrl,
+                              product.imUrl,
+                              product.imUrl,
+                            ]}
+                          />
+                        </section>
+                        {/* /PRODUCT IMAGE ZOOM */}
 
-                      <div className="u-margin-top-small u-margin-bottom-tiny u-cf">
+
+                        {/* #PRODUCT DETAIL */}
+                        <section className="o-layout__item u-4/10 u-push-1/20"
+                                 data-section="Product Detail">
+
+                          <div
+                            className="[ u-txt--title u-txt--dark u-txt--bold ] u-margin-bottom-small">
+                            {product.title}
+                          </div>
+
+                          <div className="u-margin-top-small u-margin-bottom-tiny u-cf">
 
                   <span className="[ u-txt--tiny ]">
                     Brand:
                     <span className="[ u-txt--bright u-txt--xbold ]">{product.brand}</span>
                   </span>
 
-                        <div className="[ u-float-right u-d-flex u-fd--column ]">
-                          <span className="[ u-txt--tiny u-txt--light ]">12,345 ratings</span>
-                        </div>
+                            <div className="[ u-float-right u-d-flex u-fd--column ]">
+                              <span className="[ u-txt--tiny u-txt--light ]">12,345 ratings</span>
+                            </div>
 
-                        {/* #OPTIONS */}
-                        <div className="c-option [ c-option--bordered ]">
+                            {/* #OPTIONS */}
+                            <div className="c-option [ c-option--bordered ]">
 
-                          <p className="c-option__detail">
-                            Color:
-                            <span className="c-option__value">White Black</span>
-                          </p>
+                              <p className="c-option__detail">
+                                Color:
+                                <span className="c-option__value">White Black</span>
+                              </p>
 
-                          <ul
-                            className="o-layout o-carousel [ o-carousel--8col o-carousel--tiny ] c-option__control"
-                          >
-                            <li className="o-layout__item o-carousel__item ">
-                              <img className="c-option__img" src={product.imUrl}
-                                   alt={product.title} />
-                            </li>
+                              <ul
+                                className="o-layout o-carousel [ o-carousel--8col o-carousel--tiny ] c-option__control"
+                              >
+                                <li className="o-layout__item o-carousel__item ">
+                                  <img className="c-option__img" src={product.imUrl}
+                                       alt={product.title} />
+                                </li>
 
-                          </ul>
-                        </div>
-                        {/* /OPTIONS */}
+                              </ul>
+                            </div>
+                            {/* /OPTIONS */}
 
 
-                        {/* #INFORMATION PRODUCT */}
-                        <section className="u-cf" data-section="Product Information">
-                          <ul className="[ u-txt-12 u-margin-bottom-none u-margin-left-small ]">
-                            <li>
-                              <span>{product.description}</span>
-                            </li>
-                          </ul>
-                          <a href="/" className="u-float-left u-txt-10 u-txt-underline">
+                            {/* #INFORMATION PRODUCT */}
+                            <section className="u-cf" data-section="Product Information">
+                              <ul className="[ u-txt-12 u-margin-bottom-none u-margin-left-small ]">
+                                <li>
+                                  <span>{product.description}</span>
+                                </li>
+                              </ul>
+                              <a href="/" className="u-float-left u-txt-10 u-txt-underline">
                       <span>
                         <i className="fas fa-caret-down" />
                         More
                       </span>
-                          </a>
+                              </a>
+                            </section>
+                            {/* /Product information */}
+
+                          </div>
+
                         </section>
-                        {/* /Product information */}
+                        {/* /Product Detail */}
+
+
+                        {/* #CTA */}
+                        <section className="o-layout__item u-2/10 u-push-1/10"
+                                 data-section="Call to Action">
+
+                          <div className="o-list-inline">
+                            <div className="o-list-inline__item t-price u-txt--larger">
+                              <span className="u-txt-16">$</span>
+                              {product.price}
+                            </div>
+
+
+                            <div
+                              className="o-list-inline__item t-price--before u-txt-linethrough  u-txt--light"
+                            >
+                              <span className="u-txt-12">$</span>
+                              7.99
+                            </div>
+                          </div>
+
+
+                          <div className="c-option [ c-option--control ] u-margin-top-small">
+                            <div className="c-option__board">
+                              <label className="u-txt--blur u-txt-12 u-mr-6">Quantity: </label>
+                              <input
+                                className="js-option-screen"
+                                id="qty"
+                                type="number"
+                                min={0}
+                                defaultValue={1}
+                              />
+                            </div>
+                          </div>
+
+
+                          {/* #CTA-BUTTONS */}
+                          <div className="u-d-flex u-fd--column u-margin-top u-margin-bottom-large">
+                            <button
+                              className="c-btn [ c-btn--cta c-btn--rounded c-btn--type-large ] u-flex-1 u-margin-bottom-small"
+                              type="submit"
+                              title="Buy Now"
+                            >
+                              Buy Now
+                            </button>
+                            <button
+                              onClick={this.purchaseHandle}
+                              className="c-btn [ c-btn--primary c-btn--rounded c-btn--type-large ] u-flex-1"
+                              type="button"
+                              title="Add to Cart"
+                            >
+                              Add to Cart
+                            </button>
+                          </div>
+                          {/* #CTA-BUTTONS */}
+
+
+                          {/* #SAME BRAND */}
+                          <section className="c-section" data-section="Same Brand Products">
+                            <div className="c-section__title [ c-section__title--no-margin ]">
+                              From our brand
+                            </div>
+                            <ul className="o-list-bare">
+                              <li className="o-media c-product [ c-product--secondary ]">
+                                <img
+                                  src={product.imUrl}
+                                  className="o-media__img c-product__img u-w--30 u-mr-6"
+                                  alt="Product 1"
+                                />
+                                <div className="o-media__body">
+                                  <div className="c-product__name u-txt--bold">
+                                    {product.title}
+                                  </div>
+                                  <div className="c-product__rating">
+                                    <i className="fas fa-star [ tiny rect ]" data-rating={1} />
+                                    <i className="fas fa-star [ tiny rect ]" data-rating={2} />
+                                    <i className="fas fa-star [ tiny rect ]" data-rating={3} />
+                                    <i className="fas fa-star [ tiny rect ]" data-rating={4} />
+                                    <i className="fas fa-star [ tiny rect ]" data-rating={5} />
+                                  </div>
+                                  <div className="c-price [ c-price--small ] ">
+                                    <div className="c-price__price">
+                                      <span className="c-price__currency">$</span>
+                                      {product.price}
+                                    </div>
+                                    <div className="c-price__price--secondary">
+                                      <span className="c-price__currency">$</span>
+                                      7.99
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+
+                            </ul>
+                          </section>
+                          {/* /Same brand */}
+
+
+                        </section>
+                        {/* /CTA */}
+
 
                       </div>
+                      {/* /PRODUCT VIEW BLOCK */}
+
 
                     </section>
-                    {/* /Product Detail */}
+                    {/* #PRODUCT PREVIEW */}
 
 
-                    {/* #CTA */}
-                    <section className="o-layout__item u-2/10 u-push-1/10"
-                             data-section="Call to Action">
-
-                      <div className="o-list-inline">
-                        <div className="o-list-inline__item t-price u-txt--larger">
-                          <span className="u-txt-16">$</span>
-                          {product.price}
-                        </div>
+                    <hr />
 
 
-                        <div
-                          className="o-list-inline__item t-price--before u-txt-linethrough  u-txt--light"
+                    {/* #BUNDLE PRODUCT */}
+                    {bundleProducts
+                      ? (
+                        <Section
+                          className="u-6/10"
+                          title="Usually Bought Together"
+                          titleClass="c-section__title--no-margin"
                         >
-                          <span className="u-txt-12">$</span>
-                          7.99
-                        </div>
+
+                          <Bundle
+                            bundleProducts={[product, ...bundleProducts.products]}
+                            bundleProductIds={[product._id, ...bundleIds]}
+                            currentProduct={product}
+                            totalPrice={bundleProducts.totalPrice}
+                            purchaseAll={this.purchaseAllHandle}
+                            user={currentUser}
+                          />
+                        </Section>
+                      )
+                      : ''}
+                    {/* /BUNDLE PRODUCT */}
+
+
+                    <hr />
+
+
+                    {/* #ViEWED ALSO VIEWED */}
+                    {alsoViewed.length
+                      ? (
+                        <Section
+                          title="Customers who viewed this item also viewed"
+                          titleClass="c-section__title--no-margin"
+                        >
+
+                          <ProductSlider
+                            products={alsoViewed}
+                            settings={sliderSettings}
+                            className="c-slider--tiny-gut u-ph-48"
+                          />
+
+                        </Section>
+                      )
+                      : ''}
+                    {/* /ViEWED ALSO VIEWED */}
+
+
+                    {/* #TABS */}
+                    <Tabs className="c-tab u-mt-36 u-mb-24">
+                      <TabList className="c-tab__header u-border--m-blur">
+                        <Tab
+                          className="c-tab__header-name u-txt-14"
+                          selectedClassName="active"
+                        >
+                          Description
+                        </Tab>
+                        <Tab
+                          className="c-tab__header-name u-txt-14"
+                          selectedClassName="active"
+                        >
+                          Additional Information
+                        </Tab>
+                        <Tab
+                          className="c-tab__header-name u-txt-14"
+                          selectedClassName="active"
+                        >
+                          Customer Q&A
+                        </Tab>
+                        <Tab
+                          className="c-tab__header-name u-txt-14"
+                          selectedClassName="active"
+                        >
+                          Customer Reviews
+                        </Tab>
+                      </TabList>
+
+
+                      <div className="c-tab__content">
+
+                        <TabPanel className="c-tab__content-item u-txt--normal u-txt-14 u-2/3">
+                          {product.description}
+                        </TabPanel>
+
+                        <TabPanel className="c-tab__content-item u-txt--normal u-txt-14">
+                          {/* Example Table */}
+                          <div className="c-table">
+                            <div className="c-table__row">
+                              <div className="c-table__row-col c-table__attr">
+                                Package Dimensions
+                              </div>
+                              <div className="c-table__row-col c-table__value">
+                                13.6 x 6.6 x 1.9 inches
+                              </div>
+                            </div>
+                            <div className="c-table__row">
+                              <div className="c-table__row-col c-table__attr">
+                                Weight
+                              </div>
+                              <div className="c-table__row-col c-table__value">
+                                2.33 pounds
+                              </div>
+                            </div>
+                            <div className="c-table__row">
+                              <div className="c-table__row-col c-table__attr">
+                                Color
+                              </div>
+                              <div className="c-table__row-col c-table__value">
+                                Red/Blue/Green/Black
+                              </div>
+                            </div>
+                            <div className="c-table__row">
+                              <div className="c-table__row-col c-table__attr">
+                                Manufacturer
+                              </div>
+                              <div className="c-table__row-col c-table__value">
+                                Microsoft
+                              </div>
+                            </div>
+                            <div className="c-table__row">
+                              <div className="c-table__row-col c-table__attr">
+                                Status
+                              </div>
+                              <div className="c-table__row-col c-table__value">
+                                Out of Stock
+                              </div>
+                            </div>
+                          </div>
+                          {/* /Example Table */}
+                        </TabPanel>
+
+                        <TabPanel className="c-tab__content-item u-txt-14" />
+
+                        <TabPanel className="c-tab__content-item u-txt-14" />
+
+                      </div>
+                    </Tabs>
+                    {/* /TABS */}
+
+
+                    {/* #BOUGHT ALSO BOUGHT */}
+                    {alsoBought.length
+                      ? (
+                        <Section
+                          title="Customers who bought this item also bought"
+                          titleClass="c-section__title--no-margin"
+                        >
+
+                          <ProductSlider
+                            products={alsoBought}
+                            settings={sliderSettings}
+                            className="c-slider--tiny-gut u-ph-48"
+                          />
+
+
+                        </Section>
+                      )
+                      : ''}
+                    {/* /BOUGHT ALSO BOUGHT */}
+
+
+                    {/* #SAME CATGORY */}
+                    {sameCategory.length
+                      ? (
+                        <Section
+                          title="From the same category"
+                          titleClass="c-section__title--no-margin"
+                        >
+
+                          <ProductSlider
+                            products={sameCategory}
+                            settings={sliderSettings}
+                            className="c-slider--tiny-gut u-ph-48"
+                          />
+
+
+                        </Section>
+                      )
+                      : ''}
+                    {/* /SAME CATEGORY */}
+
+                  </main>
+
+
+                </Wrapper>
+              </Desktop>
+
+
+              <Mobile>
+                <Wrapper className="o-wrapper--flush">
+
+                  <main>
+
+                    {/* #PREVIEW PRODUCT */}
+                    <Section className="c-section--splitted">
+
+
+                      {/* #BREADCRUMB */}
+                      <Breadcrumb breadcrumbItems={categories} className="u-ml-6 u-mt-6" />
+                      {/* /Breadcrumb */}
+
+
+                      <div className="c-section__title">
+                        {product.title}
                       </div>
 
 
-                      <div className="c-option [ c-option--control ] u-margin-top-small">
+                      {/* #PRODUCT ZOOM */}
+                      <Slider
+                        className="u-mb-6"
+                        settings={{
+                          slidesToShow: 1,
+                          arrows: false,
+                          dots: true,
+                          lazyLoad: 'ondemand',
+                        }}
+                      >
+                        <div className="c-product">
+                          <img
+                            className="c-product__img"
+                            src={product.imUrl}
+                            alt={product.title}
+                            style={{ margin: '0 auto' }}
+                          />
+                        </div>
+                        <div className="c-product">
+                          <img
+                            className="c-product__img"
+                            src={product.imUrl}
+                            alt={product.title}
+                            style={{ margin: '0 auto' }}
+                          />
+                        </div>
+
+                      </Slider>
+                      {/* /Product Zoom */}
+
+
+                    </Section>
+                    {/* /Preview Product */}
+
+
+                    {/* #PRODUCT OPTIONS */}
+                    <Section
+                      className="c-section--splitted"
+                      data="Product Options"
+                    >
+
+                      {/* #QUANTITY CONTROL */}
+                      <div className="c-option [ c-option--control ] u-ml-6">
+                        <label htmlFor="qty" className="c-option__detail">Quantity:</label>
                         <div className="c-option__board">
-                          <label className="u-txt--blur u-txt-12 u-mr-6">Quantity: </label>
                           <input
                             className="js-option-screen"
                             id="qty"
                             type="number"
-                            min={0}
-                            defaultValue={1}
+                            min="0"
+                            value="1"
                           />
+                          <span
+                            className="c-option__btn js-option-control"
+                            data-control="decrease"
+                          >
+                            -
+                          </span>
+                          <span
+                            className="c-option__btn js-option-control"
+                            data-control="increase"
+                          >
+                            +
+                          </span>
                         </div>
                       </div>
+                      {/* /Quantity Control */}
 
 
-                      {/* #CTA-BUTTONS */}
-                      <div className="u-d-flex u-fd--column u-margin-top u-margin-bottom-large">
-                        <button
-                          className="c-btn [ c-btn--cta c-btn--rounded c-btn--type-large ] u-flex-1 u-margin-bottom-small"
-                          type="submit"
-                          title="Buy Now"
-                        >
-                          Buy Now
-                        </button>
-                        <button
-                          onClick={this.purchaseHandle}
-                          className="c-btn [ c-btn--primary c-btn--rounded c-btn--type-large ] u-flex-1"
-                          type="button"
-                          title="Add to Cart"
-                        >
-                          Add to Cart
-                        </button>
-                      </div>
-                      {/* #CTA-BUTTONS */}
+                      <hr />
 
 
-                      {/* #SAME BRAND */}
-                      <section className="c-section" data-section="Same Brand Products">
-                        <div className="c-section__title [ c-section__title--no-margin ]">
-                          From our brand
+                      {/* #CTA BUTTON */}
+                      <div className="o-layout u-mh-6 o-layout--tiny">
+
+
+                        <div>
+
+                          {/* #PRODUCT PRICE */}
+                          <div className="o-layout__item u-1/2 u-mb-12">
+                            <span className="c-price [ c-price--huge ]">
+                              <span className="c-price__price">
+                                <span className="c-price__currency">$</span>
+                                {product.price}
+                              </span>
+                            </span>
+                            <span className="c-price__price--secondary">
+                              <span className="t-currency">$</span>
+                              40.00
+                            </span>
+                            <div className="u-txt-14 u-txt--light">(save 50%)</div>
+                          </div>
+                          {/* /Product Price */}
+
+
+                          {/* #BUTTON */}
+                          <div className="o-layout__item u-1/2 js-fixed-bottom">
+                            <button
+                              onClick={this.purchaseHandle}
+                              className="c-btn [ c-btn--rounded c-btn--primary ] u-w--100 u-mb-12"
+                              type="button"
+                              title="Add to Cart"
+                            >
+                              Add to Cart
+                            </button>
+
+                            <button
+                              className="c-btn [ c-btn--rounded c-btn--cta ] u-w--100"
+                              type="submit"
+                              title="Buy Now"
+                            >
+                              Buy Now
+                            </button>
+                          </div>
+                          {/* /Button */}
+
+
                         </div>
-                        <ul className="o-list-bare">
-                          <li className="o-media c-product [ c-product--secondary ]">
-                            <img
-                              src={product.imUrl}
-                              className="o-media__img c-product__img u-w--30 u-mr-6"
-                              alt="Product 1"
-                            />
-                            <div className="o-media__body">
-                              <div className="c-product__name u-txt--bold">
-                                {product.title}
-                              </div>
-                              <div className="c-product__rating">
-                                <i className="fas fa-star [ tiny rect ]" data-rating={1} />
-                                <i className="fas fa-star [ tiny rect ]" data-rating={2} />
-                                <i className="fas fa-star [ tiny rect ]" data-rating={3} />
-                                <i className="fas fa-star [ tiny rect ]" data-rating={4} />
-                                <i className="fas fa-star [ tiny rect ]" data-rating={5} />
-                              </div>
-                              <div className="c-price [ c-price--small ] ">
-                                <div className="c-price__price">
-                                  <span className="c-price__currency">$</span>
-                                  {product.price}
-                                </div>
-                                <div className="c-price__price--secondary">
-                                  <span className="c-price__currency">$</span>
-                                  7.99
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-
-                        </ul>
-                      </section>
-                      {/* /Same brand */}
 
 
-                    </section>
-                    {/* /CTA */}
+                      </div>
 
+                      {/* /CTA BUTTON */}
 
-                  </div>
-                  {/* /PRODUCT VIEW BLOCK */}
+                    </Section>
 
+                    {/* /Product Options */}
 
-                </section>
-                {/* #PRODUCT PREVIEW */}
+                    <hr className="thick" />
 
-
-                <hr />
-
-
-                {/* #BUNDLE PRODUCT */}
-                {bundleProducts
-                  ? (
                     <Section
-                      className="u-6/10"
+                      className="c-section--splitted"
+                      data="Product Bundle"
                       title="Usually Bought Together"
-                      titleClass="c-section__title--no-margin"
                     >
-
                       <Bundle
                         bundleProducts={[product, ...bundleProducts.products]}
                         bundleProductIds={[product._id, ...bundleIds]}
@@ -444,169 +791,36 @@ class ProductDetail extends React.Component {
                         user={currentUser}
                       />
                     </Section>
-                  )
-                  : ''}
-                {/* /BUNDLE PRODUCT */}
 
 
-                <hr />
+                    <hr className="thick" />
 
 
-                {/* #ViEWED ALSO VIEWED */}
-                {alsoViewed.length
-                  ? (
-                    <Section
-                      title="Customers who viewed this item also viewed"
-                      titleClass="c-section__title--no-margin"
-                    >
+                    {/* #ViEWED ALSO VIEWED */}
+                    {alsoViewed.length
+                      ? (
+                        <Section
+                          title="Customers who viewed this item also viewed"
+                          className="c-section--splitted"
+                        >
+                          <ProductSlider
+                            products={alsoViewed}
+                            settings={sliderMobileSettings}
+                            className="c-slider--tiny-gut"
+                          />
 
-                      <ProductSlider
-                        products={alsoViewed}
-                        settings={sliderSettings}
-                        className="c-slider--tiny-gut u-ph-48"
-                      />
+                        </Section>
+                      )
+                      : ''}
+                    {/* /ViEWED ALSO VIEWED */}
 
-                    </Section>
-                  )
-                  : ''}
-                {/* /ViEWED ALSO VIEWED */}
-
-
-                {/* #TABS */}
-                <Tabs className="c-tab u-mt-36 u-mb-24">
-                  <TabList className="c-tab__header u-border--m-blur">
-                    <Tab
-                      className="c-tab__header-name u-txt-14"
-                      selectedClassName="active"
-                    >
-                      Description
-                    </Tab>
-                    <Tab
-                      className="c-tab__header-name u-txt-14"
-                      selectedClassName="active"
-                    >
-                      Additional Information
-                    </Tab>
-                    <Tab
-                      className="c-tab__header-name u-txt-14"
-                      selectedClassName="active"
-                    >
-                      Customer Q&A
-                    </Tab>
-                    <Tab
-                      className="c-tab__header-name u-txt-14"
-                      selectedClassName="active"
-                    >
-                      Customer Reviews
-                    </Tab>
-                  </TabList>
+                  </main>
 
 
-                  <div className="c-tab__content">
+                </Wrapper>
+              </Mobile>
 
-                    <TabPanel className="c-tab__content-item u-txt--normal u-txt-14 u-2/3">
-                      {product.description}
-                    </TabPanel>
-
-                    <TabPanel className="c-tab__content-item u-txt--normal u-txt-14">
-                      {/* Example Table */}
-                      <div className="c-table">
-                        <div className="c-table__row">
-                          <div className="c-table__row-col c-table__attr">
-                            Package Dimensions
-                          </div>
-                          <div className="c-table__row-col c-table__value">
-                            13.6 x 6.6 x 1.9 inches
-                          </div>
-                        </div>
-                        <div className="c-table__row">
-                          <div className="c-table__row-col c-table__attr">
-                            Weight
-                          </div>
-                          <div className="c-table__row-col c-table__value">
-                            2.33 pounds
-                          </div>
-                        </div>
-                        <div className="c-table__row">
-                          <div className="c-table__row-col c-table__attr">
-                            Color
-                          </div>
-                          <div className="c-table__row-col c-table__value">
-                            Red/Blue/Green/Black
-                          </div>
-                        </div>
-                        <div className="c-table__row">
-                          <div className="c-table__row-col c-table__attr">
-                            Manufacturer
-                          </div>
-                          <div className="c-table__row-col c-table__value">
-                            Microsoft
-                          </div>
-                        </div>
-                        <div className="c-table__row">
-                          <div className="c-table__row-col c-table__attr">
-                            Status
-                          </div>
-                          <div className="c-table__row-col c-table__value">
-                            Out of Stock
-                          </div>
-                        </div>
-                      </div>
-                      {/* /Example Table */}
-                    </TabPanel>
-
-                    <TabPanel className="c-tab__content-item u-txt-14" />
-
-                    <TabPanel className="c-tab__content-item u-txt-14" />
-
-                  </div>
-                </Tabs>
-                {/* /TABS */}
-
-
-                {/* #BOUGHT ALSO BOUGHT */}
-                {alsoBought.length
-                  ? (
-                    <Section
-                      title="Customers who bought this item also bought"
-                      titleClass="c-section__title--no-margin"
-                    >
-
-                      <ProductSlider
-                        products={alsoBought}
-                        settings={sliderSettings}
-                        className="c-slider--tiny-gut u-ph-48"
-                      />
-
-
-                    </Section>
-                  )
-                  : ''}
-                {/* /BOUGHT ALSO BOUGHT */}
-
-
-                {/* #SAME CATGORY */}
-                {sameCategory.length
-                  ? (
-                    <Section
-                      title="From the same category"
-                      titleClass="c-section__title--no-margin"
-                    >
-
-                      <ProductSlider
-                        products={sameCategory}
-                        settings={sliderSettings}
-                        className="c-slider--tiny-gut u-ph-48"
-                      />
-
-
-                    </Section>
-                  )
-                  : ''}
-                {/* /SAME CATEGORY */}
-
-              </main>
-            </Wrapper>
+            </>
           )
         }
       </UserContext.Consumer>
