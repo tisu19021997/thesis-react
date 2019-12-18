@@ -44,6 +44,8 @@ class Header extends React.Component {
     this.openCartMobile = this.openCartMobile.bind(this);
     this.closeCart = this.closeCart.bind(this);
     this.deleteCartItem = this.deleteCartItem.bind(this);
+    this.productQtyHandle = this.productQtyHandle.bind(this);
+
 
     this.openMenu = this.openMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
@@ -138,6 +140,30 @@ class Header extends React.Component {
     }
 
     return updateCart(newCart);
+  }
+
+  productQtyHandle(event) {
+    const { currentUser, updateCart } = this.props;
+
+    const product = JSON.parse(event.currentTarget.getAttribute('data-product'));
+    const incOrDesc = event.currentTarget.getAttribute('data-action');
+
+    // bail if exceed the limit quantity
+    if (product.quantity === 1 && incOrDesc === 'desc') {
+      return false;
+    }
+
+    product.quantity = incOrDesc === 'inc' ? product.quantity + 1 : product.quantity - 1;
+
+    if (currentUser) {
+      axios.patch(`/users/${currentUser}/cart/products/${product._id}/quantity`, { quantity: product.quantity })
+        .then((res) => updateCart(res.data))
+        .catch((error) => {
+          throw new Error(error);
+        });
+    } else {
+      // save to local storage
+    }
   }
 
   /**
@@ -370,12 +396,32 @@ class Header extends React.Component {
         >
 
           <div
-            className="cart-counter o-layout__item u-txt-12 u-1/6 u-txt-align-center u-txt-underline">
-            {item.quantity}
+            className="cart-counter o-layout__item u-txt-12 u-1/6 u-txt-align-center u-txt-underline"
+          >
+            <button
+              onClick={this.productQtyHandle}
+              data-product={JSON.stringify(item)}
+              data-action="desc"
+              type="button"
+              className="c-btn--fake u-txt-16"
+            >
+              -
+            </button>
+            <span className="u-ph-6">{item.quantity}</span>
+            <button
+              onClick={this.productQtyHandle}
+              data-product={JSON.stringify(item)}
+              data-action="inc"
+              type="button"
+              className="c-btn--fake u-txt-16"
+            >
+              +
+            </button>
           </div>
 
           <div
-            className="cart-product__name o-layout__item u-txt-12 u-4/6 u-txt-align-left u-txt-lineh-1">
+            className="cart-product__name o-layout__item u-txt-12 u-4/6 u-txt-align-left u-txt-lineh-1"
+          >
             <div className="o-media">
               <img
                 className="o-media__img u-1/4"
@@ -966,9 +1012,29 @@ class Header extends React.Component {
                                 </Link>
                                 {/* /PRODUCT INFORMATION */}
 
+
                                 <div
-                                  className="o-layout__item u-txt-16 u-as--center u-txt-align-center u-1/6">
-                                  {item.quantity}
+                                  className="o-layout__item u-txt-16 u-as--center u-txt-align-center u-2/6">
+                                  <button
+                                    onClick={this.productQtyHandle}
+                                    data-product={JSON.stringify(item)}
+                                    data-action="desc"
+                                    type="button"
+                                    className="c-btn--fake u-txt-20"
+                                  >
+                                    -
+                                  </button>
+                                  <span
+                                    className="u-ph-12 u-txt-20 u-txt-underline">{item.quantity}</span>
+                                  <button
+                                    onClick={this.productQtyHandle}
+                                    data-product={JSON.stringify(item)}
+                                    data-action="inc"
+                                    type="button"
+                                    className="c-btn--fake u-txt-20"
+                                  >
+                                    +
+                                  </button>
                                 </div>
                                 ;
                               </div>

@@ -107,7 +107,7 @@ class ProductDetail extends React.Component {
    * == 3. Update state of parent component
    */
   purchaseHandle() {
-    const { product } = this.state;
+    const { product, quantity } = this.state;
     const { currentUser } = this.context;
     const { updateCart, loggedIn } = this.props;
     const productModel = toProductModel(product);
@@ -116,7 +116,8 @@ class ProductDetail extends React.Component {
       axios.patch(`/users/${currentUser}/cart`, {
         action: 'purchase',
         cartProducts: product,
-        single: false,
+        quantity,
+        single: true,
       })
         .then((res) => {
           // TODO: Get the successful message and display it to UI
@@ -161,7 +162,7 @@ class ProductDetail extends React.Component {
       axios.patch(`/users/${currentUser}/cart`, {
         action: 'purchase',
         cartProducts: products,
-        single: true,
+        single: false,
       })
         .then((res) => {
           onBundlePurchase(res.data);
@@ -283,7 +284,8 @@ class ProductDetail extends React.Component {
 
                             <span className="[ u-txt--tiny ]">
                     Brand:
-                              <span className="[ u-txt--bright u-txt--xbold ]">{product.brand}</span>
+                              <span
+                                className="[ u-txt--bright u-txt--xbold ]">{product.brand}</span>
                             </span>
 
                             <div className="[ u-float-right u-d-flex u-fd--column ]">
@@ -363,9 +365,15 @@ class ProductDetail extends React.Component {
                               <label className="u-txt--blur u-txt-12 u-mr-6">Quantity: </label>
                               <input
                                 className="js-option-screen"
+                                onChange={(event) => {
+                                  const { target } = event;
+                                  this.setState({
+                                    quantity: target.value,
+                                  });
+                                }}
                                 id="qty"
                                 type="number"
-                                min={0}
+                                min={1}
                                 defaultValue={1}
                               />
                             </div>
