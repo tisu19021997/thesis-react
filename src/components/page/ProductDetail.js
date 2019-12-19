@@ -115,7 +115,6 @@ class ProductDetail extends React.Component {
 
     if (loggedIn) {
       axios.patch(`/users/${currentUser}/cart`, {
-        action: 'purchase',
         cartProducts: product,
         quantity,
         single: true,
@@ -161,7 +160,6 @@ class ProductDetail extends React.Component {
 
     if (loggedIn) {
       axios.patch(`/users/${currentUser}/cart`, {
-        action: 'purchase',
         cartProducts: products,
         single: false,
       })

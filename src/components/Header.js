@@ -120,21 +120,17 @@ class Header extends React.Component {
    */
   deleteCartItem(event) {
     const { cart, updateCart, currentUser } = this.props;
-    const productAsin = event.currentTarget.getAttribute('data-product');
+    const product = JSON.parse(event.currentTarget.getAttribute('data-product'));
+
     // filter the product that we need to delete from the current cart
-    const newCart = cart.filter((item) => (item.product.asin !== productAsin));
+    const newCart = cart.filter((item) => (item.product.asin !== product.product.asin));
 
     // send request to server to update the database
     if (currentUser) {
-      axios.patch(`/users/${currentUser}/cart`, {
-        action: 'delete',
-        cart: newCart,
-      })
-        .then((res) => {
-          // TODO: implement the front-end message when successfully delete the item
-        })
+      axios.delete(`/users/${currentUser}/cart/products/${product._id}`)
+        .then((res) => true)
         .catch((error) => {
-          throw new Error(error.message);
+          throw new Error(error);
         });
     } else {
       local.save('cart', newCart);
@@ -215,6 +211,13 @@ class Header extends React.Component {
 
           // login success
           const { user, token } = data;
+
+          if (user.role === 'admin') {
+            const { history } = this.props;
+
+            return history.push(`/store-management/${user.username}`);
+          }
+
           login(user.username, token);
 
           // close the modal
@@ -265,7 +268,7 @@ class Header extends React.Component {
     const { usernameRegister, passwordRegister } = this.state;
 
     if (usernameRegister && passwordRegister) {
-      axios.post('/users/register', {
+      axios.post('/register', {
         username: usernameRegister,
         password: passwordRegister,
       })
@@ -449,7 +452,7 @@ class Header extends React.Component {
 
           <div className="cart-product__tool o-layout__item u-1/6 u-txt-align-right">
             <button
-              data-product={item.product.asin}
+              data-product={JSON.stringify(item)}
               type="button"
               className="c-btn--fake"
               onClick={this.deleteCartItem}
