@@ -90,6 +90,7 @@ class Home extends React.Component {
       lazyLoad: 'ondemand',
       dots: false,
       arrows: false,
+      draggable: true,
     };
 
     return (
@@ -119,6 +120,7 @@ class Home extends React.Component {
 
             <Mobile>
               <Section
+                className="u-pl-6"
                 title="Pick up where you left off"
                 titleClass="c-section__title [ c-section__title--no-margin ] u-m-0"
                 subTitle={(

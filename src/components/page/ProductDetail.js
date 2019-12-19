@@ -35,6 +35,7 @@ class ProductDetail extends React.Component {
       bundleProducts: {},
       sameCategory: {},
       ready: false,
+      quantity: 1,
     };
 
     this.purchaseHandle = this.purchaseHandle.bind(this);
@@ -709,23 +710,17 @@ class ProductDetail extends React.Component {
                         <div className="c-option__board">
                           <input
                             className="js-option-screen"
+                            onChange={(event) => {
+                              const { target } = event;
+                              this.setState({
+                                quantity: target.value,
+                              });
+                            }}
                             id="qty"
                             type="number"
-                            min="0"
-                            defaultValue="1"
+                            min={1}
+                            defaultValue={1}
                           />
-                          <span
-                            className="c-option__btn js-option-control"
-                            data-control="decrease"
-                          >
-                            -
-                          </span>
-                          <span
-                            className="c-option__btn js-option-control"
-                            data-control="increase"
-                          >
-                            +
-                          </span>
                         </div>
                       </div>
                       {/* /Quantity Control */}

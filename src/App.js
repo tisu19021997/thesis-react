@@ -20,6 +20,9 @@ import {
   faChevronLeft,
   faChevronRight,
   faBars,
+  faFilter,
+  faSortAmountUpAlt,
+  faBorderAll,
 } from '@fortawesome/free-solid-svg-icons';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
@@ -35,7 +38,7 @@ import ProductSearch from './components/page/ProductSearch';
 // create font-awesome icons library
 library.add(fab, faSearch, faGlobe, faUser, faShoppingCart, faAngleLeft, faAngleRight, faApple,
   faBasketballBall, faTshirt, faCameraRetro, faLaptopCode, faHeadphonesAlt, faTv, faTrain, faTimes,
-  faChevronRight, faChevronLeft, faBars);
+  faChevronRight, faChevronLeft, faBars, faFilter, faSortAmountUpAlt, faBorderAll);
 
 // axios default configurations
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_HOST || 'http://localhost:8081';

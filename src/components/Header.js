@@ -904,6 +904,14 @@ class Header extends React.Component {
                       className="c-header__cart"
                     >
                       <FontAwesomeIcon icon="shopping-cart" className="large" />
+                      <span
+                        style={{
+                          padding: cartCounter > 9 ? '0 4px' : '0 6px',
+                        }}
+                        className="c-header__cart-counter"
+                      >
+                        {cartCounter}
+                      </span>
                     </button>
                   </div>
 
