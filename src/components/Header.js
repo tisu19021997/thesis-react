@@ -35,6 +35,7 @@ class Header extends React.Component {
       isMenuOpen: false,
       isCartOpen: false,
       cartCounter: 0,
+      openLoginForm: false,
     };
 
     this.openModal = this.openModal.bind(this);
@@ -164,6 +165,8 @@ class Header extends React.Component {
     } else {
       // save to local storage
     }
+
+    return false;
   }
 
   /**
@@ -338,7 +341,7 @@ class Header extends React.Component {
 
   render() {
     const {
-      categories, isLoginModalOpen, isCartOpen, isMenuOpen,
+      categories, isLoginModalOpen, isCartOpen, isMenuOpen, openLoginForm,
     } = this.state;
     const { cart } = this.props;
     let { cartCounter } = this.state;
@@ -677,7 +680,9 @@ class Header extends React.Component {
                         {/* #LOG-IN FORM */}
                         <div className="o-layout__item u-1/2">
                           <div
-                            className="modal-title u-txt-40 u-txt--hairline u-mt-12 u-mb-36">Log-in
+                            className="modal-title u-txt-40 u-txt--hairline u-mt-12 u-mb-36"
+                          >
+                            Log-in
                           </div>
                           <form onSubmit={this.login}>
                             <input
@@ -835,7 +840,82 @@ class Header extends React.Component {
                             Account
                           </div>
                           <div className="u-txt-16 u-txt--light">
-                            <div className="u-ml-6 u-mb-6">Log-in</div>
+                            <div className="u-ml-6 u-mb-6">
+                              {!currentUser
+                                ? (
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      this.setState({
+                                        openLoginForm: !openLoginForm,
+                                      });
+                                    }}
+                                    className="u-ph-0 u-txt-16"
+                                  >
+                                    Log-in
+                                  </button>
+
+                                )
+                                : (
+                                  <>
+                                    <span>
+                                      Hello,
+                                      {}
+                                      <span className="u-txt--bold">{currentUser}</span>
+                                    </span>
+                                  </>
+                                )
+                              }
+                            </div>
+
+                            {currentUser
+                              ? (
+                                <div className="u-ml-6 u-mb-6">
+                                  <button
+                                    type="button"
+                                    onClick={this.logout}
+                                    className="u-ph-0 u-txt--light u-txt-16 "
+                                  >
+                                    Log-out
+                                  </button>
+                                </div>
+                              )
+                              : ''}
+
+                            {openLoginForm && !currentUser
+                              ? (
+                                <form
+                                  onSubmit={this.login}
+                                  className="u-ml-6 u-mb-12"
+                                >
+                                  <input
+                                    type="text"
+                                    name="usernameLogin"
+                                    placeholder="username"
+                                    onChange={this.handleInputChange}
+                                    required
+                                    className="u-mt-6"
+                                  />
+                                  <input
+                                    type="password"
+                                    name="passwordLogin"
+                                    placeholder="password"
+                                    onChange={this.handleInputChange}
+                                    required
+                                    className="u-mt-6"
+                                  />
+                                  <button
+                                    className="c-btn c-btn--primary u-txt-12 u-d-block u-mt-6"
+                                    type="button"
+                                    onClick={this.login}
+                                  >
+                                    Log-in
+                                  </button>
+                                </form>
+                              )
+                              : ''}
+
+
                             <div className="u-ml-6 u-mb-6">Sign-up</div>
                             <div className="u-ml-6 u-mb-6">Order</div>
                             <div className="u-ml-6 u-mb-6">History</div>

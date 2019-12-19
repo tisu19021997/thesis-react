@@ -877,6 +877,14 @@ table {
   /* [1] */
 }
 
+/*==========================================================================
+   #BUTTON
+   ========================================================================== */
+/* line 5, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/elements/_elements.button.scss */
+button {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
 /* ==========================================================================
    #PAGE
    ========================================================================== */
