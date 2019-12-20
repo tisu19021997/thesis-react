@@ -33,6 +33,7 @@ import Footer from './components/Footer';
 import Home from './components/page/Home';
 import ProductDetail from './components/page/ProductDetail';
 import ProductSearch from './components/page/ProductSearch';
+import StoreManagement from './components/page/StoreManagement';
 
 
 // create font-awesome icons library
@@ -112,6 +113,13 @@ export default class App extends React.Component {
               logout={this.logout}
               cart={cart}
               updateCart={this.updateCart}
+            />
+
+            <Route
+              path="/store-management"
+              render={(props) => (
+                <StoreManagement {...props} />
+              )}
             />
 
             <Switch>

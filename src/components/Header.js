@@ -36,6 +36,7 @@ class Header extends React.Component {
       isCartOpen: false,
       cartCounter: 0,
       openLoginForm: false,
+      userRole: '',
     };
 
     this.openModal = this.openModal.bind(this);
@@ -73,6 +74,18 @@ class Header extends React.Component {
       });
 
     this.updateCartHandle();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // TODO: implement user role check using JWT
+    const { userRole } = this.state;
+    if (prevState.userRole !== userRole && userRole === 'admin') {
+      if (userRole === 'admin') {
+        const { history } = this.props;
+
+        history.push('/store-management');
+      }
+    }
   }
 
   /**
@@ -212,23 +225,19 @@ class Header extends React.Component {
           // login success
           const { user, token } = data;
 
-          if (user.role === 'admin') {
-            const { history } = this.props;
-
-            return history.push(`/store-management/${user.username}`);
-          }
-
-          login(user.username, token);
+          this.setState({
+            userRole: user.role,
+          });
 
           // close the modal
           this.closeModal();
-
+          // update username and token to local
+          login(user.username, token);
 
           // update the cart
           if (user.products) {
             updateCart(user.products);
           }
-
           return true;
         })
         .catch((error) => {
@@ -253,6 +262,10 @@ class Header extends React.Component {
 
     // call to the parent logout method
     logout();
+
+    this.setState({
+      userRole: '',
+    });
 
     return updateCart(cart);
   }
