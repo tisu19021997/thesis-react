@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Link, Switch, withRouter, NavLink } from 'react-router-dom';
-import AddProduct from '../form/AddProduct';
+import AddProduct from '../admin/AddProduct';
+import ProductList from '../admin/ProductList';
 
 class StoreManagement extends React.Component {
   constructor(props) {
@@ -23,12 +24,12 @@ class StoreManagement extends React.Component {
           <div className="o-layout__item u-1/6">
             <div>
               <NavLink to="/store-management/products/new">
-                Create new product
+                Create New Product
               </NavLink>
             </div>
             <div>
               <NavLink to="/store-management/products/search">
-                Search product
+                Search Product
               </NavLink>
             </div>
             <div>
@@ -40,12 +41,24 @@ class StoreManagement extends React.Component {
           </div>
 
           <div className="o-layout__item u-5/6">
-            <Route
-              path="/store-management/products/new"
-              render={(props) => (
-                <AddProduct {...props} />
-              )}
-            />
+
+            <Switch>
+              <Route
+                exact
+                path="/store-management/products/new"
+                render={(props) => (
+                  <AddProduct {...props} />
+                )}
+              />
+
+              <Route
+                exact
+                path="/store-management/products/list"
+                render={(props) => (
+                  <ProductList {...props} />
+                )}
+              />
+            </Switch>
           </div>
 
         </div>

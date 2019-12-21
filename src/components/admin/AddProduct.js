@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useInput } from '../../helper/hooks';
 
@@ -10,6 +10,8 @@ function AddProduct() {
   const { state: imUrl, bind: bindImUrl } = useInput('');
   const { state: description, bind: bindDesc } = useInput('');
 
+  const [errorMessage, setError] = useState('');
+
   const onFormSubmit = (event) => {
     event.preventDefault();
 
@@ -19,18 +21,25 @@ function AddProduct() {
       imUrl,
       price,
       description,
-    });
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        setError(`Error ${error.response.status}: ${error.response.data.message}`);
+      });
   };
 
   return (
     <div className="u-mt-48">
+      <p style={{ color: 'red' }}>{errorMessage}</p>
       <div className="u-txt-40">
         Create new product
       </div>
       <form method="post" onSubmit={onFormSubmit}>
         <input
           {...bindAsin}
-          type="text"
+          type="number"
           placeholder="product asin"
         />
         <input
@@ -41,6 +50,7 @@ function AddProduct() {
         <input
           {...bindPrice}
           type="number"
+          step="0.00001"
           placeholder="price"
         />
         <input

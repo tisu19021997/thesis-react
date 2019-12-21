@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { decode } from 'jsonwebtoken';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab, faApple } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -94,6 +95,7 @@ export default class App extends React.Component {
 
   render() {
     const { currentUser, token, cart } = this.state;
+    const isAdmin = local.get('token') ? decode(local.get('token')).role === 'admin' : false;
 
     if (token) {
       axios.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -115,12 +117,16 @@ export default class App extends React.Component {
               updateCart={this.updateCart}
             />
 
-            <Route
-              path="/store-management"
-              render={(props) => (
-                <StoreManagement {...props} />
-              )}
-            />
+            {isAdmin
+              ? (
+                <Route
+                  path="/store-management"
+                  render={(props) => (
+                    <StoreManagement {...props} />
+                  )}
+                />)
+              : ''}
+
 
             <Switch>
 
