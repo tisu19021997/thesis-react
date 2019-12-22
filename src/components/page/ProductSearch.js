@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Modal from 'react-modal';
 import Product from '../Product';
 import { Desktop, Mobile } from '../../helper/mediaQuery';
-import Modal from 'react-modal';
 
 class ProductSearch extends React.Component {
   constructor(props) {
@@ -16,28 +16,6 @@ class ProductSearch extends React.Component {
       products: [],
       sort: this.useQuery()
         .get('sort') || 'featured',
-      filters: [
-        {
-          label: 'Featured',
-          value: 'featured',
-        },
-        {
-          label: 'New Arrivals',
-          value: 'newest',
-        },
-        {
-          label: 'Low Price',
-          value: 'price-asc',
-        },
-        {
-          label: 'High Price',
-          value: 'price-desc',
-        },
-        {
-          label: 'Sale Off',
-          value: 'sale',
-        },
-      ],
       ready: false,
       grid: true,
       isSortOpen: false,
@@ -153,8 +131,31 @@ class ProductSearch extends React.Component {
 
     const {
       totalPages, totalDocs, hasPrevPage, hasNextPage,
-      nextPage, prevPage, page, sort, filters,
+      nextPage, prevPage, page, sort,
     } = this.state;
+
+    const filters = [
+      {
+        label: 'Featured',
+        value: 'featured',
+      },
+      {
+        label: 'New Arrivals',
+        value: 'newest',
+      },
+      {
+        label: 'Low Price',
+        value: 'price-asc',
+      },
+      {
+        label: 'High Price',
+        value: 'price-desc',
+      },
+      {
+        label: 'Sale Off',
+        value: 'sale',
+      },
+    ];
 
     const isChecked = (value) => value === sort;
 
@@ -210,10 +211,10 @@ class ProductSearch extends React.Component {
 
             {/* #PAGE-NAME */}
             <div className="u-mt-12 u-mb-36">
-            <span className="u-txt--light u-txt-24">
-              Search results for
-              <span className="u-txt--bold">{` "${keyword}"`}</span>
-            </span>
+              <span className="u-txt--light u-txt-24">
+                Search results for
+                <span className="u-txt--bold">{` "${keyword}"`}</span>
+              </span>
               <div className="u-float-right u-txt-align-right">
                 <span className="u-txt--bold u-txt-24">{totalDocs}</span>
                 <div className="u-txt--light u-txt-12">results</div>
@@ -454,6 +455,7 @@ class ProductSearch extends React.Component {
                   {
                     products.map((product) => (
                       <Link
+                        key={product.asin}
                         to={`/products/${product.asin}`}
                         className="c-product u-p-4 u-pv-6"
                       >

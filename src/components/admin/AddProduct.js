@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useInput } from '../../helper/hooks';
 
@@ -9,8 +9,21 @@ function AddProduct() {
   const { state: price, bind: bindPrice } = useInput(0);
   const { state: imUrl, bind: bindImUrl } = useInput('');
   const { state: description, bind: bindDesc } = useInput('');
+  const { state: cat, bind: bindCat } = useInput('');
 
   const [errorMessage, setError] = useState('');
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    axios.get('/categories')
+      .then((res) => {
+        const { categories: cat } = res.data;
+        setCategories(cat);
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+  }, []);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -21,6 +34,7 @@ function AddProduct() {
       imUrl,
       price,
       description,
+      categories: cat,
     })
       .then((res) => {
         console.log(res);
@@ -31,39 +45,75 @@ function AddProduct() {
   };
 
   return (
-    <div className="u-mt-48">
+    <div className="u-mv-48">
       <p style={{ color: 'red' }}>{errorMessage}</p>
-      <div className="u-txt-40">
+
+      <div className="u-txt-40 u-mb-24">
         Create new product
       </div>
+
       <form method="post" onSubmit={onFormSubmit}>
-        <input
-          {...bindAsin}
-          type="number"
-          placeholder="product asin"
-        />
-        <input
-          {...bindName}
-          type="text"
-          placeholder="product name"
-        />
-        <input
-          {...bindPrice}
-          type="number"
-          step="0.00001"
-          placeholder="price"
-        />
-        <input
-          {...bindImUrl}
-          type="text"
-          placeholder="product image url"
-        />
-        <input
-          {...bindDesc}
-          type="text"
-          placeholder="description"
-        />
-        <input type="submit" value="Create" />
+        <div className="u-mb-12">
+          <input
+            {...bindAsin}
+            type="number"
+            placeholder="product asin"
+          />
+        </div>
+
+        <div className="u-mb-12">
+          <input
+            {...bindName}
+            type="text"
+            placeholder="product name"
+          />
+        </div>
+
+        <div className="u-mb-12">
+          <input
+            {...bindPrice}
+            type="number"
+            step="0.00001"
+            placeholder="price"
+          />
+        </div>
+
+        <div className="u-mb-12">
+          <input
+            {...bindImUrl}
+            type="text"
+            placeholder="product image url"
+          />
+        </div>
+
+        <div className="u-mb-12">
+          <input
+            {...bindDesc}
+            type="text"
+            placeholder="description"
+          />
+        </div>
+
+        <select
+          {...bindCat}
+        >
+          {
+            categories
+              ? categories.map((category) => (
+                <option key={category.name} value={category._id}>
+                  {category.name}
+                </option>
+              ))
+              : ''
+          }
+        </select>
+
+        <button
+          className="c-btn c-btn--primary u-d-block u-mt-12"
+          type="submit"
+        >
+          Create
+        </button>
       </form>
     </div>
   );
