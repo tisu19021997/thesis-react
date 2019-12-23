@@ -757,6 +757,7 @@ dd, ol, ul {
 [type="button"] {
   border: none;
   background: transparent;
+  cursor: pointer;
 }
 
 /* ==========================================================================

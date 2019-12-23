@@ -284,7 +284,10 @@ class ProductDetail extends React.Component {
                             <span className="[ u-txt--tiny ]">
                     Brand:
                               <span
-                                className="[ u-txt--bright u-txt--xbold ]">{product.brand}</span>
+                                className="[ u-txt--bright u-txt--xbold ]"
+                              >
+                                {product.brand}
+                              </span>
                             </span>
 
                             <div className="[ u-float-right u-d-flex u-fd--column ]">
@@ -344,18 +347,31 @@ class ProductDetail extends React.Component {
                         >
 
                           <div className="o-list-inline">
-                            <div className="o-list-inline__item t-price u-txt--larger">
-                              <span className="u-txt-16">$</span>
-                              {product.price}
-                            </div>
+                            {product.discountPrice
+                              ? (
+                                <>
+                                  <div className="o-list-inline__item t-price u-txt--larger">
 
+                                    <span className="u-txt-16">$</span>
+                                    {product.discountPrice}
 
-                            <div
-                              className="o-list-inline__item t-price--before u-txt-linethrough  u-txt--light"
-                            >
-                              <span className="u-txt-12">$</span>
-                              7.99
-                            </div>
+                                  </div>
+                                  <div
+                                    className="o-list-inline__item t-price--before u-txt-linethrough  u-txt--light"
+                                  >
+                                    <span className="u-txt-12">$</span>
+                                    {product.price}
+                                  </div>
+                                </>
+                              )
+
+                              : (
+                                <div className="o-list-inline__item t-price u-txt--larger">
+                                  <span className="u-txt-16">$</span>
+                                  {product.price}
+
+                                </div>
+                              )}
                           </div>
 
 
@@ -426,11 +442,11 @@ class ProductDetail extends React.Component {
                                   <div className="c-price [ c-price--small ] ">
                                     <div className="c-price__price">
                                       <span className="c-price__currency">$</span>
-                                      {product.price}
+                                      {product.discountPrice || product.price}
                                     </div>
                                     <div className="c-price__price--secondary">
                                       <span className="c-price__currency">$</span>
-                                      7.99
+                                      {product.price}
                                     </div>
                                   </div>
                                 </div>

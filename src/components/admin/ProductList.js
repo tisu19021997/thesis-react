@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
+import Modal from 'react-modal';
+import EditProduct from './EditProduct';
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -13,6 +13,12 @@ function ProductList() {
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('');
   const [limit, setLimit] = useState(4);
+  const [editing, setEditing] = useState('');
+  const [isEditOpen, setEditModal] = useState(false);
+
+  // this state is used to prevent unnecessary calls to server,
+  // only make call to server when the product is edited.
+  const [isEdited, setIsEdited] = useState(false);
 
   useEffect(() => {
     const query = `?s=${search}&page=${page}&limit=${limit}&sort=${sort}`;
@@ -32,14 +38,14 @@ function ProductList() {
       .catch((error) => {
         throw new Error(error);
       });
-  }, [page, search, limit, sort]);
+  }, [page, search, limit, sort, isEdited]);
 
   const resetPaging = () => {
     setPage(1);
   };
 
   const deleteHandle = (event) => {
-    const id = event.currentTarget.getAttribute('data-product');
+    const id = event.currentTarget.getAttribute('data-id');
 
     if (window.confirm('Do you really want to delete this product?')) {
       axios.delete(`/store-management/products/${id}`)
@@ -53,6 +59,12 @@ function ProductList() {
     }
 
     return false;
+  };
+
+  const editHandle = (event) => {
+    setEditing(JSON.parse(event.currentTarget.getAttribute('data-id')));
+    setEditModal(true);
+    setIsEdited(false);
   };
 
   // set up pagination
@@ -146,6 +158,7 @@ function ProductList() {
           <th>ASIN</th>
           <th>Name</th>
           <th>Price</th>
+          <th>Disc. Price</th>
           <th>Image</th>
         </tr>
         </thead>
@@ -161,17 +174,30 @@ function ProductList() {
                   </Link>
                 </td>
                 <td>{product.price}</td>
+                <td>{product.discountPrice}</td>
                 <td>
                   <img src={product.imUrl} alt={product.title} width={100} />
                 </td>
+
                 <td>
                   <button
                     type="button"
                     className="c-btn c-btn--rounded"
-                    data-product={product._id}
+                    data-id={product._id}
                     onClick={deleteHandle}
                   >
                     <FontAwesomeIcon icon="times" size="1x" />
+                  </button>
+                </td>
+
+                <td>
+                  <button
+                    type="button"
+                    className="c-btn c-btn--rounded"
+                    data-id={JSON.stringify(product)}
+                    onClick={editHandle}
+                  >
+                    Edit
                   </button>
                 </td>
               </tr>
@@ -182,6 +208,34 @@ function ProductList() {
       </table>
 
       {paginationButtons}
+
+
+      <Modal
+        style={{
+          content: {
+            inset: '50% auto auto 50%',
+            width: '70%',
+            height: '60%',
+            transform: 'translate(-50%, -50%)',
+          },
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, .35)',
+          },
+        }}
+        isOpen={isEditOpen}
+        onRequestClose={() => {
+          setEditModal(false);
+        }}
+      >
+        <EditProduct
+          setIsEdited={setIsEdited}
+          closeModal={() => {
+            setEditModal(false);
+          }}
+          product={editing}
+        />
+      </Modal>
+
     </div>
   );
 }
