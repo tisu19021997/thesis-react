@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { useInput } from '../../helper/hooks';
 import PropTypes from 'prop-types';
+import { useInput } from '../../helper/hooks';
 
 function EditProduct(props) {
   const { product, closeModal, setIsEdited } = props;
@@ -121,14 +121,7 @@ function EditProduct(props) {
 }
 
 EditProduct.propTypes = {
-  product: PropTypes.shape({
-    asin: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    discountPrice: PropTypes.number,
-    imUrl: PropTypes.string.isRequired,
-    description: PropTypes.string,
-  }).isRequired,
+  product: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
   setIsEdited: PropTypes.func.isRequired,
 };
