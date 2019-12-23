@@ -193,7 +193,6 @@ class ProductSearch extends React.Component {
             search: `?s=${keyword}&page=${i}&sort=${sort}`,
           }}
           key={i}
-          href="/"
           className={page === i ? 'c-paging-page c-paging-page--current' : 'c-paging-page'}
         >
           {i}

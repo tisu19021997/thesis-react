@@ -10,20 +10,40 @@ function StoreManagement() {
     <div className="o-wrapper">
       <div className="o-layout--flush">
 
+
+        {/* #SIDE MENU */}
         <div className="o-layout__item u-1/6">
-          <div className="u-txt-24 u-txt--bold">Products</div>
-          <div>
-            <NavLink to="/store-management/products/new">
-              Create New Product
-            </NavLink>
+
+          <div className="u-mb-24">
+            <div className="u-txt-24 u-txt--bold">Products</div>
+            <div>
+              <NavLink to="/store-management/products/new">
+                Create New Product
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to="/store-management/products/list">
+                Product List
+              </NavLink>
+            </div>
           </div>
-          <div>
-            <NavLink to="/store-management/products/list">
-              Product List
-            </NavLink>
+
+          <div className="u-mb-24">
+            <div className="u-txt-24 u-txt--bold">Promotions</div>
+            <div>
+              <NavLink to="/store-management/promotions/new">
+                Create New Promotion
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to="/store-management/promotions/list">
+                Promotion List
+              </NavLink>
+            </div>
           </div>
 
         </div>
+        {/* /SIDE MENU */}
 
         <div className="o-layout__item u-5/6">
 

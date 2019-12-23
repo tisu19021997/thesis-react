@@ -5,31 +5,38 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
-function ProductList(props) {
-  const useQuery = () => {
-    const { location } = props;
-    return new URLSearchParams(location.search);
-  };
-
+function ProductList() {
   const [products, setProducts] = useState([]);
+  const [totalProducts, setTotal] = useState(0);
   const [pages, setPages] = useState(0);
-  const [page, setPage] = useState(useQuery()
-    .get('page') || 1);
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
+  const [sort, setSort] = useState('');
+  const [limit, setLimit] = useState(4);
 
   useEffect(() => {
-    axios.get(`/store-management/products?page=${page}`)
+    const query = `?s=${search}&page=${page}&limit=${limit}&sort=${sort}`;
+
+    axios.get(`/products${query}`)
       .then((res) => {
-        const { docs, totalPages, page: paging } = res.data;
+        const {
+          products: docs, totalPages, page: paging, totalDocs,
+        } = res.data;
+
+        // update state
         setProducts(docs);
         setPages(totalPages);
         setPage(paging);
+        setTotal(totalDocs);
       })
       .catch((error) => {
         throw new Error(error);
       });
-  }, []);
+  }, [page, search, limit, sort]);
 
+  const resetPaging = () => {
+    setPage(1);
+  };
 
   const deleteHandle = (event) => {
     const id = event.currentTarget.getAttribute('data-product');
@@ -48,29 +55,90 @@ function ProductList(props) {
     return false;
   };
 
-  const searchProducts = (event) => {
-    const { value } = event.target;
-    setSearch(value);
+  // set up pagination
+  const paginationButtons = [];
 
-    axios.get(`/products?s=${value}`)
-      .then((res) => {
-        const { products: docs } = res.data;
-        setProducts(docs);
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  };
+  if (products.length) {
+    for (let i = 1; i <= pages; i += 1) {
+      paginationButtons.push(
+        <button
+          type="button"
+          onClick={() => {
+            setPage(i);
+          }}
+          key={i}
+          className={parseInt(page, 10) === i ? 'c-paging-page c-paging-page--current' : 'c-paging-page'}
+        >
+          {i}
+        </button>,
+      );
+    }
+  }
 
   return (
-    <div className="u-mt-24">
+    <div className="u-mv-24">
+      <div className="u-txt-40 u-txt--bold u-mb-24">
+        Product List
+      </div>
+
       <input
-        onChange={searchProducts}
+        style={{ width: '50%' }}
         className="c-searchbar__box u-mb-24"
+        onChange={(event) => {
+          const { value } = event.target;
+          setSearch(value);
+          resetPaging();
+        }}
         type="search"
         placeholder="Search"
         data-border="rounded"
       />
+
+
+      <div className="u-mv-24 u-txt-16">
+
+        <span className="u-txt--light">Showing</span>
+        <input
+          style={{
+            maxWidth: '70px',
+            border: 'none',
+            fontWeight: '700',
+          }}
+          type="number"
+          min={limit}
+          max={totalProducts}
+          defaultValue={limit}
+          onChange={(event) => {
+            setLimit(event.target.value);
+            resetPaging();
+          }}
+          className="u-txt-20"
+        />
+        <span className="u-txt--light">
+          of
+          <span className="u-txt-20 u-txt--bold">{` ${totalProducts} `}</span>
+          products
+        </span>
+
+      </div>
+
+
+      <div className="u-mv-24 u-txt-16">
+        <span className="u-txt--light">Sort by:</span>
+        <select
+          defaultValue=""
+          onChange={(event) => {
+            setSort(event.target.value);
+            resetPaging();
+          }}
+        >
+          <option value="newest">Newest</option>
+          <option value="price-asc">Price: low to high</option>
+          <option value="price-desc">Price: high to low</option>
+          <option value="sale">Sale Off</option>
+        </select>
+      </div>
+
 
       <table border={1}>
         <thead>
@@ -112,12 +180,10 @@ function ProductList(props) {
         }
         </tbody>
       </table>
+
+      {paginationButtons}
     </div>
   );
 }
 
-ProductList.propTypes = {
-  location: ReactRouterPropTypes.location.isRequired,
-};
-
-export default withRouter(ProductList);
+export default ProductList;

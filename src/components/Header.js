@@ -643,16 +643,16 @@ class Header extends React.Component {
                           </button>
                         )
                         : (
-                          <>
+                          <div className="u-d-flex u-fd--column">
                             <div className="c-header__nav-tool-text">{`Hello, ${currentUser}`}</div>
                             <button
                               type="button"
                               onClick={this.logout}
-                              className="c-header__nav-tool-text u-txt-underline c-btn--fake"
+                              className="c-header__nav-tool-text u-txt-underline c-btn--fake u-txt-align-left"
                             >
                               Log-out
                             </button>
-                          </>
+                          </div>
                         )}
                     </div>
 

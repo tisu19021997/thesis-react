@@ -45,10 +45,13 @@ function AddProduct() {
   };
 
   return (
-    <div className="u-mv-48">
-      <p style={{ color: 'red' }}>{errorMessage}</p>
+    <div className="u-mv-24">
+      {errorMessage
+        ? (<p style={{ color: 'red' }}>{errorMessage}</p>)
+        : ''}
 
-      <div className="u-txt-40 u-mb-24">
+
+      <div className="u-txt-40 u-txt--bold u-mb-24">
         Create new product
       </div>
 
