@@ -11,8 +11,9 @@ function ProductList() {
   const [pages, setPages] = useState(0);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
   const [sort, setSort] = useState('');
-  const [limit, setLimit] = useState(4);
+  const [limit, setLimit] = useState(100);
   const [editing, setEditing] = useState('');
   const [isEditOpen, setEditModal] = useState(false);
 
@@ -34,11 +35,13 @@ function ProductList() {
         setPages(totalPages);
         setPage(paging);
         setTotal(totalDocs);
+
+        setIsSearching(false);
       })
       .catch((error) => {
         throw new Error(error);
       });
-  }, [page, search, limit, sort, isEdited]);
+  }, [page, isSearching, limit, sort, isEdited]);
 
   const resetPaging = () => {
     setPage(1);
@@ -69,9 +72,14 @@ function ProductList() {
 
   // set up pagination
   const paginationButtons = [];
+  const paging = parseInt(page, 10);
+  let firstPage = 1;
 
   if (products.length) {
-    for (let i = 1; i <= pages; i += 1) {
+    if (paging > 5) {
+      firstPage = paging - 4;
+    }
+    for (let i = firstPage; i <= paging + 4; i += 1) {
       paginationButtons.push(
         <button
           type="button"
@@ -99,13 +107,22 @@ function ProductList() {
         onChange={(event) => {
           const { value } = event.target;
           setSearch(value);
-          resetPaging();
         }}
         type="search"
         placeholder="Search"
         data-border="rounded"
       />
 
+      <button
+        type="button"
+        className="c-btn c-btn--small c-btn--rounded c-btn--primary"
+        onClick={() => {
+          setIsSearching(true);
+          resetPaging();
+        }}
+      >
+        Search
+      </button>
 
       <div className="u-mv-24 u-txt-16">
 

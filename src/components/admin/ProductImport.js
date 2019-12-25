@@ -8,11 +8,19 @@ function ProductImport() {
   const [message, setMessage] = useState('');
 
   const importFile = () => {
+    if (!file) {
+      setError('Please select one JSON file from your computer.');
+
+      return false;
+    }
+
     if (!file.length) {
       setError('Please check your JSON file again. The valid format of JSON file must be an array of products.');
 
       return false;
     }
+
+    console.log(file);
 
     axios.post('/store-management/products/batch', file)
       .then((res) => {
