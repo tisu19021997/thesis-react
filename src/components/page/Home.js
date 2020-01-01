@@ -17,6 +17,7 @@ class Home extends React.Component {
 
     this.state = {
       history: [],
+      recommendProducts: [],
     };
 
     this.getUserHistory = this.getUserHistory.bind(this);
@@ -38,10 +39,11 @@ class Home extends React.Component {
     if (user) {
       axios.get(`/home/${user}`)
         .then((res) => {
-          const { history } = res.data;
+          const { history, knn: recommendProducts } = res.data;
 
           this.setState({
             history,
+            recommendProducts,
             ready: true,
           });
         })
@@ -63,7 +65,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { ready, history } = this.state;
+    const { ready, history, recommendProducts } = this.state;
 
     if (!ready) {
       return false;
@@ -106,6 +108,23 @@ class Home extends React.Component {
                   ? (
                     <ProductSlider
                       products={historyProducts}
+                      settings={sliderSettings}
+                      className="c-slider [  c-slider--tiny-gut c-slider--right-dots ] u-ph-48"
+                    />
+
+                  )
+                  : ''}
+
+
+              </Section>
+
+              <Section title="Related to items you bought" data="Recommendation">
+
+
+                {recommendProducts.length
+                  ? (
+                    <ProductSlider
+                      products={recommendProducts}
                       settings={sliderSettings}
                       className="c-slider [  c-slider--tiny-gut c-slider--right-dots ] u-ph-48"
                     />
