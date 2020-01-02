@@ -77,7 +77,6 @@ class Header extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    // TODO: implement user role check using JWT
     const { userRole } = this.state;
     if (prevState.userRole !== userRole && userRole === 'admin') {
       if (userRole === 'admin') {

@@ -72,7 +72,7 @@ class ProductDetail extends React.Component {
     axios.get(`/products/${params.asin}`)
       .then((res) => {
         const {
-          product, alsoBought, alsoViewed, bundleProducts, sameCategory,
+          product, alsoBought, alsoViewed, alsoRated, bundleProducts, sameCategory,
         } = res.data;
 
         // set initial state
@@ -80,6 +80,7 @@ class ProductDetail extends React.Component {
           product,
           alsoBought,
           alsoViewed,
+          alsoRated,
           bundleProducts,
           sameCategory,
           ready: true,
@@ -203,6 +204,7 @@ class ProductDetail extends React.Component {
       bundleProducts,
       alsoBought,
       alsoViewed,
+      alsoRated,
       sameCategory,
     } = this.state;
 
@@ -516,6 +518,26 @@ class ProductDetail extends React.Component {
                       )
                       : ''}
                     {/* /ViEWED ALSO VIEWED */}
+
+
+                    {/* #RATED AlSO */}
+                    {alsoRated.length
+                      ? (
+                        <Section
+                          title="Customers who rated this item also rated"
+                          titleClass="c-section__title--no-margin"
+                        >
+
+                          <ProductSlider
+                            products={alsoRated}
+                            settings={sliderSettings}
+                            className="c-slider--tiny-gut u-ph-48"
+                          />
+
+                        </Section>
+                      )
+                      : ''}
+                    {/* /ALSO RATED */}
 
 
                     {/* #TABS */}
@@ -837,6 +859,7 @@ class ProductDetail extends React.Component {
                       )
                       : ''}
                     {/* /ViEWED ALSO VIEWED */}
+
 
                   </main>
 
