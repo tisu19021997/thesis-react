@@ -524,7 +524,7 @@ class ProductDetail extends React.Component {
                     {alsoRated.length
                       ? (
                         <Section
-                          title="Customers who rated this item also rated"
+                          title="Customers who bought this item also bought (CF)"
                           titleClass="c-section__title--no-margin"
                         >
 

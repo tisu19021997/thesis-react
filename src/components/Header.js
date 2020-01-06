@@ -231,7 +231,7 @@ class Header extends React.Component {
           // close the modal
           this.closeModal();
           // update username and token to local
-          login(user.username, token);
+          login(user, token);
 
           // update the cart
           if (user.products) {

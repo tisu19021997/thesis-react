@@ -20,26 +20,28 @@ class Home extends React.Component {
       recommendProducts: [],
     };
 
-    this.getUserHistory = this.getUserHistory.bind(this);
+    this.getUserData = this.getUserData.bind(this);
   }
 
   componentDidMount() {
     const { currentUser } = this.props;
-    this.getUserHistory(currentUser);
+    this.getUserData(currentUser);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { currentUser } = this.props;
     if (prevProps.currentUser !== currentUser) {
-      this.getUserHistory(currentUser);
+      this.getUserData(currentUser);
     }
   }
 
-  getUserHistory(user) {
+  getUserData(user) {
     if (user) {
       axios.get(`/home/${user}`)
         .then((res) => {
-          const { history, knn: recommendProducts } = res.data;
+          const { history } = res.data;
+
+          const { knn: recommendProducts } = res.data;
 
           this.setState({
             history,

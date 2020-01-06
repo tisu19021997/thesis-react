@@ -65,10 +65,10 @@ export default class App extends React.Component {
 
   login(user, token) {
     this.setState({
-      currentUser: user,
+      currentUser: user.username,
       token,
     });
-    local.save('user', user);
+    local.save('user', user.username);
     local.save('token', token);
   }
 
