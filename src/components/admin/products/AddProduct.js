@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useInput } from '../../helper/hooks';
+import { useInput } from '../../../helper/hooks';
 
-// TODO: Implement input validation and role authentication
 function AddProduct() {
   const { state: asin, bind: bindAsin } = useInput('');
   const { state: name, bind: bindName } = useInput('');
@@ -17,8 +16,8 @@ function AddProduct() {
   useEffect(() => {
     axios.get('/categories')
       .then((res) => {
-        const { categories: cat } = res.data;
-        setCategories(cat);
+        const { categories: cate } = res.data;
+        setCategories(cate);
       })
       .catch((error) => {
         throw new Error(error);

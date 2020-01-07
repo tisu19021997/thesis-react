@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { useInput } from '../../helper/hooks';
+import { useInput } from '../../../helper/hooks';
 
 function EditProduct(props) {
   const { product, closeModal, setIsEdited } = props;
@@ -121,7 +121,6 @@ function EditProduct(props) {
 }
 
 EditProduct.propTypes = {
-  product: PropTypes.string.isRequired,
   closeModal: PropTypes.func.isRequired,
   setIsEdited: PropTypes.func.isRequired,
 };

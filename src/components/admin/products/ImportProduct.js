@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import FileUploader from '../FileUploader';
+import FileUploader from '../../FileUploader';
 
-function ProductImport() {
+function ImportProduct() {
   const [file, setFile] = useState(null);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
@@ -19,8 +19,6 @@ function ProductImport() {
 
       return false;
     }
-
-    console.log(file);
 
     axios.post('/store-management/products/batch', file)
       .then((res) => {
@@ -76,4 +74,4 @@ function ProductImport() {
   );
 }
 
-export default ProductImport;
+export default ImportProduct;

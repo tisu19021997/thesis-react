@@ -13,6 +13,8 @@ function ProductList() {
   const [search, setSearch] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [sort, setSort] = useState('');
+  const [cats, setCat] = useState('');
+  const [catFilter, setCatFilter] = useState('');
   const [limit, setLimit] = useState(100);
   const [editing, setEditing] = useState('');
   const [isEditOpen, setEditModal] = useState(false);
@@ -22,7 +24,7 @@ function ProductList() {
   const [isEdited, setIsEdited] = useState(false);
 
   useEffect(() => {
-    const query = `?s=${search}&page=${page}&limit=${limit}&sort=${sort}`;
+    const query = `?s=${search}&page=${page}&limit=${limit}&sort=${sort}&cat=${catFilter}`;
 
     axios.get(`/products${query}`)
       .then((res) => {
@@ -42,6 +44,17 @@ function ProductList() {
         throw new Error(error);
       });
   }, [page, isSearching, limit, sort, isEdited]);
+
+  useEffect(() => {
+    axios.get('/store-management/cats?s=&limit=1000')
+      .then((res) => {
+        const { docs } = res.data;
+        setCat(docs);
+      })
+      .catch((error) => {
+        throw new Error(error.message);
+      });
+  }, []);
 
   const resetPaging = () => {
     setPage(1);
@@ -165,6 +178,25 @@ function ProductList() {
           <option value="price-asc">Price: low to high</option>
           <option value="price-desc">Price: high to low</option>
           <option value="sale">Sale Off</option>
+        </select>
+      </div>
+
+      <div className="u-mv-24 u-txt-16">
+        <span className="u-txt--light">Category:</span>
+        <select
+          defaultValue=""
+          onChange={(event) => {
+            setCatFilter(event.target.value);
+            resetPaging();
+          }}
+        >
+          {
+            cats
+              ? cats.map((cat) => (
+                <option value={cat.name}>{cat.name}</option>
+              ))
+              : ''
+          }
         </select>
       </div>
 
