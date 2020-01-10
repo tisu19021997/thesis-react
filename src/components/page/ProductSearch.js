@@ -55,6 +55,7 @@ class ProductSearch extends React.Component {
         const {
           products, totalDocs, hasPrevPage, hasNextPage, prevPage, nextPage, totalPages,
         } = res.data;
+
         this.setState({
           keyword,
           products,

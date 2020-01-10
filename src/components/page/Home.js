@@ -162,6 +162,26 @@ class Home extends React.Component {
 
               </Section>
 
+              {recommendProducts.length
+                ? (
+                  <Section
+                    className="u-pl-6"
+                    title="Related to items you bought"
+                    data="Recommendation"
+                    subTitle={(
+                      <div className="c-section__sub-title u-txt-underline">
+                        <Link to="/">See all</Link>
+                      </div>
+                    )}
+                  >
+                    <ProductSlider
+                      products={recommendProducts}
+                      settings={sliderMobileSettings}
+                    />
+                  </Section>
+                )
+                : ''}
+
             </Mobile>
 
           </Wrapper>
