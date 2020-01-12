@@ -9,6 +9,7 @@ import {
 import axios from 'axios';
 import array from 'lodash/array';
 import Slider from 'react-slick';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import local from '../../helper/localStorage';
 import { toProductModel } from '../../helper/data';
 import Wrapper from '../Wrapper';
@@ -23,13 +24,13 @@ import { saveHistory } from '../../helper/request';
 import { UserContext } from '../../context/user';
 import { Desktop, Mobile } from '../../helper/mediaQuery';
 
-
 class ProductDetail extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       product: {},
+      ratings: [],
       alsoBought: {},
       alsoViewed: {},
       bundleProducts: {},
@@ -43,6 +44,8 @@ class ProductDetail extends React.Component {
 
     this.historyTracking = this.historyTracking.bind(this);
     this.pageInit = this.pageInit.bind(this);
+
+    this.onChangeHandle = this.onChangeHandle.bind(this);
   }
 
   componentDidMount() {
@@ -58,40 +61,13 @@ class ProductDetail extends React.Component {
     }
   }
 
-  /**
-   * Initialize Product Page:
-   * == 1. Send request to server to fetch data
-   * == 2. Set the initial state
-   * == 3. Update user browsing product's history
-   */
-  pageInit() {
-    const { match } = this.props;
-    const { params } = match;
+  onChangeHandle(event) {
+    const { target } = event;
+    const { name, value } = target;
 
-    // send GET request to server to get necessary data
-    axios.get(`/products/${params.asin}`)
-      .then((res) => {
-        const {
-          product, alsoBought, alsoViewed, alsoRated, bundleProducts, sameCategory,
-        } = res.data;
-
-        // set initial state
-        this.setState({
-          product,
-          alsoBought,
-          alsoViewed,
-          alsoRated,
-          bundleProducts,
-          sameCategory,
-          ready: true,
-        });
-
-        // update the user history
-        this.historyTracking();
-      })
-      .catch((error) => {
-        throw new Error(error.message);
-      });
+    this.setState({
+      [name]: value,
+    });
   }
 
   historyTracking() {
@@ -191,6 +167,54 @@ class ProductDetail extends React.Component {
     }
   }
 
+  /**
+   * Initialize Product Page:
+   * == 1. Send request to server to fetch data
+   * == 2. Set the initial state
+   * == 3. Update user browsing product's history
+   */
+  pageInit() {
+    const { match } = this.props;
+    const { params } = match;
+
+    // send GET request to server to get necessary data
+    axios.get(`/products/${params.asin}`)
+      .then((res) => {
+        const {
+          product, alsoBought, alsoViewed, alsoRated, bundleProducts, sameCategory,
+        } = res.data;
+
+        // set initial state
+        this.setState({
+          product,
+          alsoBought,
+          alsoViewed,
+          alsoRated,
+          bundleProducts,
+          sameCategory,
+          ready: true,
+        });
+
+        // update the user history
+        this.historyTracking();
+      })
+      .catch((error) => {
+        throw new Error(error.message);
+      });
+
+    axios.get(`/ratings/${params.asin}`)
+      .then((res) => {
+        const { ratings } = res.data;
+
+        this.setState({
+          ratings,
+        });
+      })
+      .catch((error) => {
+        throw new Error(error.message);
+      });
+  }
+
   render() {
     const { ready } = this.state;
 
@@ -204,9 +228,11 @@ class ProductDetail extends React.Component {
       bundleProducts,
       alsoBought,
       alsoViewed,
-      alsoRated,
       sameCategory,
+      ratings,
     } = this.state;
+
+    let { alsoRated } = this.state;
 
     const { categories } = product;
 
@@ -229,6 +255,9 @@ class ProductDetail extends React.Component {
     };
 
     const bundleIds = bundleProducts.products.map((bundleProduct) => bundleProduct._id);
+
+    // exclude the current product from the recommended products
+    alsoRated = alsoRated.filter((item) => item.asin !== product.asin);
 
     return (
       <UserContext.Consumer>
@@ -625,7 +654,138 @@ class ProductDetail extends React.Component {
 
                         <TabPanel className="c-tab__content-item u-txt-14" />
 
-                        <TabPanel className="c-tab__content-item u-txt-14" />
+                        <TabPanel className="c-tab__content-item u-txt-14 u-w--80">
+
+
+                          <section className="c-section u-mt-24 u-mb-36">
+
+                            {
+                              ratings.length
+                                ? ratings.map((rating) => {
+                                  const starRating = [];
+
+                                  for (let i = 1; i <= rating.overall; i += 1) {
+                                    starRating.push(<FontAwesomeIcon icon="star" />);
+                                  }
+
+                                  return (
+                                    <div className="u-mb-24" key={rating._id}>
+
+                                      {/* RATING INFORMATION */}
+                                      <div className="o-media [ o-media--small ]">
+                                        <div className="o-media__img c-avatar [ c-avatar--small ]">
+                                          <img
+                                            src="asset/img/avatar-1.svg"
+                                            alt={rating.summary}
+                                          />
+                                        </div>
+
+                                        <div className="o-media__body u-txt-14">
+                                          <div
+                                            className="u-txt--bold u-mb-6">{rating.reviewerName}</div>
+
+                                          <div className="u-txt-12">
+
+                                            {/* STAR RATINGS */}
+                                            <span className="u-mr-6">{starRating}</span>
+
+                                            {/* RATING TIME */}
+                                            <span
+                                              className="u-txt--light u-txt--blur"
+                                            >
+                                            {rating.reviewTime}
+                                          </span>
+
+                                          </div>
+
+                                        </div>
+
+                                      </div>
+                                      {/* /RATING INFORMATION */}
+
+                                      {/* RATING HEADING */}
+                                      <div
+                                        className="u-mt-12 u-txt--bold u-txt-16"
+                                      >
+                                        {rating.summary}
+                                      </div>
+
+                                      {/* RATING CONTENT */}
+                                      <div className="u-txt-14">
+                                        {rating.reviewText}
+                                      </div>
+
+                                    </div>
+                                  );
+                                })
+                                : ''
+                            }
+
+                          </section>
+
+
+                          <hr />
+
+                          {/* POST NEW CONTENT */}
+                          <div className="u-txt-24 u-txt--hairline u-mb-24">
+                            Write your own review
+                          </div>
+
+                          <div className="u-mb-12 u-txt-12 utxt--light">
+
+                            <input
+                              className="u-w--80 u-pv-12 u-mb-12"
+                              type="text"
+                              placeholder="Your review's title"
+                              name="reviewerName"
+                              onChange={this.onChangeHandle}
+                            />
+                            <textarea
+                              className="u-w--80 u-pv-12"
+                              cols="8"
+                              rows="4"
+                              placeholder="What do you want to say about this product?"
+                              name="reviewText"
+                              onChange={this.onChangeHandle}
+                            />
+
+                          </div>
+
+                          <div>
+                            <span className="u-txt-12 u-txt--blur">Rate this product</span>
+                            <input
+                              style={{
+                                maxWidth: '70px',
+                                border: 'none',
+                                fontSize: '14px',
+                              }}
+                              type="number"
+                              name="overall"
+                              min={1}
+                              max={5}
+                              defaultValue={1}
+                              onChange={this.onChangeHandle}
+                              className="u-txt-20"
+                            />
+                          </div>
+
+                          <div className="u-mt-36 u-txt-align-right u-txt-12">
+                            <button
+                              className="c-btn [ c-btn--rounded c-btn--secondary ] u-w--15"
+                              type="reset"
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              className="c-btn [ c-btn--rounded c-btn--primary ] u-w--15 u-ml-12"
+                              type="submit"
+                            >
+                              Post
+                            </button>
+                          </div>
+
+
+                        </TabPanel>
 
                       </div>
                     </Tabs>
@@ -860,6 +1020,25 @@ class ProductDetail extends React.Component {
                       : ''}
                     {/* /ViEWED ALSO VIEWED */}
 
+
+                    {/* #RATED AlSO */}
+                    {alsoRated.length
+                      ? (
+                        <Section
+                          title="Customers who bought this item also bought (CF)"
+                          titleClass="c-section--splitted"
+                        >
+
+                          <ProductSlider
+                            products={alsoRated}
+                            settings={sliderMobileSettings}
+                            className="c-slider--tiny-gut"
+                          />
+
+                        </Section>
+                      )
+                      : ''}
+                    {/* /ALSO RATED */}
 
                   </main>
 
