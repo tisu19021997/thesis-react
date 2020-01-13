@@ -18,7 +18,7 @@ function AddCat() {
     axios.post('/store-management/cats', {
       name,
       iconClass,
-      imUrl
+      imUrl,
     })
       .then((res) => {
         setMessage({

@@ -5,11 +5,12 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import EditUser from './EditUser';
 import { isoDateToString } from '../../../helper/string';
+import Pagination from '../../Pagination';
 
 function UserList() {
   const [users, setUsers] = useState([]);
   const [totalUsers, setTotal] = useState(0);
-  const [, setPages] = useState(0);
+  const [pages, setPages] = useState(0);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [isSearching, setIsSearching] = useState(false);
@@ -66,31 +67,6 @@ function UserList() {
     setEditModal(true);
     setIsEdited(false);
   };
-
-  // set up pagination
-  const paginationButtons = [];
-  const paging = parseInt(page, 10);
-  let firstPage = 1;
-
-  if (users.length) {
-    if (paging > 5) {
-      firstPage = paging - 4;
-    }
-    for (let i = firstPage; i <= paging + 4; i += 1) {
-      paginationButtons.push(
-        <button
-          type="button"
-          onClick={() => {
-            setPage(i);
-          }}
-          key={i}
-          className={parseInt(page, 10) === i ? 'c-paging-page c-paging-page--current' : 'c-paging-page'}
-        >
-          {i}
-        </button>,
-      );
-    }
-  }
 
   return (
     <div className="u-mv-24">
@@ -215,7 +191,12 @@ function UserList() {
         </tbody>
       </table>
 
-      {paginationButtons}
+
+      <Pagination
+        currentPage={page}
+        totalPages={pages}
+        setPage={setPage}
+      />
 
 
       <Modal
