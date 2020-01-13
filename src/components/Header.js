@@ -369,7 +369,7 @@ class Header extends React.Component {
           >
             <Link
               to={`/categories/${category._id}`}
-              className="c-cat-list__item-detail"
+              className="c-cat-list__item-detail u-txt-truncate-2"
             >
               <FontAwesomeIcon icon={category.iconClass} className="large" size="lg" />
               {category.name}

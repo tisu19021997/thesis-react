@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import EditProduct from './EditProduct';
 import Pagination from '../../Pagination';
+import CategoryDropDown from '../../CategoryDropDown';
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -14,7 +15,6 @@ function ProductList() {
   const [search, setSearch] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [sort, setSort] = useState('');
-  const [cats, setCat] = useState('');
   const [catFilter, setCatFilter] = useState('');
   const [limit, setLimit] = useState(100);
   const [editing, setEditing] = useState('');
@@ -25,9 +25,9 @@ function ProductList() {
   const [isEdited, setIsEdited] = useState(false);
 
   useEffect(() => {
-    const query = `?s=${search}&page=${page}&limit=${limit}&sort=${sort}&cat=${catFilter}`;
+    const query = `?s=${search}&page=${page}&limit=${limit}&sort=${sort}&${catFilter}`;
 
-    axios.get(`/products${query}`)
+    axios.get(`/store-management/products${query}`)
       .then((res) => {
         const {
           products: docs, totalPages, page: paging, totalDocs,
@@ -38,7 +38,6 @@ function ProductList() {
         setPages(totalPages);
         setPage(paging);
         setTotal(totalDocs);
-
         setIsSearching(false);
       })
       .catch((error) => {
@@ -46,16 +45,6 @@ function ProductList() {
       });
   }, [page, isSearching, limit, sort, isEdited, catFilter]);
 
-  useEffect(() => {
-    axios.get('/store-management/cats?s=&limit=1000')
-      .then((res) => {
-        const { docs } = res.data;
-        setCat(docs);
-      })
-      .catch((error) => {
-        throw new Error(error.message);
-      });
-  }, []);
 
   const resetPaging = () => {
     setPage(1);
@@ -159,21 +148,11 @@ function ProductList() {
 
       <div className="u-mv-24 u-txt-16">
         <span className="u-txt--light">Category:</span>
-        <select
-          defaultValue=""
-          onChange={(event) => {
-            setCatFilter(event.target.value);
-            resetPaging();
-          }}
-        >
-          {
-            cats
-              ? cats.map((cat) => (
-                <option value={cat.name} key={cat.name}>{cat.name}</option>
-              ))
-              : ''
-          }
-        </select>
+        <CategoryDropDown onChange={(event) => {
+          setCatFilter(event.target.value);
+          resetPaging();
+        }}
+        />
       </div>
 
 

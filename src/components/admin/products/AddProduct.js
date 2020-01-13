@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useInput } from '../../../helper/hooks';
+import CategoryDropDown from '../../CategoryDropDown';
 
 function AddProduct() {
   const { state: asin, bind: bindAsin } = useInput('');
@@ -8,21 +9,9 @@ function AddProduct() {
   const { state: price, bind: bindPrice } = useInput(0);
   const { state: imUrl, bind: bindImUrl } = useInput('');
   const { state: description, bind: bindDesc } = useInput('');
-  const { state: cat, bind: bindCat } = useInput('');
+  const { state: cat, setState: setCat } = useInput('');
 
   const [errorMessage, setError] = useState('');
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    axios.get('/categories')
-      .then((res) => {
-        const { categories: cate } = res.data;
-        setCategories(cate);
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  }, []);
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -33,7 +22,7 @@ function AddProduct() {
       imUrl,
       price,
       description,
-      categories: cat,
+      categories: [[cat]],
     })
       .then((res) => {
         console.log(res);
@@ -96,19 +85,12 @@ function AddProduct() {
           />
         </div>
 
-        <select
-          {...bindCat}
-        >
-          {
-            categories
-              ? categories.map((category) => (
-                <option key={category.name} value={category._id}>
-                  {category.name}
-                </option>
-              ))
-              : ''
-          }
-        </select>
+        <CategoryDropDown
+          onChange={async (event) => {
+            setCat(event.target.value);
+          }}
+          queryOrBody="body"
+        />
 
         <button
           className="c-btn c-btn--primary u-d-block u-mt-12"
