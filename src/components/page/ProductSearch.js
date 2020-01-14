@@ -186,7 +186,13 @@ class ProductSearch extends React.Component {
 
     const paginationButtons = [];
 
-    for (let i = 1; i <= totalPages; i += 1) {
+    let firstPage = 1;
+
+    if (page > 5) {
+      firstPage = page - 4;
+    }
+
+    for (let i = firstPage; i <= page + 4 && i < totalPages; i += 1) {
       paginationButtons.push(
         <Link
           to={{
@@ -490,6 +496,9 @@ class ProductSearch extends React.Component {
               </div>
               {/* /PRODUCT GRID */}
 
+              <div className="u-txt-align-center u-mh-12">
+                {paginationButtons}
+              </div>
 
               {/* #TOOLBAR */}
               <div className="c-toolbar u-d-flex u-jc--c u-w--100 u-bg-darkblue u-p-6 u-pb-0">

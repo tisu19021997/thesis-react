@@ -24,7 +24,6 @@ const modalStyles = {
 
 
 class Header extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -213,10 +212,13 @@ class Header extends React.Component {
       })
         .then((res) => {
           const { data } = res;
-          const { status } = data;
-
+          const { status, message } = data;
           // login failed
-          if (status === 404) {
+          if (status === 401) {
+            this.setState({
+              loginMessage: message,
+            });
+
             return false;
           }
 
@@ -276,14 +278,20 @@ class Header extends React.Component {
   register(event) {
     event.preventDefault();
 
-    const { usernameRegister, passwordRegister } = this.state;
+    const { usernameRegister, passwordRegister, emailRegister } = this.state;
 
     if (usernameRegister && passwordRegister) {
       axios.post('/register', {
         username: usernameRegister,
         password: passwordRegister,
+        email: emailRegister,
       })
-        .then(() => true)
+        .then((res) => {
+          console.log(res);
+          const { message } = res.data;
+
+          this.setState({ message });
+        })
         .catch((error) => {
           throw new Error(error.message);
         });
@@ -305,6 +313,7 @@ class Header extends React.Component {
   closeModal() {
     this.setState({
       isLoginModalOpen: false,
+      message: '',
     });
   }
 
@@ -355,7 +364,7 @@ class Header extends React.Component {
 
   render() {
     const {
-      categories, isLoginModalOpen, isCartOpen, isMenuOpen, openLoginForm,
+      categories, isLoginModalOpen, isCartOpen, isMenuOpen, openLoginForm, message, loginMessage,
     } = this.state;
     const { cart } = this.props;
     let { cartCounter } = this.state;
@@ -468,9 +477,9 @@ class Header extends React.Component {
               className="c-btn--fake"
               onClick={this.deleteCartItem}
             >
-                <span>
-                  <FontAwesomeIcon size="1x" icon="times" />
-                </span>
+              <span>
+                <FontAwesomeIcon size="1x" icon="times" />
+              </span>
             </button>
           </div>
 
@@ -557,8 +566,17 @@ class Header extends React.Component {
                   <div className="o-layout__item c-header__nav-logo u-1/10 left">
 
                     <Link to="/">
-                      <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19.5 0.75C9.16125 0.75 0.75 9.16125 0.75 19.5C0.75 29.8387 9.16125 38.25 19.5 38.25C29.8387 38.25 38.25 29.8387 38.25 19.5C38.25 9.16125 29.8387 0.75 19.5 0.75Z" fill="black"/>
+                      <svg
+                        width="39"
+                        height="39"
+                        viewBox="0 0 39 39"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19.5 0.75C9.16125 0.75 0.75 9.16125 0.75 19.5C0.75 29.8387 9.16125 38.25 19.5 38.25C29.8387 38.25 38.25 29.8387 38.25 19.5C38.25 9.16125 29.8387 0.75 19.5 0.75Z"
+                          fill="black"
+                        />
                       </svg>
 
                     </Link>
@@ -658,7 +676,7 @@ class Header extends React.Component {
                         {
                           isCartOpen ? <span className="cart-caret" /> : ''
                         }
-                        </span>
+                      </span>
                     </button>
 
                     {/* #CART VIEW */}
@@ -687,6 +705,9 @@ class Header extends React.Component {
                           >
                             Log-in
                           </div>
+                          <span className="message u-mb-4" style={{ color: 'red' }}>
+                            {loginMessage}
+                          </span>
                           <form onSubmit={this.login}>
                             <input
                               type="text"
@@ -705,7 +726,7 @@ class Header extends React.Component {
                               onChange={this.handleInputChange}
                             />
                             <Link to="/forget">
-                              <span className="u-txt-underline u-txt-8">Forget your password?</span>
+                              <span className="u-txt-underline u-txt-10">Forget your password?</span>
                             </Link>
                             <input
                               type="submit"
@@ -721,6 +742,9 @@ class Header extends React.Component {
                           <div className="modal-title u-txt-40 u-txt--hairline u-mt-12 u-mb-36">
                             Sign-up
                           </div>
+                          <span className="message u-mb-4" style={{ color: 'red' }}>
+                            {message}
+                          </span>
                           <form onSubmit={this.register}>
                             <input
                               type="text"
@@ -867,8 +891,7 @@ class Header extends React.Component {
                                       <span className="u-txt--bold">{currentUser}</span>
                                     </span>
                                   </>
-                                )
-                              }
+                                )}
                             </div>
 
                             {currentUser
@@ -961,8 +984,17 @@ class Header extends React.Component {
                   {/* #LOGO */}
                   <div className="o-layout__item c-header__nav-logo u-4/6">
                     <Link to="/">
-                      <svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19.5 0.75C9.16125 0.75 0.75 9.16125 0.75 19.5C0.75 29.8387 9.16125 38.25 19.5 38.25C29.8387 38.25 38.25 29.8387 38.25 19.5C38.25 9.16125 29.8387 0.75 19.5 0.75Z" fill="black"/>
+                      <svg
+                        width="39"
+                        height="39"
+                        viewBox="0 0 39 39"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19.5 0.75C9.16125 0.75 0.75 9.16125 0.75 19.5C0.75 29.8387 9.16125 38.25 19.5 38.25C29.8387 38.25 38.25 29.8387 38.25 19.5C38.25 9.16125 29.8387 0.75 19.5 0.75Z"
+                          fill="black"
+                        />
                       </svg>
                     </Link>
                   </div>
@@ -1061,7 +1093,7 @@ class Header extends React.Component {
                                 {/* #DELETE BUTTON */}
                                 <div className="o-layout__item u-1/10">
                                   <button
-                                    data-product={item.product.asin}
+                                    data-product={JSON.stringify(item)}
                                     type="button"
                                     onClick={this.deleteCartItem}
                                   >
@@ -1095,7 +1127,8 @@ class Header extends React.Component {
 
 
                                 <div
-                                  className="o-layout__item u-txt-16 u-as--center u-txt-align-center u-2/6">
+                                  className="o-layout__item u-txt-16 u-as--center u-txt-align-center u-2/6"
+                                >
                                   <button
                                     onClick={this.productQtyHandle}
                                     data-product={JSON.stringify(item)}
@@ -1106,7 +1139,10 @@ class Header extends React.Component {
                                     -
                                   </button>
                                   <span
-                                    className="u-ph-12 u-txt-20 u-txt-underline">{item.quantity}</span>
+                                    className="u-ph-12 u-txt-20 u-txt-underline"
+                                  >
+                                    {item.quantity}
+                                  </span>
                                   <button
                                     onClick={this.productQtyHandle}
                                     data-product={JSON.stringify(item)}

@@ -18,6 +18,7 @@ class Home extends React.Component {
     this.state = {
       history: [],
       recommendProducts: [],
+      promotion: [],
     };
 
     this.getUserData = this.getUserData.bind(this);
@@ -37,15 +38,16 @@ class Home extends React.Component {
 
   getUserData(user) {
     if (user) {
-      axios.get(`/home/${user}`)
+      axios.get(`/home/users/${user}`)
         .then((res) => {
-          const { history } = res.data;
+          const { history, promotion } = res.data;
 
           const { knn: recommendProducts } = res.data;
 
           this.setState({
             history,
             recommendProducts,
+            promotion,
             ready: true,
           });
         })
@@ -58,16 +60,24 @@ class Home extends React.Component {
       if (history.length) {
         this.setState({
           history,
-          ready: true,
         });
       }
 
+      axios.get('/home')
+        .then((res) => {
+          const { promotion } = res.data;
+
+          this.setState({
+            promotion,
+            ready: true,
+          });
+        });
       // TODO: implement axios request for other products (except history products)
     }
   }
 
   render() {
-    const { ready, history, recommendProducts } = this.state;
+    const { ready, history, recommendProducts, promotion } = this.state;
 
     if (!ready) {
       return false;
@@ -103,39 +113,46 @@ class Home extends React.Component {
           <Wrapper className="u-ph-0">
 
             <Desktop>
-              <Section title="Pick up where you left off" data="History">
 
-
-                {historyProducts.length
-                  ? (
+              {historyProducts.length
+                ? (
+                  <Section title="Pick up where you left off" data="History">
                     <ProductSlider
                       products={historyProducts}
                       settings={sliderSettings}
                       className="c-slider [  c-slider--tiny-gut c-slider--right-dots ] u-ph-48"
                     />
-
-                  )
-                  : ''}
-
-
-              </Section>
-
-              <Section title="Related to items you bought" data="Recommendation">
+                  </Section>
+                )
+                : ''}
 
 
-                {recommendProducts.length
-                  ? (
+              {recommendProducts.length
+                ? (
+                  <Section title="Related to items you rated" data="Recommendation">
                     <ProductSlider
                       products={recommendProducts}
                       settings={sliderSettings}
                       className="c-slider [  c-slider--tiny-gut c-slider--right-dots ] u-ph-48"
                     />
+                  </Section>
 
-                  )
-                  : ''}
+                )
+                : ''}
 
 
-              </Section>
+              {promotion.length
+                ? (
+                  <Section title="Today's Deal" data="Random">
+                    <ProductSlider
+                      products={promotion}
+                      settings={sliderSettings}
+                      className="c-slider [  c-slider--tiny-gut c-slider--right-dots ] u-ph-48"
+                    />
+                  </Section>
+                )
+                : ''}
+
             </Desktop>
 
 

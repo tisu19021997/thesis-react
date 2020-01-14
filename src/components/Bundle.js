@@ -267,7 +267,10 @@ Bundle.propTypes = {
   bundleProducts: PropTypes.array.isRequired,
   bundleProductIds: PropTypes.array.isRequired,
   currentProduct: PropTypes.object.isRequired,
-  totalPrice: PropTypes.number.isRequired,
+  totalPrice: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.number.isRequired,
+  ]).isRequired,
 };
 
 export default Bundle;

@@ -13,6 +13,8 @@ function EditProduct(props) {
   const { state: imUrl, bind: bindImUrl } = useInput(product.imUrl);
   const { state: description, bind: bindDesc } = useInput(product.description);
 
+  console.log(product.asin);
+
   const onFormSubmit = (event) => {
     event.preventDefault();
 
@@ -46,7 +48,7 @@ function EditProduct(props) {
           <input
             className="u-w--100"
             {...bindAsin}
-            type="number"
+            type="text"
             placeholder="product asin"
             defaultValue={asin}
           />
