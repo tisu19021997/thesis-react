@@ -72,7 +72,6 @@ class Home extends React.Component {
             ready: true,
           });
         });
-      // TODO: implement axios request for other products (except history products)
     }
   }
 

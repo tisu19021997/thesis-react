@@ -11,7 +11,7 @@ function AddProduct() {
   const { state: description, bind: bindDesc } = useInput('');
   const { state: cat, setState: setCat } = useInput('');
 
-  const [errorMessage, setError] = useState('');
+  const [message, setMessage] = useState('');
 
   const onFormSubmit = (event) => {
     event.preventDefault();
@@ -28,14 +28,14 @@ function AddProduct() {
         console.log(res);
       })
       .catch((error) => {
-        setError(`Error ${error.response.status}: ${error.response.data.message}`);
+        setMessage(`Error ${error.response.status}: ${error.response.data.message}`);
       });
   };
 
   return (
     <div className="u-mv-24">
-      {errorMessage
-        ? (<p style={{ color: 'red' }}>{errorMessage}</p>)
+      {message
+        ? (<p style={{ color: 'red' }}>{message}</p>)
         : ''}
 
 

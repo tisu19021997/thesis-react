@@ -56,7 +56,7 @@ function AddUser() {
 
 
       <div className="u-txt-40 u-txt--bold u-mb-24">
-        Create new product
+        Create new user
       </div>
 
       <form method="post" onSubmit={onFormSubmit}>

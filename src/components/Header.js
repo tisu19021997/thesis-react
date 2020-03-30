@@ -267,7 +267,9 @@ class Header extends React.Component {
       userRole: '',
     });
 
-    return updateCart(cart);
+    updateCart(cart);
+
+    return true;
   }
 
   /**
@@ -287,7 +289,6 @@ class Header extends React.Component {
         email: emailRegister,
       })
         .then((res) => {
-          console.log(res);
           const { message } = res.data;
 
           this.setState({ message });
@@ -297,7 +298,7 @@ class Header extends React.Component {
         });
     }
 
-    return false;
+    return true;
   }
 
   /**
@@ -524,6 +525,7 @@ class Header extends React.Component {
       <UserContext.Consumer>
         {({ currentUser }) => (
           <>
+            {/* * DESTOP * */}
             <Desktop>
               <header className="c-header">
 
@@ -726,7 +728,8 @@ class Header extends React.Component {
                               onChange={this.handleInputChange}
                             />
                             <Link to="/forget">
-                              <span className="u-txt-underline u-txt-10">Forget your password?</span>
+                              <span
+                                className="u-txt-underline u-txt-10">Forget your password?</span>
                             </Link>
                             <input
                               type="submit"
@@ -783,6 +786,7 @@ class Header extends React.Component {
             </Desktop>
 
 
+            {/* * MOBILE * */}
             <Mobile>
 
               <header className="c-header">
