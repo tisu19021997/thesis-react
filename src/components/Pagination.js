@@ -19,6 +19,7 @@ function Pagination(props) {
         type="button"
         onClick={() => {
           setPage(i);
+
         }}
         key={i}
         className={currentPage === i ? 'c-paging-page c-paging-page--current' : 'c-paging-page'}

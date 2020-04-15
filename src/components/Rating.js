@@ -58,9 +58,7 @@ function Rating(props) {
         throw new Error(err);
       });
 
-    await axios.post('/recommendation/knn', {
-      username: user,
-    })
+    await axios.get(`/users/${user}/generate_recommendations`)
       .then(() => true)
       .catch((err) => {
         throw new Error(err);
