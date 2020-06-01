@@ -6,6 +6,7 @@ import AddProduct from '../admin/products/AddProduct';
 import ProductList from '../admin/products/ProductList';
 import ImportProduct from '../admin/products/ImportProduct';
 import UserList from '../admin/users/UsertList';
+import ImportUser from '../admin/users/ImportUser';
 import AddUser from '../admin/users/AddUser';
 import CatList from '../admin/cats/CatList';
 import AddCat from '../admin/cats/AddCat';
@@ -74,6 +75,14 @@ function StoreManagement() {
                 Users List
               </NavLink>
             </div>
+            <div>
+              <NavLink
+                to="/store-management/users/import"
+                activeStyle={navActiveStyle}
+              >
+                Import Products
+              </NavLink>
+            </div>
           </div>
           {/* #USERS */}
 
@@ -134,6 +143,14 @@ function StoreManagement() {
               path="/store-management/users/list"
               render={(props) => (
                 <UserList {...props} />
+              )}
+            />
+
+            <Route
+              exact
+              path="/store-management/users/import"
+              render={(props) => (
+                <ImportUser {...props} />
               )}
             />
 
