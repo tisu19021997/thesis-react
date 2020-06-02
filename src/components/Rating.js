@@ -58,7 +58,14 @@ function Rating(props) {
         throw new Error(err);
       });
 
-    await axios.get(`/users/${user}/generate_recommendations`)
+    const reviewVector = {
+      user,
+      item: asin,
+      rating: overall,
+      k: 100,
+    };
+
+    await axios.patch(`/users/${user}/generate_recommendations`, reviewVector)
       .then(() => true)
       .catch((err) => {
         throw new Error(err);

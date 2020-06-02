@@ -80,7 +80,7 @@ function StoreManagement() {
                 to="/store-management/users/import"
                 activeStyle={navActiveStyle}
               >
-                Import Products
+                Import Users
               </NavLink>
             </div>
           </div>

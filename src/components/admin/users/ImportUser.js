@@ -46,7 +46,7 @@ function ImportUser() {
   return (
     <div className="u-mv-24">
       <div className="u-txt-40 u-txt--bold u-mb-24">
-        Import Product
+        Import Users
       </div>
 
       <div style={{ color: 'red' }}>{error}</div>
