@@ -14,7 +14,7 @@ function Rating(props) {
   const { state: summary, bind: bindSummary } = useInput('');
   const { state: reviewText, bind: bindReviewText } = useInput('');
   const { state: overall, bind: bindOverall } = useInput(1);
-  const { asin, user } = props;
+  const { asin, user, productId } = props;
 
   useEffect(() => {
     axios.get(`/ratings/${asin}?page=${page}`)
@@ -38,8 +38,8 @@ function Rating(props) {
 
     const data = {
       rating: {
-        asin,
-        reviewerName: user,
+        product: productId,
+        reviewer: user,
         reviewText,
         summary,
         overall,
@@ -49,6 +49,7 @@ function Rating(props) {
       user,
     };
 
+    // Save new rating to Database
     await axios.post('/ratings', data)
       .then((res) => {
         const { rating } = res.data;
@@ -64,7 +65,6 @@ function Rating(props) {
       rating: overall,
       k: 100,
     };
-
     await axios.patch(`/users/${user}/generate_recommendations`, reviewVector)
       .then(() => true)
       .catch((err) => {
@@ -90,13 +90,16 @@ function Rating(props) {
             <div className="o-media__img c-avatar [ c-avatar--small ]">
               <img
                 src="asset/img/avatar-1.svg"
-                alt="User"
+                alt="Avatar"
               />
             </div>
 
             <div className="o-media__body u-txt-14">
               <div
-                className="u-txt--bold u-mb-6">{rating.reviewerName}</div>
+                className="u-txt--bold u-mb-6"
+              >
+                {rating.reviewer.name}
+              </div>
 
               <div className="u-txt-12">
 
@@ -213,6 +216,7 @@ function Rating(props) {
 Rating.propTypes = {
   asin: PropTypes.string.isRequired,
   user: PropTypes.string.isRequired,
+  productId: PropTypes.string.isRequired,
 };
 
 export default Rating;

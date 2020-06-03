@@ -685,7 +685,7 @@ class ProductDetail extends React.Component {
 
                         <TabPanel className="c-tab__content-item u-txt-14 u-w--80">
 
-                          <Rating asin={product.asin} user={currentUser} />
+                          <Rating asin={product.asin} user={currentUser} productId={product._id} />
 
                           <hr />
 

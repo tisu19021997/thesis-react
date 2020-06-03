@@ -42,7 +42,7 @@ class Home extends React.Component {
         .then((res) => {
           const { history, promotion } = res.data;
 
-          const { knn: recommendProducts } = res.data;
+          const { svd: recommendProducts } = res.data;
 
           this.setState({
             history,
