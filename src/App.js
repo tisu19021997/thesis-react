@@ -36,6 +36,7 @@ import Home from './components/page/Home';
 import ProductDetail from './components/page/ProductDetail';
 import ProductSearch from './components/page/ProductSearch';
 import StoreManagement from './components/page/StoreManagement';
+import ProductCategory from './components/page/ProductCategory';
 
 
 // create font-awesome icons library
@@ -162,6 +163,17 @@ export default class App extends React.Component {
                   />
                 )}
               />
+
+              <Route
+                path="/categories/:id"
+                exact
+                render={(props) => (
+                  <ProductCategory
+                    {...props}
+                  />
+                )}
+              />
+
             </Switch>
 
             <Footer />

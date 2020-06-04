@@ -9,18 +9,15 @@ function Pagination(props) {
 
   currentPage = parseInt(currentPage, 10);
 
-  if (currentPage > 5) {
+  if (currentPage > 4) {
     firstPage = currentPage - 4;
   }
 
-  for (let i = firstPage; i <= currentPage + 4 && i < totalPages; i += 1) {
+  for (let i = firstPage; i <= currentPage + 4 && i <= totalPages; i += 1) {
     buttons.push(
       <button
         type="button"
-        onClick={() => {
-          setPage(i);
-
-        }}
+        onClick={() => setPage(i)}
         key={i}
         className={currentPage === i ? 'c-paging-page c-paging-page--current' : 'c-paging-page'}
       >

@@ -382,7 +382,7 @@ class Header extends React.Component {
               className="c-cat-list__item-detail u-txt-truncate-2"
             >
               <FontAwesomeIcon icon={category.iconClass} className="large" size="lg" />
-              {category.name}
+              {category.name[category.name.length - 1]}
             </Link>
           </li>
         </Desktop>
