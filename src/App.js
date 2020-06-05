@@ -28,6 +28,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
+import { ModalProvider } from 'react-modal-hook';
 import { UserContext } from './context/user';
 import local from './helper/localStorage';
 import Header from './components/Header';
@@ -37,7 +38,7 @@ import ProductDetail from './components/page/ProductDetail';
 import ProductSearch from './components/page/ProductSearch';
 import StoreManagement from './components/page/StoreManagement';
 import ProductCategory from './components/page/ProductCategory';
-
+import Checkout from './components/page/Checkout';
 
 // create font-awesome icons library
 library.add(fab, faSearch, faGlobe, faUser, faShoppingCart, faAngleLeft, faAngleRight, faApple,
@@ -108,79 +109,93 @@ export default class App extends React.Component {
         currentUser,
         token,
       }}>
-        <Router>
-          <div className="App">
+        <ModalProvider>
+          <Router>
+            <div className="App">
 
-            <Header
-              currentUser={currentUser}
-              login={this.login}
-              logout={this.logout}
-              cart={cart}
-              updateCart={this.updateCart}
-            />
+              <Header
+                currentUser={currentUser}
+                login={this.login}
+                logout={this.logout}
+                cart={cart}
+                updateCart={this.updateCart}
+              />
 
-            {isAdmin
-              ? (
+              {isAdmin
+                ? (
+                  <Route
+                    path="/store-management"
+                    render={(props) => (
+                      <StoreManagement {...props} />
+                    )}
+                  />)
+                : ''}
+
+
+              <Switch>
+
                 <Route
-                  path="/store-management"
+                  path="/"
+                  exact
                   render={(props) => (
-                    <StoreManagement {...props} />
+                    <Home {...props} currentUser={currentUser} />
                   )}
-                />)
-              : ''}
+                />
+
+                <Route
+                  path="/checkout"
+                  exact
+                  render={(props) => (
+                    <Checkout
+                      {...props}
+                      updateCart={this.updateCart}
+                      user={currentUser}
+                      cart={cart}
+                    />
+                  )}
+                />
+
+                <Route
+                  path="/products/search"
+                  exact
+                  render={(props) => (
+                    <ProductSearch
+                      {...props}
+                    />
+                  )}
+                />
+
+                <Route
+                  path="/products/:asin"
+                  render={(props) => (
+                    <ProductDetail
+                      {...props}
+                      loggedIn={currentUser !== ''}
+                      currentUser={currentUser}
+                      updateCart={this.updateCart}
+                      onBundlePurchase={this.bundlePurchase}
+                    />
+                  )}
+                />
+
+                <Route
+                  path="/categories/:id"
+                  exact
+                  render={(props) => (
+                    <ProductCategory
+                      {...props}
+                    />
+                  )}
+                />
+
+              </Switch>
+
+              <Footer />
 
 
-            <Switch>
-
-              <Route
-                exact
-                path="/"
-                render={(props) => (
-                  <Home {...props} currentUser={currentUser} />
-                )}
-              />
-
-              <Route
-                path="/products/search"
-                exact
-                render={(props) => (
-                  <ProductSearch
-                    {...props}
-                  />
-                )}
-              />
-
-              <Route
-                path="/products/:asin"
-                render={(props) => (
-                  <ProductDetail
-                    {...props}
-                    loggedIn={currentUser !== ''}
-                    currentUser={currentUser}
-                    updateCart={this.updateCart}
-                    onBundlePurchase={this.bundlePurchase}
-                    shoppingCart={cart}
-                  />
-                )}
-              />
-
-              <Route
-                path="/categories/:id"
-                exact
-                render={(props) => (
-                  <ProductCategory
-                    {...props}
-                  />
-                )}
-              />
-
-            </Switch>
-
-            <Footer />
-
-
-          </div>
-        </Router>
+            </div>
+          </Router>
+        </ModalProvider>
       </UserContext.Provider>
     );
   }

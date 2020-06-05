@@ -459,7 +459,7 @@ class ProductDetail extends React.Component {
                           <div className="u-d-flex u-fd--column u-margin-top u-margin-bottom-large">
                             <button
                               className="c-btn [ c-btn--cta c-btn--rounded c-btn--type-large ] u-flex-1 u-margin-bottom-small"
-                              type="submit"
+                              type="button"
                               title="Buy Now"
                             >
                               Buy Now
@@ -965,7 +965,6 @@ ProductDetail.propTypes = {
   currentUser: PropTypes.string.isRequired,
   updateCart: PropTypes.func.isRequired,
   onBundlePurchase: PropTypes.func.isRequired,
-  shoppingCart: PropTypes.array.isRequired,
   // eslint-disable-next-line react/require-default-props
   match: PropTypes.shape({
     params: PropTypes.shape({}),

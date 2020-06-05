@@ -152,7 +152,7 @@ function Rating(props) {
       <form method="post" onSubmit={newRating}>
 
 
-        <div className="u-mb-12 u-txt-12 utxt--light">
+        <div className="u-mb-12 u-txt-12 u-txt--light">
 
           <input
             className="u-w--80 u-pv-12 u-mb-12"

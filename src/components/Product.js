@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Product = (props) => {
-  const { product } = props;
+  const { product, useName, usePrice } = props;
 
   return (
     <Link
@@ -15,16 +15,27 @@ const Product = (props) => {
         <img src={product.imUrl} alt={product.title} />
       </div>
 
-      <div className="c-product__name">
-        {product.title}
-      </div>
+      {useName
+        ? (
+          <div className="c-product__name">
+            {product.title}
+          </div>
+        )
+        : ''
+      }
 
-      <div className="c-price">
+      {usePrice
+        ? (
+          <div className="c-price">
         <span className="c-price__price">
           <span className="c-price__currency">$</span>
           {product.price}
         </span>
-      </div>
+          </div>
+        )
+        : ''
+      }
+
 
     </Link>
   );
@@ -32,11 +43,13 @@ const Product = (props) => {
 
 Product.propTypes = {
   product: PropTypes.object.isRequired,
-  user: PropTypes.string,
+  useName: PropTypes.bool,
+  usePrice: PropTypes.bool,
 };
 
 Product.defaultProps = {
-  user: '',
+  useName: true,
+  usePrice: true,
 };
 
 

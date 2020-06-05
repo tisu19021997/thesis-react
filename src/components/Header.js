@@ -494,7 +494,7 @@ class Header extends React.Component {
           <div className="cart-view__content">
 
             <div className="cart-header u-d-flex u-border--m-blur">
-              <Link to="/cart" className="u-txt-underline u-txt-12">
+              <Link to={'/checkout'} className="u-txt-underline u-txt-12">
                 Proceed to checkout
               </Link>
               <div className="u-txt-20 u-line u-txt-align-center u-txt--bold u-ml-auto">
