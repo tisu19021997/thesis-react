@@ -13,7 +13,9 @@ import { useInput } from '../../helper/hooks';
 import Product from '../Product';
 
 function Checkout(props) {
-  const { cart, updateCart, user, history } = props;
+  const {
+    cart, updateCart, user, history,
+  } = props;
 
   const [errorMessage, setErrorMessage] = useState('');
   const { state: name, bind: bindName } = useInput('');
@@ -21,12 +23,14 @@ function Checkout(props) {
   const { state: email, bind: bindEmail } = useInput('');
   const { state: shippingMessage, bind: bindShippingMessage } = useInput('');
   // const { state: shippingMethod, bind: bindShippingMethod } = useInput('cod');
+  // total value of cart
+  let cartTotal = 0;
 
   const modalStyles = {
     content: {
       inset: '50% auto auto 50%',
       width: '40%',
-      height: '20%',
+      height: '25%',
       transform: 'translate(-50%, -50%)',
     },
     overlay: {
@@ -42,7 +46,10 @@ function Checkout(props) {
     >
       <div className="u-txt-align-center">
         <h1>Thanks for shopping!</h1>
-        <p> Your order is being processed by now. We have sent you a confirmation email, please check.</p>
+        <p>
+          Your order is being processed by now. We have sent you a confirmation email, please
+          check.
+        </p>
         <button
           className="c-btn [ c-btn--rounded c-btn--primary ] u-ml-12 u-mb-12"
           type="button"
@@ -60,8 +67,7 @@ function Checkout(props) {
     </ReactModal>
   ));
 
-  let cartTotal = 0;
-
+  // Build products DOM while increasing the cart total value.
   const cartProducts = cart.map((item) => {
     cartTotal += parseFloat(item.product.price) * parseInt(item.quantity, 10);
 
@@ -96,9 +102,10 @@ function Checkout(props) {
   const checkOut = async (event) => {
     event.preventDefault();
 
-    // Request with token to server to proceed checking out, create transaction
+    // Request with token to server to proceed checking out
+    // TODO: create transaction
     try {
-      const res = await axios.post(`users/${user}/checkout`,
+      await axios.post(`users/${user}/checkout`,
         {
           cart,
           name,
@@ -107,7 +114,7 @@ function Checkout(props) {
           shippingMessage,
         });
 
-      // Notify success, redirect to home page
+      // Notify success, redirect to home page.
       showModal();
     } catch (error) {
       setErrorMessage(error.message);
@@ -155,7 +162,7 @@ function Checkout(props) {
                   <div className="u-txt-20 u-txt--light u-txt-align-right u-mt-24">
                     Total:
                     <span className="u-txt--bold">
-                      {` $${cartTotal}`}
+                      {` $${cartTotal.toFixed(2)}`}
                     </span>
                   </div>
                 </Section>
