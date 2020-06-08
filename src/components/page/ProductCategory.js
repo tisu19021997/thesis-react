@@ -3,7 +3,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router';
 import axios from 'axios';
 import Pagination from '../Pagination';
-import { Desktop } from '../../helper/mediaQuery';
+import { Desktop, Mobile } from '../../helper/mediaQuery';
 import CheckboxList from '../CheckboxList';
 import Product from '../Product';
 
@@ -143,6 +143,11 @@ function ProductCategory(props) {
           {/* /Main Area */}
 
         </Desktop>
+
+
+        <Mobile>
+
+        </Mobile>
 
       </main>
     </div>

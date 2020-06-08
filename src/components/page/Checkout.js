@@ -11,6 +11,7 @@ import { UserContext } from '../../context/user';
 import { Desktop, Mobile } from '../../helper/mediaQuery';
 import { useInput } from '../../helper/hooks';
 import Product from '../Product';
+import { Link } from 'react-router-dom';
 
 function Checkout(props) {
   const {
@@ -40,31 +41,78 @@ function Checkout(props) {
 
   const [showModal, hideModal] = useModal(() => (
     // eslint-disable-next-line react/jsx-filename-extension
-    <ReactModal
-      style={modalStyles}
-      isOpen
-    >
-      <div className="u-txt-align-center">
-        <h1>Thanks for shopping!</h1>
-        <p>
-          Your order is being processed by now. We have sent you a confirmation email, please
-          check.
-        </p>
-        <button
-          className="c-btn [ c-btn--rounded c-btn--primary ] u-ml-12 u-mb-12"
-          type="button"
-          onClick={() => {
-            hideModal();
-
-            // Clear cart (save cart history, maybe?)
-            updateCart([]);
-            history.push('/');
+    <>
+      <Mobile>
+        <ReactModal
+          style={{
+            content: {
+              position: 'absolute',
+              backgroundColor: 'rgba(255, 255, 255)',
+              inset: '50% 0 0 50%',
+              transform: 'translate(-50%, -50%)',
+              width: '66.66667%',
+              overflowY: 'auto',
+              padding: '12px',
+              maxHeight: '300px',
+            },
+            overlay: {
+              backgroundColor: 'rgba(0, 0, 0, .7)',
+            },
           }}
+          isOpen
         >
-          Confirm
-        </button>
-      </div>
-    </ReactModal>
+          <div className="u-txt-align-center">
+            <h1>Thanks for shopping!</h1>
+            <p>
+              Your order is being processed by now. We have sent you a confirmation email, please
+              check.
+            </p>
+            <button
+              className="c-btn [ c-btn--rounded c-btn--primary ] u-ml-12 u-mb-12"
+              type="button"
+              onClick={() => {
+                hideModal();
+
+                // Clear cart (save cart history, maybe?)
+                updateCart([]);
+                history.push('/');
+              }}
+            >
+              Confirm
+            </button>
+          </div>
+        </ReactModal>
+      </Mobile>
+
+      <Desktop>
+        <ReactModal
+          style={modalStyles}
+          isOpen
+        >
+          <div className="u-txt-align-center">
+            <h1>Thanks for shopping!</h1>
+            <p>
+              Your order is being processed by now. We have sent you a confirmation email, please
+              check.
+            </p>
+            <button
+              className="c-btn [ c-btn--rounded c-btn--primary ] u-ml-12 u-mb-12"
+              type="button"
+              onClick={() => {
+                hideModal();
+
+                // Clear cart (save cart history, maybe?)
+                updateCart([]);
+                history.push('/');
+              }}
+            >
+              Confirm
+            </button>
+          </div>
+        </ReactModal>
+      </Desktop>
+
+    </>
   ));
 
   // Build products DOM while increasing the cart total value.
@@ -73,9 +121,43 @@ function Checkout(props) {
 
     return (
       // eslint-disable-next-line react/jsx-filename-extension
-      <div key={item._id} className="o-layout__item u-1/4 u-mb-24">
-        <Product product={item.product} useName={false} usePrice={false} overlay={true}/>
-      </div>
+      <React.Fragment key={item._id}>
+        <Desktop>
+          <div key={item._id} className="o-layout__item u-1/4 u-mb-24">
+            <Product product={item.product} useName={false} usePrice={false} overlay={true} />
+          </div>
+        </Desktop>
+
+        <Mobile>
+          <Link
+            key={item.product.asin}
+            to={`/products/${item.product.asin}`}
+            className="c-product u-p-4 u-pv-6"
+          >
+            <div className="o-media o-media--tiny">
+              <img
+                className="o-media__img c-product__img u-1/3"
+                style={{ border: '1px solid #dfe1e5' }}
+                src={item.product.imUrl}
+                alt={item.product.title}
+              />
+              <div className="o-media__body">
+                <div
+                  className="u-txt-truncate-2 u-txt--light"
+                >
+                  {item.product.title}
+                </div>
+                <div className="c-price [ c-price--small ] ">
+                  <div className="c-price__price">
+                    <span className="c-price__currency">$</span>
+                    {item.product.price}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </Mobile>
+      </React.Fragment>
     );
   });
 
@@ -125,7 +207,8 @@ function Checkout(props) {
     <UserContext.Consumer>
       {
         () => (
-          <Wrapper className="u-pr-0">
+          <Wrapper>
+
             <Desktop>
               {/* Products Cart and Order Summary */}
               <div className="o-layout [ o-layout--flush ]">
@@ -226,6 +309,105 @@ function Checkout(props) {
 
 
             </Desktop>
+
+            <Mobile>
+              <div className="o-layout [ o-layout--flush ]">
+
+                {/* Cart Items */}
+                <Section
+                  className="o-layout__item o-layout [ o-layout--small ]"
+                  data="Your Cart Items"
+                  title="Your Cart Items"
+                  titleClass="u-txt-24 u-pv-12 u-border--m-blur"
+                  contentClass="u-mt-16"
+                >
+                  <div className="c-product-grid c-product--grid">
+                    {cartProducts}
+                  </div>
+                </Section>
+
+                {/* Order Summary */}
+                <Section
+                  className="o-layout__item o-layout [ o-layout--flush ] u-border-all-blur"
+                  data="Order Summary"
+                  title="Order Summary"
+                  titleClass="u-txt-24 u-p-6 u-pv-24 u-border--m-blur"
+                  contentClass="u-mt-4 u-p-6"
+                >
+                  <div
+                    className="c-table"
+                    style={{
+                      border: 'none',
+                      maxHeight: '340px',
+                      overflowY: 'auto',
+                    }}
+                  >
+                    {orderSummary}
+                  </div>
+                  <div className="u-txt-20 u-txt--light u-txt-align-right u-mt-24">
+                    Total:
+                    <span className="u-txt--bold">
+                      {` $${cartTotal.toFixed(2)}`}
+                    </span>
+                  </div>
+                </Section>
+
+                {/* Shipping Information */}
+                <form
+                  method="post"
+                  onSubmit={checkOut}
+                  className="o-layout__item o-layout [ o-layout--flush ]"
+                >
+                  <Section
+                    data="Shipping Information"
+                    title="Shipping Information"
+                    titleClass="u-txt-24 u-p-6 u-pv-24 u-border--m-blur"
+                    contentClass="u-mt-4 u-p-6"
+                  >
+                    <div className="u-mb-12 u-txt-12 u-txt--light">
+                      <input
+                        className="u-w--100 u-pv-12 u-mb-12 u-mr-12"
+                        {...bindName}
+                        type="text"
+                        placeholder="Your full name"
+                        required
+                      />
+                      <input
+                        className="u-w--100 u-pv-12 u-mr-12 u-mb-12"
+                        {...bindAddress}
+                        type="text"
+                        placeholder="Your address"
+                        required
+                      />
+                      <input
+                        className="u-w--100 u-pv-12 u-mr-12 u-mb-12"
+                        {...bindEmail}
+                        type="text"
+                        placeholder="Your email"
+                        required
+                      />
+                      <textarea
+                        className="u-w--100 u-pv-12"
+                        cols="8"
+                        rows="4"
+                        {...bindShippingMessage}
+                        placeholder="Leave a message for shipper."
+                      />
+                    </div>
+                    <div className="u-mv-12 u-txt-12">
+                      <button
+                        className="c-btn [ c-btn--rounded c-btn--primary ] u-ml-12 u-float-right"
+                        type="submit"
+                      >
+                        Confirm
+                      </button>
+                    </div>
+                  </Section>
+                </form>
+
+
+              </div>
+            </Mobile>
           </Wrapper>
         )
       }

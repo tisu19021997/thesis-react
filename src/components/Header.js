@@ -494,7 +494,13 @@ class Header extends React.Component {
           <div className="cart-view__content">
 
             <div className="cart-header u-d-flex u-border--m-blur">
-              <Link to={'/checkout'} className="u-txt-underline u-txt-12">
+              <Link
+                onClick={() => {
+                  this.setState({ isCartOpen: false });
+                }}
+                to="/checkout"
+                className="u-txt-underline u-txt-12"
+              >
                 Proceed to checkout
               </Link>
               <div className="u-txt-20 u-line u-txt-align-center u-txt--bold u-ml-auto">
@@ -1065,6 +1071,11 @@ class Header extends React.Component {
                       <div className="u-mv-24 u-d-flex u-ai--fe">
 
                         <Link
+                          onClick={() => {
+                            this.setState({
+                              isCartOpen: false,
+                            });
+                          }}
                           to="/checkout"
                           className="u-txt--light u-txt-16 u-txt-underline"
                         >
