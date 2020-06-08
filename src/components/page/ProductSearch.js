@@ -6,6 +6,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from 'react-modal';
 import Product from '../Product';
+import { sortList, mobileCenteredModalStyles } from '../../helper/constant';
 import { Desktop, Mobile } from '../../helper/mediaQuery';
 
 class ProductSearch extends React.Component {
@@ -135,29 +136,6 @@ class ProductSearch extends React.Component {
       nextPage, prevPage, page, sort,
     } = this.state;
 
-    const filters = [
-      {
-        label: 'Featured',
-        value: 'featured',
-      },
-      {
-        label: 'New Arrivals',
-        value: 'newest',
-      },
-      {
-        label: 'Low Price',
-        value: 'price-asc',
-      },
-      {
-        label: 'High Price',
-        value: 'price-desc',
-      },
-      {
-        label: 'Sale Off',
-        value: 'sale',
-      },
-    ];
-
     const isChecked = (value) => value === sort;
 
     const productsDOM = products.map((product) => (
@@ -168,27 +146,10 @@ class ProductSearch extends React.Component {
       </div>
     ));
 
-    const modalStyles = {
-      content: {
-        position: 'absolute',
-        backgroundColor: 'rgba(255, 255, 255)',
-        inset: '50% 0 0 50%',
-        transform: 'translate(-50%, -50%)',
-        width: '66.66667%',
-        overflowY: 'auto',
-        padding: '12px',
-        maxHeight: '300px',
-      },
-      overlay: {
-        backgroundColor: 'rgba(0, 0, 0, .7)',
-      },
-    };
-
     const paginationButtons = [];
-
     let firstPage = 1;
 
-    if (page > 5) {
+    if (page > 4) {
       firstPage = page - 4;
     }
 
@@ -374,16 +335,16 @@ class ProductSearch extends React.Component {
                 {/* #SORT */}
                 <ul className="o-list-inline u-pl-12 u-txt-16">
                   <span className="u-txt-14 u-txt-underline u-mr-12">Sort by:</span>
-                  {filters.map((filter) => (
-                    <li key={filter.value} className="o-list-inline__item u-mr-12">
+                  {sortList.map((choice) => (
+                    <li key={choice.value} className="o-list-inline__item u-mr-12">
                       <input
                         type="radio"
-                        name="filter"
-                        value={filter.value}
-                        defaultChecked={isChecked(filter.value)}
+                        name="choice"
+                        value={choice.value}
+                        defaultChecked={isChecked(choice.value)}
                         onChange={this.sortHandle}
                       />
-                      <label htmlFor="filter">{filter.label}</label>
+                      <label htmlFor="choice">{choice.label}</label>
                     </li>
                   ))}
                 </ul>
@@ -398,6 +359,7 @@ class ProductSearch extends React.Component {
 
 
                 {/* #PAGINATION */}
+                {/* TODO: Replace with Pagination components */}
                 <div className="c-paging u-txt-align-center u-pv-12 u-border-all-blur">
 
                   {hasPrevPage
@@ -508,17 +470,15 @@ class ProductSearch extends React.Component {
                   <button
                     type="button"
                     className="u-txt--white u-ph-0"
-                    onClick={() => {
-                      // TODO: Implement sort modal and function
-                      console.log('sort');
-                    }}
+                    onClick={this.openSortModal}
                   >
                     <FontAwesomeIcon icon="filter" className="u-txt--white" />
                     <div className="u-txt-12 u-mt-6">Sort</div>
                   </button>
                 </div>
+
                 <Modal
-                  style={modalStyles}
+                  style={mobileCenteredModalStyles}
                   isOpen={isSortOpen}
                   onRequestClose={this.closeSortModal}
                 >
@@ -532,16 +492,16 @@ class ProductSearch extends React.Component {
                     </button>
                   </div>
                   <div className="u-txt-16 u-txt--bold">Sort by:</div>
-                  {filters.map((filter) => (
-                    <div key={filter.value} className="u-ml-12 u-mt-12 u-mb-6">
+                  {sortList.map((choice) => (
+                    <div key={choice.value} className="u-ml-12 u-mt-12 u-mb-6">
                       <input
                         type="radio"
-                        name="filter"
-                        value={filter.value}
-                        defaultChecked={isChecked(filter.value)}
+                        name="choice"
+                        value={choice.value}
+                        defaultChecked={isChecked(choice.value)}
                         onChange={this.sortHandle}
                       />
-                      <label htmlFor="filter">{filter.label}</label>
+                      <label htmlFor="choice">{choice.label}</label>
                     </div>
                   ))}
 
@@ -554,7 +514,7 @@ class ProductSearch extends React.Component {
                   <button
                     type="button"
                     className="u-txt--white u-ph-0"
-                    onClick={this.openSortModal}
+                    onClick={() => true}
                   >
                     <FontAwesomeIcon icon="sort-amount-up-alt" className="u-txt--white" />
                     <div className="u-txt-12 u-mt-6">Filter</div>

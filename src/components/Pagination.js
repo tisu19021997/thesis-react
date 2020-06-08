@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Pagination(props) {
   const {
-    totalPages, setPage, hasPrevPage, hasNextPage, queryParams,
+    totalPages, setPage, hasPrevPage, hasNextPage,
   } = props;
   const buttons = [];
   let { currentPage } = props;
@@ -66,14 +66,12 @@ Pagination.propTypes = {
   setPage: PropTypes.func.isRequired,
   hasPrevPage: PropTypes.bool,
   hasNextPage: PropTypes.bool,
-  queryParams: PropTypes.string,
 };
 
 Pagination.defaultProps = {
   currentPage: '1',
   hasPrevPage: false,
   hasNextPage: false,
-  queryParams: '',
 };
 
 

@@ -182,7 +182,7 @@ class Home extends React.Component {
                 ? (
                   <Section
                     className="u-pl-6"
-                    title="Related to items you bought"
+                    title="Related to items you rated"
                     data="Recommendation"
                     subTitle={(
                       <div className="c-section__sub-title u-txt-underline">
