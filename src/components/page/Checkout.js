@@ -74,7 +74,7 @@ function Checkout(props) {
     return (
       // eslint-disable-next-line react/jsx-filename-extension
       <div key={item._id} className="o-layout__item u-1/4 u-mb-24">
-        <Product product={item.product} useName={false} usePrice={false} />
+        <Product product={item.product} useName={false} usePrice={false} overlay={true}/>
       </div>
     );
   });

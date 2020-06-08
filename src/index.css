@@ -3551,6 +3551,46 @@ progress::-moz-progress-bar {
 }
 
 /* line 38, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+.c-product--overlayed .c-product__overlay-container {
+  position: relative;
+  opacity: .9;
+  display: none;
+  background-color: #232f3e;
+  padding: 0 6px;
+  border-radius: 3px;
+}
+
+@media (min-width: 61.25em) {
+  /* line 38, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  .c-product--overlayed .c-product__overlay-container {
+    height: 160px;
+  }
+}
+
+/* line 51, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+.c-product--overlayed .c-product__overlay {
+  position: absolute;
+  z-index: 999;
+}
+
+/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+.c-product--overlayed .c-product__name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* line 63, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+.c-product--overlayed:hover .c-product__img {
+  display: none;
+}
+
+/* line 64, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+.c-product--overlayed:hover .c-product__overlay-container {
+  display: block;
+}
+
+/* line 69, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__name {
   margin-top: 12px;
   font-size: 14px;
@@ -3562,50 +3602,50 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 38, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 69, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__name {
     font-size: 14px;
     line-height: 1.42861;
   }
 }
 
-/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 87, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__img {
   position: relative;
   /* Quick view butotn */
 }
 
-/* line 60, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 91, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__img.c-product__img--bordered {
   border: 0.5px solid #dfe1e5;
 }
 
-/* line 64, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 95, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__img > img {
   width: auto;
   height: auto;
 }
 
 @media (max-width: 46.24em) {
-  /* line 64, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 95, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__img > img {
     height: 100px;
   }
 }
 
 @media (min-width: 61.25em) {
-  /* line 64, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 95, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__img > img {
     height: 160px;
   }
 }
 
-/* line 77, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 108, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__img .c-btn {
   opacity: 0;
 }
 
-/* line 82, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 113, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__img:hover .c-btn {
   opacity: 1;
   transition: opacity 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -3615,19 +3655,19 @@ progress::-moz-progress-bar {
   -o-transition: opacity 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-/* line 94, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 125, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__rating {
   line-height: 1;
 }
 
 @media (max-width: 61.24em) {
-  /* line 97, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 128, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__rating > span {
     display: block;
   }
 }
 
-/* line 105, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 136, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__discount,
 .c-product__date {
   position: absolute;
@@ -3638,7 +3678,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 105, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 136, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__discount,
   .c-product__date {
     visibility: hidden;
@@ -3652,7 +3692,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 20em) {
-  /* line 105, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 136, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__discount,
   .c-product__date {
     padding: 2px 4px;
@@ -3663,7 +3703,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 46.25em) {
-  /* line 105, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 136, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__discount,
   .c-product__date {
     padding: 6px 12px;
@@ -3674,24 +3714,24 @@ progress::-moz-progress-bar {
 }
 
 /* Direction variations */
-/* line 141, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 172, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--horizontal {
   margin-top: 12px;
 }
 
-/* line 144, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 175, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--horizontal .c-product__name {
   margin-top: 0;
 }
 
 /* Position variations */
-/* line 154, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 185, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--secondary {
   margin-top: 12px;
 }
 
 @media (min-width: 61.25em) {
-  /* line 157, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 188, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product--secondary .c-product__name {
     font-size: 12px;
     line-height: 1.25;
@@ -3700,13 +3740,13 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 166, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 197, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product--secondary .c-product__img {
     height: auto;
   }
 }
 
-/* line 173, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 204, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--secondary .c-product__rating [class^="fa"] {
   font-size: 10px;
 }
