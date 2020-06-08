@@ -8,6 +8,8 @@ import CheckboxList from '../CheckboxList';
 import Product from '../Product';
 
 function ProductCategory(props) {
+  const [hasPrev, setHasPrev] = useState(false);
+  const [hasNext, setHasNext] = useState(false);
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState('');
   const [totalProducts, setTotalProducts] = useState(0);
@@ -25,6 +27,7 @@ function ProductCategory(props) {
       .then((res) => {
         const {
           products: docs, totalPages: totalP, page: paging, totalDocs, category: cat,
+          hasPrevPage, hasNextPage,
         } = res.data;
 
         setProducts(docs);
@@ -32,6 +35,8 @@ function ProductCategory(props) {
         setTotalPages(totalP);
         setPage(paging);
         setTotalProducts(totalDocs);
+        setHasNext(hasNextPage);
+        setHasPrev(hasPrevPage);
       })
       .catch((e) => {
         throw new Error(e);
@@ -117,7 +122,13 @@ function ProductCategory(props) {
               {totalPages > 1
                 ? (
                   <div className="c-paging u-txt-align-center u-pv-12 u-mb-6 u-border-all-blur">
-                    <Pagination currentPage={page} totalPages={totalPages} setPage={setPage} />
+                    <Pagination
+                      currentPage={page}
+                      totalPages={totalPages}
+                      setPage={setPage}
+                      hasPrevPage={hasPrev}
+                      hasNextPage={hasNext}
+                    />
                   </div>
                 )
                 : ''}

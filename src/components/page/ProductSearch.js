@@ -403,7 +403,7 @@ class ProductSearch extends React.Component {
                   {hasPrevPage
                     ? (
                       <Link
-                        to={location => `${location.pathname}?s=${keyword}&page=${prevPage}&sort=${sort}`}
+                        to={(location) => `${location.pathname}?s=${keyword}&page=${prevPage}&sort=${sort}`}
                         className="c-paging-prev"
                       >
                         <FontAwesomeIcon icon="chevron-left" />
@@ -417,7 +417,7 @@ class ProductSearch extends React.Component {
                   {hasNextPage
                     ? (
                       <Link
-                        to={location => `${location.pathname}?s=${keyword}&page=${nextPage}&sort=${sort}`}
+                        to={(location) => `${location.pathname}?s=${keyword}&page=${nextPage}&sort=${sort}`}
                         className="c-paging-next"
                       >
                         <FontAwesomeIcon icon="chevron-right" />
