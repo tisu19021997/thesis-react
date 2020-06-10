@@ -393,7 +393,7 @@ class Header extends React.Component {
               to={`/categories/${category._id}`}
               className=" u-txt-14"
             >
-              {category.name}
+              {category.name[category.name.length - 1]}
             </Link>
           </li>
 
@@ -539,7 +539,7 @@ class Header extends React.Component {
                   <div className="c-header__topnav-wrapper">
                     <ul className="c-header__topnav-list">
                       <li className="c-header__topnav-item">
-                        <Link to="/sell"><span>Sell</span></Link>
+                        <Link to="/orders"><span>My Orders</span></Link>
                       </li>
                       <li className="c-header__topnav-item">
                         <Link to="/registry"><span>Registry</span></Link>
@@ -802,7 +802,9 @@ class Header extends React.Component {
                   <div className="c-header__topnav-wrapper">
                     <ul className="c-header__topnav-list">
                       <li className="c-header__topnav-item">
-                        <a href="/"><span>Sell</span></a>
+                        <Link to="/orders">
+                          <span>My Orders</span>
+                        </Link>
                       </li>
                       <li className="c-header__topnav-item">
                         <a href="/"><span>Registry</span></a>

@@ -39,6 +39,7 @@ import ProductSearch from './components/page/ProductSearch';
 import StoreManagement from './components/page/StoreManagement';
 import ProductCategory from './components/page/ProductCategory';
 import Checkout from './components/page/Checkout';
+import OrderTracking from './components/page/OrderTracking';
 
 // create font-awesome icons library
 library.add(fab, faSearch, faGlobe, faUser, faShoppingCart, faAngleLeft, faAngleRight, faApple,
@@ -151,6 +152,17 @@ export default class App extends React.Component {
                       updateCart={this.updateCart}
                       user={currentUser}
                       cart={cart}
+                    />
+                  )}
+                />
+
+                <Route
+                  path="/orders"
+                  exact
+                  render={(props) => (
+                    <OrderTracking
+                      {...props}
+                      user={currentUser}
                     />
                   )}
                 />

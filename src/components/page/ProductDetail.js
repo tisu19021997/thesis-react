@@ -77,6 +77,7 @@ class ProductDetail extends React.Component {
     };
 
     this.purchaseHandle = this.purchaseHandle.bind(this);
+    this.purchaseAndCheckOutHandle = this.purchaseAndCheckOutHandle.bind(this);
     this.purchaseAllHandle = this.purchaseAllHandle.bind(this);
 
     this.historyTracking = this.historyTracking.bind(this);
@@ -157,6 +158,12 @@ class ProductDetail extends React.Component {
       local.save('cart', localCart);
       updateCart(localCart);
     }
+  }
+
+  async purchaseAndCheckOutHandle() {
+    const { history } = this.props;
+    await this.purchaseHandle();
+    history.push('/checkout');
   }
 
   /**
@@ -254,9 +261,8 @@ class ProductDetail extends React.Component {
       alsoBought,
       alsoViewed,
       sameCategory,
+      alsoRated,
     } = this.state;
-
-    let { alsoRated } = this.state;
 
     const { categories } = product;
 
@@ -281,7 +287,59 @@ class ProductDetail extends React.Component {
     const bundleIds = bundleProducts.products.map((bundleProduct) => bundleProduct._id);
 
     // exclude the current product from the recommended products
-    alsoRated = alsoRated.filter((item) => item.asin !== product.asin);
+    // alsoRated = alsoRated.filter((item) => item.asin !== product.asin);
+
+    const sliders = [
+      {
+        products: alsoViewed,
+        title: 'Customers who viewed this product also viewed',
+      },
+      {
+        products: alsoBought,
+        title: 'Customers who bought this product also bought',
+      },
+      {
+        products: alsoRated,
+        title: 'Customers who rated this product also rated',
+      },
+      {
+        products: sameCategory,
+        title: 'Products from the same category',
+      },
+    ];
+
+    const sliderDOM = sliders.map((slider) => (slider.products.length ? (
+      <React.Fragment key={slider.title}>
+        <Desktop>
+          <Section
+            title={slider.title}
+            titleClass="c-section__title--no-margin"
+          >
+
+            <ProductSlider
+              products={slider.products}
+              settings={sliderSettings}
+              className="c-slider--tiny-gut u-ph-48"
+            />
+          </Section>
+        </Desktop>
+
+        <Mobile>
+          <Section
+            title={slider.title}
+            className="c-section--splitted"
+          >
+            <ProductSlider
+              products={slider.products}
+              settings={sliderMobileSettings}
+              className="c-slider--tiny-gut"
+            />
+
+          </Section>
+        </Mobile>
+      </React.Fragment>
+
+    ) : ''));
 
     return (
       <UserContext.Consumer>
@@ -458,6 +516,7 @@ class ProductDetail extends React.Component {
                           {/* #CTA-BUTTONS */}
                           <div className="u-d-flex u-fd--column u-margin-top u-margin-bottom-large">
                             <button
+                              onClick={this.purchaseAndCheckOutHandle}
                               className="c-btn [ c-btn--cta c-btn--rounded c-btn--type-large ] u-flex-1 u-margin-bottom-small"
                               type="button"
                               title="Buy Now"
@@ -695,51 +754,10 @@ class ProductDetail extends React.Component {
                     </Tabs>
                     {/* /TABS */}
 
-
-                    {/* #BOUGHT ALSO BOUGHT */}
-                    {alsoBought.length
-                      ? (
-                        <Section
-                          title="Customers who bought this item also bought"
-                          titleClass="c-section__title--no-margin"
-                        >
-
-                          <ProductSlider
-                            products={alsoBought}
-                            settings={sliderSettings}
-                            className="c-slider--tiny-gut u-ph-48"
-                          />
-
-
-                        </Section>
-                      )
-                      : ''}
-                    {/* /BOUGHT ALSO BOUGHT */}
-
-
-                    {/* #SAME CATGORY */}
-                    {sameCategory.length
-                      ? (
-                        <Section
-                          title="From the same category"
-                          titleClass="c-section__title--no-margin"
-                        >
-
-                          <ProductSlider
-                            products={sameCategory}
-                            settings={sliderSettings}
-                            className="c-slider--tiny-gut u-ph-48"
-                          />
-
-
-                        </Section>
-                      )
-                      : ''}
-                    {/* /SAME CATEGORY */}
+                    {/* Products Slider from Different Categories */}
+                    {sliderDOM}
 
                   </main>
-
-
                 </Wrapper>
               </Desktop>
 
@@ -843,11 +861,6 @@ class ProductDetail extends React.Component {
                                 {product.price}
                               </span>
                             </span>
-                            <span className="c-price__price--secondary">
-                              <span className="t-currency">$</span>
-                              40.00
-                            </span>
-                            <div className="u-txt-14 u-txt--light">(save 50%)</div>
                           </div>
                           {/* /Product Price */}
 
@@ -864,6 +877,7 @@ class ProductDetail extends React.Component {
                             </button>
 
                             <button
+                              onClick={this.purchaseAndCheckOutHandle}
                               className="c-btn [ c-btn--rounded c-btn--cta ] u-w--100"
                               type="submit"
                               title="Buy Now"
@@ -905,51 +919,12 @@ class ProductDetail extends React.Component {
 
                     <hr className="thick" />
 
-
-                    {/* #ViEWED ALSO VIEWED */}
-                    {alsoViewed.length
-                      ? (
-                        <Section
-                          title="Customers who viewed this item also viewed"
-                          className="c-section--splitted"
-                        >
-                          <ProductSlider
-                            products={alsoViewed}
-                            settings={sliderMobileSettings}
-                            className="c-slider--tiny-gut"
-                          />
-
-                        </Section>
-                      )
-                      : ''}
-                    {/* /ViEWED ALSO VIEWED */}
-
-
-                    {/* #RATED AlSO */}
-                    {alsoRated.length
-                      ? (
-                        <Section
-                          title="Customers who bought this item also bought (CF)"
-                          titleClass="c-section--splitted"
-                        >
-
-                          <ProductSlider
-                            products={alsoRated}
-                            settings={sliderMobileSettings}
-                            className="c-slider--tiny-gut"
-                          />
-
-                        </Section>
-                      )
-                      : ''}
-                    {/* /ALSO RATED */}
+                    {/* Products Slider from Different Categories */}
+                    {sliderDOM}
 
                   </main>
-
-
                 </Wrapper>
               </Mobile>
-
             </>
           )
         }

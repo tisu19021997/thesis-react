@@ -124,7 +124,7 @@ function Checkout(props) {
       <React.Fragment key={item._id}>
         <Desktop>
           <div key={item._id} className="o-layout__item u-1/4 u-mb-24">
-            <Product product={item.product} useName={false} usePrice={false} overlay={true} />
+            <Product product={item.product} useName={false} usePrice={false} overlay />
           </div>
         </Desktop>
 
@@ -184,9 +184,8 @@ function Checkout(props) {
   const checkOut = async (event) => {
     event.preventDefault();
 
-    // Request with token to server to proceed checking out
-    // TODO: create transaction
     try {
+      // Proceed checking out.
       await axios.post(`users/${user}/checkout`,
         {
           cart,
@@ -195,6 +194,23 @@ function Checkout(props) {
           email,
           shippingMessage,
         });
+
+      const cartProducts = cart.map((item) => (
+        {
+          product: item.product._id,
+          quantity: item.quantity,
+        }
+      ));
+
+      // Keep track of the transaction.
+      await axios.post(`transactions/${user}/`, {
+        products: cartProducts,
+        name,
+        address,
+        email,
+        message: shippingMessage,
+        total: cartTotal,
+      });
 
       // Notify success, redirect to home page.
       showModal();
