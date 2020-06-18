@@ -72,6 +72,7 @@ class ProductDetail extends React.Component {
       alsoViewed: {},
       bundleProducts: {},
       sameCategory: {},
+      sameBrand: {},
       ready: false,
       quantity: 1,
     };
@@ -224,7 +225,7 @@ class ProductDetail extends React.Component {
     axios.get(`/products/${params.asin}`)
       .then((res) => {
         const {
-          product, alsoBought, alsoViewed, alsoRated, bundleProducts, sameCategory,
+          product, alsoBought, alsoViewed, alsoRated, bundleProducts, sameCategory, sameBrand,
         } = res.data;
 
         // set initial state
@@ -235,6 +236,7 @@ class ProductDetail extends React.Component {
           alsoRated,
           bundleProducts,
           sameCategory,
+          sameBrand,
           ready: true,
         });
 
@@ -261,6 +263,7 @@ class ProductDetail extends React.Component {
       alsoBought,
       alsoViewed,
       sameCategory,
+      sameBrand,
       alsoRated,
     } = this.state;
 
@@ -286,6 +289,30 @@ class ProductDetail extends React.Component {
 
     const bundleIds = bundleProducts.products.map((bundleProduct) => bundleProduct._id);
 
+    const sameBrandProducts = sameBrand.map((product) => (
+      <li key={product.asin} className="o-media c-product [ c-product--secondary ]">
+        <img
+          src={product.imUrl}
+          className="o-media__img c-product__img u-w--30 u-mr-6"
+          alt="Product 1"
+        />
+        <div className="o-media__body">
+          <div className="c-product__name u-txt--bold">
+            {product.title}
+          </div>
+          <div className="c-price [ c-price--small ] ">
+            <div className="c-price__price">
+              <span className="c-price__currency">$</span>
+              {product.discountPrice || product.price}
+            </div>
+            <div className="c-price__price--secondary">
+              <span className="c-price__currency">$</span>
+              {product.price}
+            </div>
+          </div>
+        </div>
+      </li>
+    ));
     // exclude the current product from the recommended products
     // alsoRated = alsoRated.filter((item) => item.asin !== product.asin);
 
@@ -300,7 +327,7 @@ class ProductDetail extends React.Component {
       },
       {
         products: alsoRated,
-        title: 'Customers who rated this product also rated',
+        title: 'Related to this product',
       },
       {
         products: sameCategory,
@@ -312,6 +339,7 @@ class ProductDetail extends React.Component {
       <React.Fragment key={slider.title}>
         <Desktop>
           <Section
+            data={slider.title}
             title={slider.title}
             titleClass="c-section__title--no-margin"
           >
@@ -538,40 +566,15 @@ class ProductDetail extends React.Component {
                           {/* #SAME BRAND */}
                           <section className="c-section" data-section="Same Brand Products">
                             <div className="c-section__title [ c-section__title--no-margin ]">
-                              From our brand
+                              Products from the same brand
                             </div>
                             <ul className="o-list-bare">
-                              <li className="o-media c-product [ c-product--secondary ]">
-                                <img
-                                  src={product.imUrl}
-                                  className="o-media__img c-product__img u-w--30 u-mr-6"
-                                  alt="Product 1"
-                                />
-                                <div className="o-media__body">
-                                  <div className="c-product__name u-txt--bold">
-                                    {product.title}
-                                  </div>
-                                  <div className="c-product__rating">
-                                    <i className="fas fa-star [ tiny rect ]" data-rating={1} />
-                                    <i className="fas fa-star [ tiny rect ]" data-rating={2} />
-                                    <i className="fas fa-star [ tiny rect ]" data-rating={3} />
-                                    <i className="fas fa-star [ tiny rect ]" data-rating={4} />
-                                    <i className="fas fa-star [ tiny rect ]" data-rating={5} />
-                                  </div>
-                                  <div className="c-price [ c-price--small ] ">
-                                    <div className="c-price__price">
-                                      <span className="c-price__currency">$</span>
-                                      {product.discountPrice || product.price}
-                                    </div>
-                                    <div className="c-price__price--secondary">
-                                      <span className="c-price__currency">$</span>
-                                      {product.price}
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-
+                              {sameBrand
+                                ? sameBrandProducts
+                                : ''}
                             </ul>
+
+
                           </section>
                           {/* /Same brand */}
 
@@ -615,46 +618,6 @@ class ProductDetail extends React.Component {
 
 
                     <hr />
-
-
-                    {/* #ViEWED ALSO VIEWED */}
-                    {alsoViewed.length
-                      ? (
-                        <Section
-                          title="Customers who viewed this item also viewed"
-                          titleClass="c-section__title--no-margin"
-                        >
-
-                          <ProductSlider
-                            products={alsoViewed}
-                            settings={sliderSettings}
-                            className="c-slider--tiny-gut u-ph-48"
-                          />
-
-                        </Section>
-                      )
-                      : ''}
-                    {/* /ViEWED ALSO VIEWED */}
-
-
-                    {/* #RATED AlSO */}
-                    {alsoRated.length
-                      ? (
-                        <Section
-                          title="Customers who bought this item also bought (CF)"
-                          titleClass="c-section__title--no-margin"
-                        >
-
-                          <ProductSlider
-                            products={alsoRated}
-                            settings={sliderSettings}
-                            className="c-slider--tiny-gut u-ph-48"
-                          />
-
-                        </Section>
-                      )
-                      : ''}
-                    {/* /ALSO RATED */}
 
 
                     {/* #TABS */}

@@ -30,13 +30,12 @@ function ProductList() {
     axios.get(`/store-management/products${query}`)
       .then((res) => {
         const {
-          products: docs, totalPages, page: paging, totalDocs,
+          products: docs, totalPages, totalDocs,
         } = res.data;
 
         // update state
         setProducts(docs);
         setPages(totalPages);
-        setPage(paging);
         setTotal(totalDocs);
         setIsSearching(false);
       })

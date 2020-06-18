@@ -19,6 +19,7 @@ function UserList() {
   const [editing, setEditing] = useState('');
   const [isEditOpen, setEditModal] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
+  const [isBusy, setIsBusy] = useState(true);
 
   useEffect(() => {
     const query = `?s=${search}&page=${page}&limit=${limit}&sort=${sort}`;
@@ -26,13 +27,12 @@ function UserList() {
     axios.get(`/store-management/users${query}`)
       .then((res) => {
         const {
-          docs, totalPages, page: paging, totalDocs,
+          docs, totalPages, totalDocs,
         } = res.data;
 
         // update state
         setUsers(docs);
         setPages(totalPages);
-        setPage(paging);
         setTotal(totalDocs);
         setIsSearching(false);
       })

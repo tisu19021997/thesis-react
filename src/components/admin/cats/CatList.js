@@ -24,13 +24,12 @@ function CatList() {
     axios.get(`/store-management/cats${query}`)
       .then((res) => {
         const {
-          docs, totalPages, page: paging, totalDocs,
+          docs, totalPages, totalDocs,
         } = res.data;
 
         // update state
         setCats(docs);
         setPages(totalPages);
-        setPage(paging);
         setTotal(totalDocs);
         setIsSearching(false);
       })
