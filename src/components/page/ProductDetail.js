@@ -9,6 +9,7 @@ import {
 import axios from 'axios';
 import array from 'lodash/array';
 import Slider from 'react-slick';
+import { Link } from 'react-router-dom';
 import { findIndex, sortBy } from 'lodash';
 import local from '../../helper/localStorage';
 import { toProductModel } from '../../helper/data';
@@ -23,6 +24,7 @@ import NextArrow from '../slider/NextArrow';
 import { UserContext } from '../../context/user';
 import { Desktop, Mobile } from '../../helper/mediaQuery';
 import Rating from '../Rating';
+import ReadMore from '../ReadMore';
 
 class ProductDetail extends React.Component {
   /**
@@ -239,7 +241,6 @@ class ProductDetail extends React.Component {
           sameBrand,
           ready: true,
         });
-
         // update the user history
         this.historyTracking();
       })
@@ -289,30 +290,6 @@ class ProductDetail extends React.Component {
 
     const bundleIds = bundleProducts.products.map((bundleProduct) => bundleProduct._id);
 
-    const sameBrandProducts = sameBrand.map((product) => (
-      <li key={product.asin} className="o-media c-product [ c-product--secondary ]">
-        <img
-          src={product.imUrl}
-          className="o-media__img c-product__img u-w--30 u-mr-6"
-          alt="Product 1"
-        />
-        <div className="o-media__body">
-          <div className="c-product__name u-txt--bold">
-            {product.title}
-          </div>
-          <div className="c-price [ c-price--small ] ">
-            <div className="c-price__price">
-              <span className="c-price__currency">$</span>
-              {product.discountPrice || product.price}
-            </div>
-            <div className="c-price__price--secondary">
-              <span className="c-price__currency">$</span>
-              {product.price}
-            </div>
-          </div>
-        </div>
-      </li>
-    ));
     // exclude the current product from the recommended products
     // alsoRated = alsoRated.filter((item) => item.asin !== product.asin);
 
@@ -331,7 +308,7 @@ class ProductDetail extends React.Component {
       },
       {
         products: sameCategory,
-        title: 'Products from the same category',
+        title: 'From the same category',
       },
     ];
 
@@ -364,6 +341,7 @@ class ProductDetail extends React.Component {
             />
 
           </Section>
+          <hr className="thick" />
         </Mobile>
       </React.Fragment>
 
@@ -381,7 +359,7 @@ class ProductDetail extends React.Component {
                   <main>
 
                     {/* #PRODUCT PREVIEW */}
-                    <section className="c-section" data-section="Product Preview">
+                    <Section className="c-section" data="Product Preview">
 
                       {/* #BREADCRUMB */}
                       {
@@ -440,44 +418,16 @@ class ProductDetail extends React.Component {
                               <span className="[ u-txt--tiny u-txt--light ]">12,345 ratings</span>
                             </div>
 
-                            {/* #OPTIONS */}
-                            <div className="c-option [ c-option--bordered ]">
-
-                              <p className="c-option__detail">
-                                Color:
-                                <span className="c-option__value">White Black</span>
-                              </p>
-
-                              <ul
-                                className="o-layout o-carousel [ o-carousel--8col o-carousel--tiny ] c-option__control"
-                              >
-                                <li className="o-layout__item o-carousel__item ">
-                                  <img
-                                    className="c-option__img"
-                                    src={product.imUrl}
-                                    alt={product.title}
-                                  />
-                                </li>
-
-                              </ul>
-                            </div>
-                            {/* /OPTIONS */}
-
-
                             {/* #INFORMATION PRODUCT */}
-                            <section className="u-cf" data-section="Product Information">
+                            <Section className="u-cf" data="Product Information">
                               <ul className="[ u-txt-12 u-margin-bottom-none u-margin-left-small ]">
                                 <li>
-                                  <span>{product.description}</span>
+                                  <span>
+                                    <ReadMore text={product.description} />
+                                  </span>
                                 </li>
                               </ul>
-                              <a href="/" className="u-float-left u-txt-10 u-txt-underline">
-                                <span>
-                                  <i className="fas fa-caret-down" />
-                        More
-                                </span>
-                              </a>
-                            </section>
+                            </Section>
                             {/* /Product information */}
 
                           </div>
@@ -564,18 +514,54 @@ class ProductDetail extends React.Component {
 
 
                           {/* #SAME BRAND */}
-                          <section className="c-section" data-section="Same Brand Products">
-                            <div className="c-section__title [ c-section__title--no-margin ]">
-                              Products from the same brand
-                            </div>
-                            <ul className="o-list-bare">
-                              {sameBrand
-                                ? sameBrandProducts
-                                : ''}
-                            </ul>
 
-
-                          </section>
+                          {
+                            sameBrand
+                              ? (
+                                <Section className="c-section" data="Same Brand Products">
+                                  <div className="c-section__title [ c-section__title--no-margin ]">
+                                    From the same brand
+                                  </div>
+                                  <ul className="o-list-bare">
+                                    {
+                                      sameBrand.map((p) => (
+                                        <Link
+                                          to={`/products/${p.asin}`}
+                                          key={p.asin}
+                                          className="o-media c-product [ c-product--secondary ]"
+                                        >
+                                          <img
+                                            src={p.imUrl}
+                                            className="o-media__img c-product__img u-w--30 u-mr-6 u-border-all-blur"
+                                            alt="Product 1"
+                                          />
+                                          <div className="o-media__body">
+                                            <div className="c-product__name u-txt--bold">
+                                              {p.title}
+                                            </div>
+                                            <div className="c-price [ c-price--small ] ">
+                                              <div className="c-price__price">
+                                                <span className="c-price__currency">$</span>
+                                                {p.discountPrice || p.price}
+                                              </div>
+                                              {p.discountPrice
+                                                ? (
+                                                  <div className="c-price__price--secondary">
+                                                    <span className="c-price__currency">$</span>
+                                                    {p.price}
+                                                  </div>
+                                                )
+                                                : ''}
+                                            </div>
+                                          </div>
+                                        </Link>
+                                      ))
+                                    }
+                                  </ul>
+                                </Section>
+                              )
+                              : ''
+                          }
                           {/* /Same brand */}
 
 
@@ -587,7 +573,7 @@ class ProductDetail extends React.Component {
                       {/* /PRODUCT VIEW BLOCK */}
 
 
-                    </section>
+                    </Section>
                     {/* #PRODUCT PREVIEW */}
 
 
@@ -595,7 +581,7 @@ class ProductDetail extends React.Component {
 
 
                     {/* #BUNDLE PRODUCT */}
-                    {bundleProducts
+                    {bundleProducts.length > 1
                       ? (
                         <Section
                           className="u-6/10"
@@ -611,13 +597,12 @@ class ProductDetail extends React.Component {
                             purchaseAll={this.purchaseAllHandle}
                             user={currentUser}
                           />
+
+                          <hr />
                         </Section>
                       )
                       : ''}
                     {/* /BUNDLE PRODUCT */}
-
-
-                    <hr />
 
 
                     {/* #TABS */}
@@ -634,12 +619,6 @@ class ProductDetail extends React.Component {
                           selectedClassName="active"
                         >
                           Additional Information
-                        </Tab>
-                        <Tab
-                          className="c-tab__header-name u-txt-14"
-                          selectedClassName="active"
-                        >
-                          Customer Q&A
                         </Tab>
                         <Tab
                           className="c-tab__header-name u-txt-14"
@@ -703,7 +682,6 @@ class ProductDetail extends React.Component {
                           {/* /Example Table */}
                         </TabPanel>
 
-                        <TabPanel className="c-tab__content-item u-txt-14" />
 
                         <TabPanel className="c-tab__content-item u-txt-14 u-w--80">
 
@@ -862,23 +840,29 @@ class ProductDetail extends React.Component {
 
                     {/* /Product Options */}
 
-                    <hr className="thick" />
 
-                    <Section
-                      className="c-section--splitted"
-                      data="Product Bundle"
-                      title="Usually Bought Together"
-                    >
-                      <Bundle
-                        bundleProducts={[product, ...bundleProducts.products]}
-                        bundleProductIds={[product._id, ...bundleIds]}
-                        currentProduct={product}
-                        totalPrice={bundleProducts.totalPrice}
-                        purchaseAll={this.purchaseAllHandle}
-                        user={currentUser}
-                      />
-                    </Section>
+                    {bundleProducts.length > 1
+                      ? (
+                        <>
+                          <hr className="thick" />
 
+                          <Section
+                            className="c-section--splitted"
+                            data="Product Bundle"
+                            title="Usually Bought Together"
+                          >
+                            <Bundle
+                              bundleProducts={[product, ...bundleProducts.products]}
+                              bundleProductIds={[product._id, ...bundleIds]}
+                              currentProduct={product}
+                              totalPrice={bundleProducts.totalPrice}
+                              purchaseAll={this.purchaseAllHandle}
+                              user={currentUser}
+                            />
+                          </Section>
+                        </>
+                      )
+                      : ''}
 
                     <hr className="thick" />
 

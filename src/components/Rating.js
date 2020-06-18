@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Pagination from './Pagination';
 import { useInput } from '../helper/hooks';
 import { nowString } from '../helper/string';
+import ReadMore from './ReadMore';
 
 function Rating(props) {
   const [page, setPage] = useState(1);
@@ -125,7 +126,7 @@ function Rating(props) {
 
           {/* RATING CONTENT */}
           <div className="u-txt-14 u-mt-6">
-            {rating.reviewText}
+            <ReadMore text={rating.reviewText} maxLength={300}/>
           </div>
 
         </div>
