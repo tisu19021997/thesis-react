@@ -61,13 +61,12 @@ function Rating(props) {
       });
 
     const reviewVector = {
-      user,
       item: asin,
       rating: overall,
       k: 100,
     };
     await axios.patch(`/users/${user}/recommendations`, reviewVector)
-      .then(() => true)
+      .then((res) => console.log(res))
       .catch((err) => {
         throw new Error(err);
       });
@@ -145,8 +144,10 @@ function Rating(props) {
         <Pagination totalPages={totalPages} currentPage={page} setPage={setPage} />
       </div>
 
+      <hr />
+
       {/* NEW RATING */}
-      <div className="u-txt-24 u-txt--hairline u-mb-24">
+      <div className="u-txt-24 u-mb-24 u-txt--bold">
         Write your own review
       </div>
 

@@ -47,7 +47,7 @@ library.add(fab, faSearch, faGlobe, faUser, faShoppingCart, faAngleLeft, faAngle
   faChevronRight, faChevronLeft, faBars, faFilter, faSortAmountUpAlt, faBorderAll, faStar);
 
 // axios default configurations
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_HOST || 'http://localhost:8081';
+axios.defaults.baseURL = process.env.NODE_SERVER || 'http://localhost:8081/api/v1';
 
 
 export default class App extends React.Component {

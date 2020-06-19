@@ -6,6 +6,11 @@ function Pagination(props) {
   const {
     totalPages, setPage, hasPrevPage, hasNextPage,
   } = props;
+
+  if (totalPages === 1) {
+    return false;
+  }
+
   const buttons = [];
   let { currentPage } = props;
   let firstPage = 1;
