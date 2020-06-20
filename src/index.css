@@ -2610,40 +2610,46 @@ progress::-moz-progress-bar {
   }
 }
 
+/* line 43, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+.c-btn:disabled {
+  background: #999 !important;
+  cursor: not-allowed;
+}
+
 /* Style variants
    ========================================================================== */
-/* line 51, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--primary {
   background: #232f3e;
 }
 
 @media (max-width: 61.24em) {
-  /* line 51, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+  /* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
   .c-btn--primary {
     -webkit-box-shadow: 0 3px 6px #b8babd, 0 3px 6px #fff;
     box-shadow: 0 3px 6px #b8babd, 0 3px 6px #fff;
   }
 }
 
-/* line 59, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 64, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--primary, .c-btn--primary:hover, .c-btn--primary:active, .c-btn--primary:focus {
   text-decoration: none;
   /* [4] */
   color: #fff;
 }
 
-/* line 69, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 74, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--secondary {
   background-color: #999;
 }
 
-/* line 72, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 77, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--secondary, .c-btn--secondary:hover, .c-btn--secondary:active, .c-btn--secondary:focus {
   text-decoration: none;
   color: #fff;
 }
 
-/* line 81, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 86, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--fake {
   cursor: pointer;
   border: none;
@@ -2651,45 +2657,45 @@ progress::-moz-progress-bar {
   padding: 0;
 }
 
-/* line 89, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 94, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--tertiary {
   background-color: white;
   color: black;
   border: 0.5px solid #dfe1e5;
 }
 
-/* line 96, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 101, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--cta {
   background: #fd6600;
 }
 
 @media (max-width: 61.24em) {
-  /* line 96, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+  /* line 101, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
   .c-btn--cta {
     -webkit-box-shadow: 0 3px 6px #b8babd, 0 3px 6px #fff;
     box-shadow: 0 3px 6px #b8babd, 0 3px 6px #fff;
   }
 }
 
-/* line 104, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 109, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--cta, .c-btn--cta:hover, .c-btn--cta:active, .c-btn--cta:focus {
   text-decoration: none;
   color: #fff;
 }
 
-/* line 113, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 118, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--attract {
   background-color: #ff424f;
   color: #fff;
 }
 
-/* line 117, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 122, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--attract, .c-btn--attract:hover, .c-btn--attract:active, .c-btn--attract:focus {
   text-decoration: none;
   background-color: #ff424f;
 }
 
-/* line 127, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 132, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--rounded {
   border-radius: 36px;
   -webkit-border-radius: 36px;
@@ -2698,7 +2704,7 @@ progress::-moz-progress-bar {
   -o-border-radius: 36px;
 }
 
-/* line 136, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 141, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--type-large {
   font-size: 20px;
   font-size: 1.25rem;
@@ -2706,7 +2712,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 136, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+  /* line 141, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
   .c-btn--type-large {
     font-size: 12px;
     font-size: 0.75rem;
@@ -2714,7 +2720,7 @@ progress::-moz-progress-bar {
   }
 }
 
-/* line 145, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 150, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--stretch {
   width: 100%;
   -webkit-box-flex: 1;
@@ -2724,12 +2730,12 @@ progress::-moz-progress-bar {
 
 /* Size variants
    ========================================================================== */
-/* line 157, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 162, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--small {
   padding: 6px 12px;
 }
 
-/* line 161, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 166, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--large {
   padding: 24px 48px;
 }
@@ -2739,53 +2745,53 @@ progress::-moz-progress-bar {
 /**
  * Ghost buttons have see-through backgrounds and are bordered.
  */
-/* line 178, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 183, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--ghost {
   border: 2px solid currentColor;
   padding: 10px 22px;
 }
 
-/* line 182, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 187, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--ghost, .c-btn--ghost:hover, .c-btn--ghost:active, .c-btn--ghost:focus {
   background: none;
 }
 
-/* line 189, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 194, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--ghost.c-btn--small {
   padding: 4px 10px;
 }
 
-/* line 193, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 198, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--ghost.c-btn--large {
   padding: 22px 46px;
 }
 
-/* line 197, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 202, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--ghost.c-btn--primary {
   color: #4a8ec2;
 }
 
-/* line 200, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 205, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--ghost.c-btn--primary:hover, .c-btn--ghost.c-btn--primary:focus {
   color: #3774a2;
 }
 
-/* line 207, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 212, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--ghost.c-btn--secondary {
   color: #2f4054;
 }
 
-/* line 210, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 215, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--ghost.c-btn--secondary:hover, .c-btn--ghost.c-btn--secondary:focus {
   color: #1d2733;
 }
 
-/* line 217, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 222, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--ghost.c-btn--tertiary {
   color: #fff;
 }
 
-/* line 220, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
+/* line 225, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.buttons.scss */
 .c-btn--ghost.c-btn--tertiary:hover, .c-btn--ghost.c-btn--tertiary:focus {
   color: #fff;
 }

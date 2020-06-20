@@ -7,7 +7,7 @@ const Section = (props) => {
   } = props;
 
   return (
-    <section className={`c-section ${className}`} data-section={data}>
+    <section className={`c-section ${className}`} data-section={data || title}>
 
       {title
         ? (

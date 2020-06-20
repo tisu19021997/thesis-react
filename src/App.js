@@ -40,6 +40,7 @@ import StoreManagement from './components/page/StoreManagement';
 import ProductCategory from './components/page/ProductCategory';
 import Checkout from './components/page/Checkout';
 import OrderTracking from './components/page/OrderTracking';
+import Recommender from './components/admin/recommender/Recommender';
 
 // create font-awesome icons library
 library.add(fab, faSearch, faGlobe, faUser, faShoppingCart, faAngleLeft, faAngleRight, faApple,
@@ -128,6 +129,17 @@ export default class App extends React.Component {
                     path="/store-management"
                     render={(props) => (
                       <StoreManagement {...props} />
+                    )}
+                  />)
+                : ''}
+
+              {isAdmin
+                ? (
+                  <Route
+                    exact
+                    path="/recommender"
+                    render={(props) => (
+                      <Recommender {...props} />
                     )}
                   />)
                 : ''}
