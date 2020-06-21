@@ -1,10 +1,13 @@
 import React, { useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { CSVReader } from 'react-papaparse';
 import * as FileSaver from 'file-saver';
 import Section from '../../Section';
 
-function UploadDataset() {
+function DatasetUploader(props) {
+  const { setDataset } = props;
+
   const [data, setData] = useState([]);
   const [dataHeader, setDataHeader] = useState([]);
   const [message, setMessage] = useState('');
@@ -17,8 +20,11 @@ function UploadDataset() {
       return false;
     }
     await setData(results);
+    await setDataset(results);
     await setDataHeader(results[0].meta.fields);
     await setSaveBtnDisabled(false);
+
+    return true;
   };
 
   const handleOnError = (err, file, inputElem, reason) => {
@@ -27,6 +33,7 @@ function UploadDataset() {
 
   const handleOnRemoveFile = () => {
     setData([]);
+    setDataset([]);
     setDataHeader([]);
     setSaveBtnDisabled(true);
     setMessage('');
@@ -39,8 +46,8 @@ function UploadDataset() {
 
     setSaveBtnDisabled(true);
 
-    if (window.confirm('The old dataset may get lost. Please back-up the old dataset first. Proceed?')) {
-      axios.post('/store-management/recommender/dataset', {
+    if (window.confirm('The old dataset may get lost. Please back-up the old dataset first. Still proceed?')) {
+      axios.post('/recommender/dataset', {
         data,
         header: dataHeader,
       })
@@ -55,7 +62,7 @@ function UploadDataset() {
   };
 
   const backup = () => {
-    axios.get('/store-management/recommender/dataset')
+    axios.get('/recommender/dataset')
       .then(async (res) => {
         const { data: backupData } = res;
         const filename = 'data-backup.csv';
@@ -98,14 +105,14 @@ function UploadDataset() {
             disabled={saveBtnDisabled}
             className="c-btn c-btn--primary c-btn--rounded"
           >
-            Upload dataset
+            Upload to server
           </button>
 
           <button
             className="c-btn c-btn--primary c-btn--rounded u-ml-6"
             onClick={backup}
           >
-            Back-up dataset
+            Back-up from server
           </button>
         </div>
       </Section>
@@ -137,4 +144,8 @@ function UploadDataset() {
   );
 }
 
-export default UploadDataset;
+DatasetUploader.propTypes = {
+  setDataset: PropTypes.func.isRequired,
+};
+
+export default DatasetUploader;

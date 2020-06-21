@@ -21,6 +21,67 @@ export const sortList = [
   },
 ];
 
+export const modelsConfig = {
+  insvd: {
+    name: 'Incremental SVD',
+    params: [
+      {
+        name: 'n_factors',
+        label: 'Number of factors',
+        type: 'number',
+        default: 20,
+      },
+      {
+        name: 'n_epochs',
+        label: 'Number of epochs',
+        type: 'number',
+        default: 100,
+      },
+      {
+        name: 'lr_all',
+        label: 'Learning rate',
+        type: 'number',
+        default: 0.005,
+      },
+      {
+        name: 'reg_all',
+        label: 'Regularization Parameter',
+        type: 'number',
+        default: 0.1,
+      },
+      {
+        name: 'random_state',
+        label: 'Random State',
+        type: 'number',
+        default: 42,
+      },
+    ],
+  },
+  iknn: {
+    name: 'Item-based KNN',
+    params: [
+      {
+        name: 'k',
+        label: 'Number of Neighbors',
+        type: 'number',
+        default: 50,
+      },
+      {
+        name: 'sim_options',
+        label: 'Similarity Metrics',
+        type: 'text',
+        default: 'cosine',
+      },
+      {
+        name: 'random_state',
+        label: 'Random State',
+        type: 'number',
+        default: 42,
+      },
+    ],
+  },
+};
+
 export const mobileCenteredModalStyles = {
   content: {
     position: 'absolute',

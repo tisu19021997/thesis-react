@@ -1,11 +1,16 @@
 import React, { useState, useRef } from 'react';
-import UploadDataset from './UploadDataset';
+import DatasetUploader from './DatasetUploader';
 import Wrapper from '../../Wrapper';
+import ModelTrainer from './ModelTrainer';
 
-function Recommender(props) {
+function Recommender() {
+  const [dataset, setDataset] = useState([]);
+
   return (
     <Wrapper>
-      <UploadDataset />
+      <DatasetUploader setDataset={setDataset} />
+
+      <ModelTrainer dataset={dataset} />
     </Wrapper>
   );
 }
