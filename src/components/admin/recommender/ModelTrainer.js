@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import * as FileSaver from 'file-saver';
 import Section from '../../Section';
@@ -40,24 +41,34 @@ function ModelTrainer(props) {
         modelDefaults[param.name] = modelParams[param.name] || param.default;
       },
     );
+    let dataHeader = [];
+    let data = [];
 
-    axios.post('/recommender/models', {
+    if (datasetType === 'local') {
+      dataHeader = dataset[0].meta.fields;
+      data = await dataset.map((dp) => dp.data);
+    }
+
+    // Send direct POST request to recommender system. Receive the response as blob.
+    // Then use the blob to save as a zip file.
+    axios.post('/models', {
+      dataset: data,
+      dataHeader,
       model,
       params: modelDefaults,
       trainType,
-      dataset: datasetType === 'local' ? dataset : [],
       saveOnServer,
       saveOnLocal,
+    }, {
+      baseURL: 'http://127.0.0.1:5000/api/v1',
+      maxContentLength: 100000000, // 1gb
+      maxBodyLength: 100000000,
+      responseType: 'blob',
     })
       .then(async (res) => {
-        // TODO: Fix wrong file saving
         if (saveOnLocal) {
-          const { data: trainedModel } = res;
-          const filename = 'model';
-          const file = new File([trainedModel], filename, { type: 'text/plain' });
-          FileSaver.saveAs(file);
+          FileSaver.saveAs(res.data, 'model.zip');
         }
-
         setTrainBtnDisabled(false);
       })
       .catch((e) => {
@@ -176,4 +187,11 @@ function ModelTrainer(props) {
   );
 }
 
+ModelTrainer.propTypes = {
+  dataset: PropTypes.array,
+};
+
+ModelTrainer.defaultProps = {
+  dataset: [],
+};
 export default ModelTrainer;
