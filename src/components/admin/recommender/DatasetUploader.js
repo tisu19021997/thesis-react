@@ -40,16 +40,20 @@ function DatasetUploader(props) {
   };
 
   const saveToServer = async () => {
-    if (!data) {
+    if (!data.length) {
       return false;
     }
+
+    const dataset = await data.map((dp) => dp.data);
 
     setSaveBtnDisabled(true);
 
     if (window.confirm('The old dataset may get lost. Please back-up the old dataset first. Still proceed?')) {
-      axios.post('/recommender/dataset', {
-        data,
+      axios.post('/dataset', {
+        data: dataset,
         header: dataHeader,
+      }, {
+        baseURL: 'http://127.0.0.1:5000/api/v1',
       })
         .then((res) => {
           setSaveBtnDisabled(false);
@@ -62,11 +66,16 @@ function DatasetUploader(props) {
   };
 
   const backup = () => {
-    axios.get('/recommender/dataset')
+    axios.get('/dataset',
+      {
+        baseURL: 'http://127.0.0.1:5000/api/v1',
+        maxContentLength: 100000000, // 1gb
+        maxBodyLength: 100000000,
+      })
       .then(async (res) => {
         const { data: backupData } = res;
         const filename = 'data-backup.csv';
-        const file = new File([backupData], filename, { type: 'text/plain;charset=utf-8' });
+        const file = new File([backupData], filename, { type: 'text/csv;charset=utf-8' });
         FileSaver.saveAs(file);
       })
       .catch((e) => setMessage(e));
@@ -77,8 +86,8 @@ function DatasetUploader(props) {
     <>
       <Section
         title="Upload New Dataset"
-        data="Upload New Dataset"
-        className="o-layout__item u-2/5"
+        subTitle="Correct format for each row of data: <reviewerID, asin, overall>."
+        className="o-layout__item u-2/5 u-mb-36"
       >
         <CSVReader
           onDrop={handleOnDrop}
@@ -118,7 +127,11 @@ function DatasetUploader(props) {
       </Section>
 
 
-      <Section title="Data Live Preview" className="o-layout__item u-3/5">
+      <Section
+        title="Data Live Preview"
+        subTitle="A short preview of your data will appear here."
+        className="o-layout__item u-3/5"
+      >
         <table>
           <thead>
           <tr>

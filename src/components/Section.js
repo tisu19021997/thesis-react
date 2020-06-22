@@ -19,7 +19,7 @@ const Section = (props) => {
 
       {subTitle
         ? (
-          <div className="c-section__sub-title u-txt-underline">
+          <div className="c-section__sub-title">
             {subTitle}
           </div>
         )
