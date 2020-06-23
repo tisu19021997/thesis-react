@@ -49,7 +49,7 @@ function StoreManagement() {
                 to="/store-management/products/import"
                 activeStyle={navActiveStyle}
               >
-                Import Products
+                Import/Export
               </NavLink>
             </div>
           </div>
@@ -80,7 +80,7 @@ function StoreManagement() {
                 to="/store-management/users/import"
                 activeStyle={navActiveStyle}
               >
-                Import Users
+                Import/Export
               </NavLink>
             </div>
           </div>

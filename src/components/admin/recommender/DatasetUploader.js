@@ -87,7 +87,7 @@ function DatasetUploader(props) {
       <Section
         title="Upload New Dataset"
         subTitle="Correct format for each row of data: <reviewerID, asin, overall>."
-        className="o-layout__item u-2/5 u-mb-36"
+        className="o-layout__item u-3/5 u-mb-36"
       >
         <CSVReader
           onDrop={handleOnDrop}
@@ -96,6 +96,7 @@ function DatasetUploader(props) {
             header: true,
             skipEmptyLines: true,
           }}
+          style={{ width: '80%' }}
           addRemoveButton
           onRemoveFile={handleOnRemoveFile}
         >
@@ -129,8 +130,8 @@ function DatasetUploader(props) {
 
       <Section
         title="Data Live Preview"
-        subTitle="A short preview of your data will appear here."
-        className="o-layout__item u-3/5"
+        subTitle="A brief preview of your data will appear here."
+        className="o-layout__item u-2/5"
       >
         <table>
           <thead>

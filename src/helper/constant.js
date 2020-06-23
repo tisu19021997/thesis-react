@@ -45,7 +45,7 @@ export const modelsConfig = {
       },
       {
         name: 'reg_all',
-        label: 'Regularization Parameter',
+        label: 'Reg. Parameter',
         type: 'number',
         default: 0.1,
       },

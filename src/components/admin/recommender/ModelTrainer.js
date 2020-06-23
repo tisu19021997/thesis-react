@@ -93,7 +93,7 @@ function ModelTrainer(props) {
       <Section
         title="Train Your Model"
         subTitle="Select the model, the dataset, and the parameters for training."
-        className="o-layout__item u-3/5 u-mb-36"
+        className="o-layout__item u-4/5 u-mb-36"
       >
         <div className="u-mb-12 u-d-flex">
 
@@ -198,7 +198,7 @@ function ModelTrainer(props) {
       <Section
         title="Model Information"
         subTitle="Information about your trained model will appear here."
-        className="o-layout__item u-2/5 u-mb-36"
+        className="o-layout__item u-1/5 u-mb-36"
       >
         {Object.keys(trainedModelInfo)
           .map((key) => (
