@@ -21,7 +21,7 @@ function CatList() {
   useEffect(() => {
     const query = `?s=${search}&page=${page}&limit=${limit}`;
 
-    axios.get(`/store-management/cats${query}`)
+    axios.get(`/management/cats${query}`)
       .then((res) => {
         const {
           docs, totalPages, totalDocs,
@@ -46,7 +46,7 @@ function CatList() {
     const id = event.currentTarget.getAttribute('data-id');
 
     if (window.confirm('Do you really want to delete this category?')) {
-      axios.delete(`/store-management/cats/${id}`)
+      axios.delete(`/management/cats/${id}`)
         .then((res) => {
           const { id: catId } = res.data;
           setCats(cats.filter((cat) => (cat._id !== catId)));

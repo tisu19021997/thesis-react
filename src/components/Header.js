@@ -80,7 +80,7 @@ class Header extends React.Component {
       if (userRole === 'admin') {
         const { history } = this.props;
 
-        history.push('/store-management');
+        history.push('/management');
       }
     }
   }
@@ -629,15 +629,15 @@ class Header extends React.Component {
 
 
                   <div className="o-layout__item c-header__nav-tool u-3/10 right">
-                    <a
-                      href="/"
-                      className="u-margin-horizontal-tiny"
-                      data-display="inline-flex"
-                      data-hover="darkblue"
-                    >
-                      <FontAwesomeIcon icon="globe" className="large" />
-                      <span className="c-header__nav-tool-text">English</span>
-                    </a>
+                    {/*<a*/}
+                    {/*  href="/"*/}
+                    {/*  className="u-margin-horizontal-tiny"*/}
+                    {/*  data-display="inline-flex"*/}
+                    {/*  data-hover="darkblue"*/}
+                    {/*>*/}
+                    {/*  <FontAwesomeIcon icon="globe" className="large" />*/}
+                    {/*  <span className="c-header__nav-tool-text">English</span>*/}
+                    {/*</a>*/}
 
                     <div
                       className="u-margin-horizontal-tiny"

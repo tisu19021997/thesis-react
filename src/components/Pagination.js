@@ -20,11 +20,11 @@ function Pagination(props) {
   const nextPage = currentPage + 1;
 
   // Only show pages number which are 4-page away from the current page.
-  if (currentPage > 4) {
-    firstPage = currentPage - 4;
+  if (currentPage > 3) {
+    firstPage = currentPage - 2;
   }
 
-  for (let i = firstPage; i <= currentPage + 4 && i <= totalPages; i += 1) {
+  for (let i = firstPage; i <= currentPage + 2 && i <= totalPages; i += 1) {
     buttons.push(
       // eslint-disable-next-line react/jsx-filename-extension
       <button
@@ -42,7 +42,7 @@ function Pagination(props) {
     <>
       {hasPrevPage
         ? (
-          <button type="button" onClick={() => setPage(prevPage)} className="c-paging-prev">
+          <button type="button" onClick={() => setPage(prevPage)} className="c-paging-prev" title="Prev">
             <FontAwesomeIcon icon="chevron-left" />
           </button>
         )
@@ -52,7 +52,7 @@ function Pagination(props) {
 
       {hasNextPage
         ? (
-          <button type="button" onClick={() => setPage(nextPage)} className="c-paging-next">
+          <button type="button" onClick={() => setPage(nextPage)} className="c-paging-next" title="Next">
             <FontAwesomeIcon icon="chevron-right" />
           </button>
         )
@@ -66,14 +66,13 @@ Pagination.propTypes = {
   currentPage: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-  ]),
+  ]).isRequired,
   setPage: PropTypes.func.isRequired,
   hasPrevPage: PropTypes.bool,
   hasNextPage: PropTypes.bool,
 };
 
 Pagination.defaultProps = {
-  currentPage: '1',
   hasPrevPage: false,
   hasNextPage: false,
 };

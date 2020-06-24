@@ -16,7 +16,7 @@ function AddProduct() {
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    axios.post('/store-management/products', {
+    axios.post('/management/products', {
       asin,
       title: name,
       imUrl,

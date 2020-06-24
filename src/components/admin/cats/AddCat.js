@@ -15,7 +15,7 @@ function AddCat() {
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    axios.post('/store-management/cats', {
+    axios.post('/management/cats', {
       name,
       iconClass,
       imUrl,

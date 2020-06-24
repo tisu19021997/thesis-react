@@ -127,7 +127,7 @@ export default class App extends React.Component {
               {isAdmin
                 ? (
                   <Route
-                    path="/store-management"
+                    path="/management"
                     render={(props) => (
                       <StoreManagement {...props} />
                     )}

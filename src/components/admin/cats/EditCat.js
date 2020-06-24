@@ -13,7 +13,7 @@ function EditCat(props) {
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    axios.patch(`/store-management/cats/${cat._id}`, {
+    axios.patch(`/management/cats/${cat._id}`, {
       name,
       iconClass,
       imUrl,

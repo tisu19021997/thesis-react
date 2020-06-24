@@ -19,12 +19,11 @@ function UserList() {
   const [editing, setEditing] = useState('');
   const [isEditOpen, setEditModal] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
-  const [isBusy, setIsBusy] = useState(true);
 
   useEffect(() => {
     const query = `?s=${search}&page=${page}&limit=${limit}&sort=${sort}`;
 
-    axios.get(`/store-management/users${query}`)
+    axios.get(`/management/users${query}`)
       .then((res) => {
         const {
           docs, totalPages, totalDocs,
@@ -49,7 +48,7 @@ function UserList() {
     const id = event.currentTarget.getAttribute('data-id');
 
     if (window.confirm('Do you really want to delete this user?')) {
-      axios.delete(`/store-management/users/${id}`)
+      axios.delete(`/management/users/${id}`)
         .then((res) => {
           const { id: userId } = res.data;
           setUsers(users.filter((user) => (user._id !== userId)));
@@ -140,6 +139,13 @@ function UserList() {
         </select>
       </div>
 
+      <div className="u-mb-24">
+        <Pagination
+          currentPage={page}
+          totalPages={pages}
+          setPage={setPage}
+        />
+      </div>
 
       <table border={1}>
         <thead>
@@ -190,13 +196,6 @@ function UserList() {
         }
         </tbody>
       </table>
-
-
-      <Pagination
-        currentPage={page}
-        totalPages={pages}
-        setPage={setPage}
-      />
 
 
       <Modal

@@ -30,7 +30,7 @@ function StoreManagement() {
             <div className="u-txt-24 u-txt--bold">Products</div>
             <div>
               <NavLink
-                to="/store-management/products/new"
+                to="/management/products/new"
                 activeStyle={navActiveStyle}
               >
                 Create New Product
@@ -38,7 +38,7 @@ function StoreManagement() {
             </div>
             <div>
               <NavLink
-                to="/store-management/products/list"
+                to="/management/products/list"
                 activeStyle={navActiveStyle}
               >
                 Product List
@@ -46,7 +46,7 @@ function StoreManagement() {
             </div>
             <div>
               <NavLink
-                to="/store-management/products/import"
+                to="/management/products/import"
                 activeStyle={navActiveStyle}
               >
                 Import/Export
@@ -61,7 +61,7 @@ function StoreManagement() {
             <div className="u-txt-24 u-txt--bold">Users</div>
             <div>
               <NavLink
-                to="/store-management/users/new"
+                to="/management/users/new"
                 activeStyle={navActiveStyle}
               >
                 Create New User
@@ -69,7 +69,7 @@ function StoreManagement() {
             </div>
             <div>
               <NavLink
-                to="/store-management/users/list"
+                to="/management/users/list"
                 activeStyle={navActiveStyle}
               >
                 Users List
@@ -77,7 +77,7 @@ function StoreManagement() {
             </div>
             <div>
               <NavLink
-                to="/store-management/users/import"
+                to="/management/users/import"
                 activeStyle={navActiveStyle}
               >
                 Import/Export
@@ -91,7 +91,7 @@ function StoreManagement() {
             <div className="u-txt-24 u-txt--bold">Categories</div>
             <div>
               <NavLink
-                to="/store-management/cats/new"
+                to="/management/cats/new"
                 activeStyle={navActiveStyle}
               >
                 Create New Category
@@ -99,7 +99,7 @@ function StoreManagement() {
             </div>
             <div>
               <NavLink
-                to="/store-management/cats/list"
+                to="/management/cats/list"
                 activeStyle={navActiveStyle}
               >
                 Category List
@@ -116,7 +116,7 @@ function StoreManagement() {
           <Switch>
             <Route
               exact
-              path="/store-management/products/new"
+              path="/management/products/new"
               render={(props) => (
                 <AddProduct {...props} />
               )}
@@ -124,7 +124,7 @@ function StoreManagement() {
 
             <Route
               exact
-              path="/store-management/products/list"
+              path="/management/products/list"
               render={(props) => (
                 <ProductList {...props} />
               )}
@@ -132,7 +132,7 @@ function StoreManagement() {
 
             <Route
               exact
-              path="/store-management/products/import"
+              path="/management/products/import"
               render={(props) => (
                 <ImportProduct {...props} />
               )}
@@ -140,7 +140,7 @@ function StoreManagement() {
 
             <Route
               exact
-              path="/store-management/users/list"
+              path="/management/users/list"
               render={(props) => (
                 <UserList {...props} />
               )}
@@ -148,7 +148,7 @@ function StoreManagement() {
 
             <Route
               exact
-              path="/store-management/users/import"
+              path="/management/users/import"
               render={(props) => (
                 <ImportUser {...props} />
               )}
@@ -156,7 +156,7 @@ function StoreManagement() {
 
             <Route
               exact
-              path="/store-management/users/new"
+              path="/management/users/new"
               render={(props) => (
                 <AddUser {...props} />
               )}
@@ -164,7 +164,7 @@ function StoreManagement() {
 
             <Route
               exact
-              path="/store-management/cats/list"
+              path="/management/cats/list"
               render={(props) => (
                 <CatList {...props} />
               )}
@@ -172,7 +172,7 @@ function StoreManagement() {
 
             <Route
               exact
-              path="/store-management/cats/new"
+              path="/management/cats/new"
               render={(props) => (
                 <AddCat {...props} />
               )}

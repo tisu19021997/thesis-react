@@ -24,7 +24,7 @@ function ImportProduct() {
       return false;
     }
 
-    axios.post('/store-management/products/batch', file)
+    axios.post('/management/products/batch', file)
       .then((res) => {
         setMessage(res.data.message);
         setError('');
@@ -39,15 +39,12 @@ function ImportProduct() {
   const parseFile = (fileContent) => {
     try {
       const json = JSON.parse(fileContent);
-      setFile(json);
+      return setFile(json);
     } catch (e) {
       setError(e.message);
       return false;
     }
-
-    return false;
   };
-
 
   return (
     <div className="u-mv-24">
@@ -97,7 +94,7 @@ function ImportProduct() {
         </select>
 
         <ServerExporter
-          endpoint="/store-management/products/batch"
+          endpoint="/management/products/batch"
           fileName="products"
           fileType={fileType}
         />

@@ -9,7 +9,7 @@ function CategoryDropDown(props) {
   const { onChange, queryOrBody } = props;
 
   useEffect(() => {
-    axios.get('/store-management/cats?s=&limit=1000')
+    axios.get('/management/cats?s=&limit=1000')
       .then((res) => {
         const { docs } = res.data;
         setCats(docs);

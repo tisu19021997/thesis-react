@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import * as FileSaver from 'file-saver';
 import axios from 'axios';
 import FileUploader from '../../FileUploader';
 import { useInput } from '../../../helper/hooks';
@@ -23,7 +22,7 @@ function ImportUser() {
       return false;
     }
 
-    axios.post('/store-management/users/batch', file)
+    axios.post('/management/users/batch', file)
       .then((res) => {
         setMessage(res.data.message);
         setError('');
@@ -33,22 +32,6 @@ function ImportUser() {
       });
 
     return true;
-  };
-
-  const exportAll = () => {
-    axios.get(`/store-management/users/batch?type=${fileType}`, {
-      responseType: fileType === 'csv' ? 'blob' : 'json',
-    })
-      .then((res) => {
-        // The response is a Blob object when the file type is CSV and
-        // a JSON object when the file type is JSON.
-        const blob = fileType === 'csv'
-          ? res.data
-          : new Blob([JSON.stringify(res.data)],
-            { type: 'text/plain;charset=utf-8' });
-
-        FileSaver.saveAs(blob, `users.${fileType}`);
-      });
   };
 
   const parseFile = (fileContent) => {
@@ -113,7 +96,7 @@ function ImportUser() {
         </select>
 
         <ServerExporter
-          endpoint="/store-management/users/batch"
+          endpoint="/management/users/batch"
           fileName="users"
           fileType={fileType}
         />

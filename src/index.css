@@ -4646,32 +4646,33 @@ progress::-moz-progress-bar {
 .c-tab__header {
   display: block;
   font-weight: 700;
+  cursor: pointer;
 }
 
-/* line 20, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.tab.scss */
+/* line 21, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.tab.scss */
 .c-tab__header-name {
   display: inline-block;
   opacity: .35;
 }
 
-/* line 24, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.tab.scss */
+/* line 25, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.tab.scss */
 .c-tab__header-name:not(:first-child) {
   margin-left: 24px;
 }
 
-/* line 29, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.tab.scss */
+/* line 30, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.tab.scss */
 .c-tab__header-name.active {
   border-bottom: 3px solid #fd6600;
   opacity: 1;
 }
 
-/* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.tab.scss */
+/* line 36, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.tab.scss */
 .c-tab__content {
   margin-top: 12px;
 }
 
 @media (max-width: 61.24em) {
-  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.tab.scss */
+  /* line 36, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.tab.scss */
   .c-tab__content {
     padding-left: 6px;
   }
@@ -4724,6 +4725,65 @@ progress::-moz-progress-bar {
 /* line 39, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.table.scss */
 .c-table__value {
   width: 40%;
+}
+
+/*==========================================================================
+   #DATA TABLE
+   ========================================================================== */
+/* line 6, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  border: 1px solid #cbcbcb;
+}
+
+/* line 12, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable > thead {
+  background-color: #e0e0e0;
+  color: #000;
+  text-align: left;
+  vertical-align: bottom;
+}
+
+/* line 19, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable td, .c-datatable th {
+  padding: .5em 1em;
+  border-left: 1px solid #cbcbcb;
+  border-left-width: 1px;
+  border-bottom-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  font-size: inherit;
+  margin: 0;
+  overflow: visible;
+}
+
+/* line 31, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable td {
+  background-color: transparent;
+}
+
+/* line 37, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable--scrollable tbody {
+  overflow-y: scroll;
+}
+
+/* line 41, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable--scrollable thead, .c-datatable--scrollable tbody {
+  display: block;
+}
+
+/* line 45, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable--scrollable td, .c-datatable--scrollable th {
+  width: 100%;
+}
+
+/* line 51, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable--horizontal td, .c-datatable--horizontal th {
+  border-width: 0 0 1px;
+  border-bottom-width: 1px;
+  border-bottom: 1px solid #cbcbcb;
 }
 
 /*==========================================================================

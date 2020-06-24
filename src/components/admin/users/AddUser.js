@@ -16,7 +16,7 @@ function AddUser() {
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    axios.post('/store-management/users', {
+    axios.post('/management/users', {
       username,
       password,
       email,

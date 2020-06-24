@@ -18,7 +18,7 @@ function EditProduct(props) {
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    axios.patch(`/store-management/products/${product._id}`, {
+    axios.patch(`/management/products/${product._id}`, {
       asin,
       title,
       price,

@@ -27,7 +27,7 @@ function ProductList() {
   useEffect(() => {
     const query = `?s=${search}&page=${page}&limit=${limit}&sort=${sort}&${catFilter}`;
 
-    axios.get(`/store-management/products${query}`)
+    axios.get(`/management/products${query}`)
       .then((res) => {
         const {
           products: docs, totalPages, totalDocs,
@@ -53,7 +53,7 @@ function ProductList() {
     const id = event.currentTarget.getAttribute('data-id');
 
     if (window.confirm('Do you really want to delete this product?')) {
-      axios.delete(`/store-management/products/${id}`)
+      axios.delete(`/management/products/${id}`)
         .then((res) => {
           const { id: productId } = res.data;
           setProducts(products.filter((product) => (product._id !== productId)));
@@ -154,6 +154,13 @@ function ProductList() {
         />
       </div>
 
+      <div className="u-mb-24">
+        <Pagination
+          currentPage={page}
+          totalPages={pages}
+          setPage={setPage}
+        />
+      </div>
 
       <table border={1}>
         <thead>
@@ -209,13 +216,6 @@ function ProductList() {
         }
         </tbody>
       </table>
-
-
-      <Pagination
-        currentPage={page}
-        totalPages={pages}
-        setPage={setPage}
-      />
 
 
       <Modal

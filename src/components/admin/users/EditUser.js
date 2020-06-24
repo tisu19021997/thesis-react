@@ -13,7 +13,7 @@ function EditUser(props) {
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    axios.patch(`/store-management/users/${user._id}`, {
+    axios.patch(`/management/users/${user._id}`, {
       username,
       email,
       role,

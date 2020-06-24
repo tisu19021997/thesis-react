@@ -40,6 +40,7 @@ function ModelTrainer(props) {
     modelsConfig[model].params.map(
       (param) => {
         modelDefaults[param.name] = modelParams[param.name] || param.default;
+        return true;
       },
     );
     let dataHeader = [];
