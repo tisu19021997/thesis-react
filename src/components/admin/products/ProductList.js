@@ -8,6 +8,7 @@ import Pagination from '../../Pagination';
 import CategoryDropDown from '../../CategoryDropDown';
 
 function ProductList() {
+  // TODO: Use the UseDataList hook instead.
   const [products, setProducts] = useState([]);
   const [totalProducts, setTotal] = useState(0);
   const [pages, setPages] = useState(0);
@@ -30,7 +31,7 @@ function ProductList() {
     axios.get(`/management/products${query}`)
       .then((res) => {
         const {
-          products: docs, totalPages, totalDocs,
+          docs, totalPages, totalDocs,
         } = res.data;
 
         // update state

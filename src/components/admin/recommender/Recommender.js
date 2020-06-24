@@ -22,39 +22,47 @@ function Recommender() {
         <Tabs className="c-tab u-mt-36 u-mb-24">
           <TabList className="c-tab__header u-border--m-blur">
             <Tab
-              className="c-tab__header-name u-txt-14"
+              className="c-tab__header-name u-txt-22"
               selectedClassName="active"
             >
-              Dataset Controller
+              Dataset
             </Tab>
             <Tab
-              className="c-tab__header-name u-txt-14"
+              className="c-tab__header-name u-txt-22"
               selectedClassName="active"
             >
-              Model Controller
+              Model
             </Tab>
             <Tab
-              className="c-tab__header-name u-txt-14"
+              className="c-tab__header-name u-txt-22"
               selectedClassName="active"
             >
-              Recommendation Controller
+              Users Recommendation
+            </Tab>
+            <Tab
+              className="c-tab__header-name u-txt-22"
+              selectedClassName="active"
+            >
+              Related Products
             </Tab>
           </TabList>
 
 
           <div className="c-tab__content">
 
-            <TabPanel className="c-tab__content-item u-txt--normal u-txt-14">
+            <TabPanel className="c-tab__content-item u-txt--normal">
               <DatasetUploader setDataset={setDataset} />
             </TabPanel>
 
-            <TabPanel className="c-tab__content-item u-txt--normal u-txt-14">
+            <TabPanel className="c-tab__content-item u-txt--normal">
               <ModelTrainer dataset={dataset} />
             </TabPanel>
 
-            <TabPanel className="c-tab__content-item u-txt--normal u-txt-14">
+            <TabPanel className="c-tab__content-item u-txt--normal">
               <RecommendationGenerator />
+            </TabPanel>
 
+            <TabPanel className="c-tab__content-item u-txt--normal">
               <RelatedProductsGenerator />
             </TabPanel>
 
