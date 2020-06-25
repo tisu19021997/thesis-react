@@ -4779,7 +4779,26 @@ progress::-moz-progress-bar {
   width: 100%;
 }
 
-/* line 51, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+/* line 49, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable--scrollable tr {
+  display: flex;
+}
+
+/* line 53, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable--scrollable td, .c-datatable--scrollable th {
+  flex-basis: 100%;
+  flex-grow: 2;
+  display: block;
+  text-align: left;
+}
+
+/* line 62, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable--small-first-col td:first-child, .c-datatable--small-first-col th:first-child {
+  flex-basis: 20%;
+  flex-grow: 1;
+}
+
+/* line 69, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
 .c-datatable--horizontal td, .c-datatable--horizontal th {
   border-width: 0 0 1px;
   border-bottom-width: 1px;
@@ -5011,6 +5030,19 @@ progress::-moz-progress-bar {
 /* line 17, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.layer.scss */
 .u-layer-last {
   z-index: -1;
+}
+
+/* ==========================================================================
+   #OVERFLOW
+   ========================================================================== */
+/* line 8, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.overflow.scss */
+.u-overflow-scroll {
+  overflow: scroll;
+}
+
+/* line 12, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.overflow.scss */
+.u-overflow-x-scroll {
+  overflow-x: scroll;
 }
 
 /* ==========================================================================
@@ -6129,7 +6161,7 @@ progress::-moz-progress-bar {
 * classes below if you want a fixed font size.
 */
 @media (min-width: 20em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--tiny {
     font-size: 8px;
     font-size: 0.5rem;
@@ -6138,7 +6170,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--tiny {
     font-size: 10px;
     font-size: 0.625rem;
@@ -6147,7 +6179,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 20em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--smaller {
     font-size: 10px;
     font-size: 0.625rem;
@@ -6156,7 +6188,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--smaller {
     font-size: 12px;
     font-size: 0.75rem;
@@ -6165,7 +6197,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 20em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--small {
     font-size: 12px;
     font-size: 0.75rem;
@@ -6174,7 +6206,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--small {
     font-size: 14px;
     font-size: 0.875rem;
@@ -6183,7 +6215,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 20em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--medium {
     font-size: 16px;
     font-size: 1rem;
@@ -6192,7 +6224,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--medium {
     font-size: 18px;
     font-size: 1.125rem;
@@ -6201,7 +6233,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 20em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--large, .c-option__btn {
     font-size: 20px;
     font-size: 1.25rem;
@@ -6210,7 +6242,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--large, .c-option__btn {
     font-size: 22px;
     font-size: 1.375rem;
@@ -6219,7 +6251,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 20em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--larger {
     font-size: 22px;
     font-size: 1.375rem;
@@ -6228,7 +6260,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--larger {
     font-size: 24px;
     font-size: 1.5rem;
@@ -6237,7 +6269,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 20em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--pretty {
     font-size: 14px;
     font-size: 0.875rem;
@@ -6246,7 +6278,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--pretty {
     font-size: 16px;
     font-size: 1rem;
@@ -6255,7 +6287,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 20em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--title {
     font-size: 26px;
     font-size: 1.625rem;
@@ -6264,7 +6296,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--title {
     font-size: 28px;
     font-size: 1.75rem;
@@ -6273,7 +6305,25 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 20em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  .u-txt--standout {
+    font-size: 36px;
+    font-size: 2.25rem;
+    line-height: 1.16667;
+  }
+}
+
+@media (min-width: 61.25em) {
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  .u-txt--standout {
+    font-size: 38px;
+    font-size: 2.375rem;
+    line-height: 1.26316;
+  }
+}
+
+@media (min-width: 20em) {
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--huge {
     font-size: 40px;
     font-size: 2.5rem;
@@ -6282,7 +6332,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 34, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+  /* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
   .u-txt--huge {
     font-size: 42px;
     font-size: 2.625rem;
@@ -6290,63 +6340,63 @@ progress::-moz-progress-bar {
   }
 }
 
-/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-8 {
   font-size: 8px;
   font-size: 0.5rem;
   line-height: 2.25;
 }
 
-/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-10 {
   font-size: 10px;
   font-size: 0.625rem;
   line-height: 1.8;
 }
 
-/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-12 {
   font-size: 12px;
   font-size: 0.75rem;
   line-height: 1.5;
 }
 
-/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-14 {
   font-size: 14px;
   font-size: 0.875rem;
   line-height: 1.71429;
 }
 
-/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-16 {
   font-size: 16px;
   font-size: 1rem;
   line-height: 1.5;
 }
 
-/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-20 {
   font-size: 20px;
   font-size: 1.25rem;
   line-height: 1.5;
 }
 
-/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-22 {
   font-size: 22px;
   font-size: 1.375rem;
   line-height: 1.36364;
 }
 
-/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-24 {
   font-size: 24px;
   font-size: 1.5rem;
   line-height: 1.25;
 }
 
-/* line 56, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-40 {
   font-size: 40px;
   font-size: 2.5rem;
@@ -6373,22 +6423,22 @@ progress::-moz-progress-bar {
   color: #fd6600;
 }
 
-/* line 74, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 75, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-align-center {
   text-align: center;
 }
 
-/* line 78, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 79, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-align-right {
   text-align: right;
 }
 
-/* line 82, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 83, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-align-justify {
   text-align: justify;
 }
 
-/* line 86, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 87, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-align-left {
   text-align: left;
 }
@@ -6443,22 +6493,22 @@ progress::-moz-progress-bar {
   font-weight: 950;
 }
 
-/* line 108, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 109, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-linethrough {
   text-decoration: line-through;
 }
 
-/* line 112, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 113, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-underline {
   text-decoration: underline;
 }
 
-/* line 118, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 119, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt--i {
   font-style: italic;
 }
 
-/* line 129, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 130, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-truncate-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -6466,7 +6516,7 @@ progress::-moz-progress-bar {
   -webkit-box-orient: vertical;
 }
 
-/* line 129, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 130, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-truncate-2 {
   overflow: hidden;
   display: -webkit-box;
@@ -6474,7 +6524,7 @@ progress::-moz-progress-bar {
   -webkit-box-orient: vertical;
 }
 
-/* line 129, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 130, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-truncate-3 {
   overflow: hidden;
   display: -webkit-box;
@@ -6482,7 +6532,7 @@ progress::-moz-progress-bar {
   -webkit-box-orient: vertical;
 }
 
-/* line 129, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 130, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-truncate-4 {
   overflow: hidden;
   display: -webkit-box;
@@ -6490,7 +6540,7 @@ progress::-moz-progress-bar {
   -webkit-box-orient: vertical;
 }
 
-/* line 136, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
+/* line 137, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/utilities/_utilities.text.scss */
 .u-txt-lineh-1 {
   line-height: 1;
 }

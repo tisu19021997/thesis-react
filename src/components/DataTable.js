@@ -3,7 +3,7 @@ import PropTypes, { instanceOf } from 'prop-types';
 
 function DataTable(props) {
   const {
-    data, fields, fieldToCheck, selected, select, className,
+    data, fields, hasSelect, fieldToCheck, selected, select, className,
   } = props;
 
   const selectAll = (event) => {
@@ -26,17 +26,21 @@ function DataTable(props) {
       className={className}
       style={{
         boxShadow: '-2px 4px 17px 7px rgba(199,199,199,1)',
+        width: 'auto',
       }}
     >
       <thead>
       <tr>
-        <th>
-          <input
-            style={{ scale: '1.5' }}
-            type="checkbox"
-            onChange={selectAll}
-          />
-        </th>
+        {hasSelect && (
+          <th>
+            <input
+              style={{ scale: '1.5' }}
+              type="checkbox"
+              onChange={selectAll}
+            />
+          </th>
+        )}
+
         {
           fields.map((field) => <th key={field}>{field}</th>)
         }
@@ -49,31 +53,42 @@ function DataTable(props) {
       >
       {
         data
-          ? data.map((dp) => (
-            <tr key={dp[fieldToCheck]}>
-              <td>
-                <input
-                  style={{ scale: '1.5' }}
-                  type="checkbox"
-                  value={dp[fieldToCheck]}
-                  checked={selected.has(dp[fieldToCheck])}
-                  onChange={() => {
-                    const newSelectedUsers = new Set(selected);
+          ? data.map((dp, index) => (
+            <tr key={index}>
+              {hasSelect && (
+                <td>
+                  <input
+                    style={{ scale: '1.5' }}
+                    type="checkbox"
+                    value={dp[fieldToCheck]}
+                    checked={selected.has(dp[fieldToCheck])}
+                    onChange={() => {
+                      const newSelectedUsers = new Set(selected);
 
-                    if (newSelectedUsers.has(dp[fieldToCheck])) {
-                      newSelectedUsers.delete(dp[fieldToCheck]);
-                    } else {
-                      newSelectedUsers.add(dp[fieldToCheck]);
-                    }
+                      if (newSelectedUsers.has(dp[fieldToCheck])) {
+                        newSelectedUsers.delete(dp[fieldToCheck]);
+                      } else {
+                        newSelectedUsers.add(dp[fieldToCheck]);
+                      }
 
-                    return select(newSelectedUsers);
-                  }}
-                />
-              </td>
+                      return select(newSelectedUsers);
+                    }}
+                  />
+                </td>
+              )}
 
-              <td>
-                <span className="u-p-6">{dp[fieldToCheck]}</span>
-              </td>
+              {fields.map((field, idx) => {
+                if (field && dp[field]) {
+                  return (
+                    <td key={field}>
+                      {`${dp[field].toString()
+                        .substr(0, 40)}...`}
+                    </td>
+                  );
+                }
+
+                return <td key={idx} />;
+              })}
 
             </tr>
           ))
@@ -88,13 +103,18 @@ DataTable.propTypes = {
   className: PropTypes.string,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   fields: PropTypes.arrayOf(PropTypes.string).isRequired,
-  fieldToCheck: PropTypes.string.isRequired,
-  selected: instanceOf(Set).isRequired,
-  select: PropTypes.func.isRequired,
+  fieldToCheck: PropTypes.string,
+  selected: instanceOf(Set),
+  select: PropTypes.func,
+  hasSelect: PropTypes.bool,
 };
 
 DataTable.defaultProps = {
   className: 'c-datatable',
+  hasSelect: false,
+  selected: new Set([]),
+  fieldToCheck: '',
+  select: () => false,
 };
 
 export default DataTable;

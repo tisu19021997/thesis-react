@@ -3,41 +3,51 @@ import Section from '../../Section';
 import { useDataList } from '../../../helper/hooks';
 import DataTable from '../../DataTable';
 import Pagination from '../../Pagination';
+import ErrorPage from '../../page/ErrorPage';
+import SearchBar from '../../SearchBar';
 
 function RelatedProductsGenerator() {
   const {
-    data, totalDataCount, page, setPage, pages, setSearch, hasPrev, hasNext,
+    data, totalDataCount, page, setPage, pages, setSearch, hasPrev, hasNext, error,
   } = useDataList('/management/products');
 
   const [selectedProducts, selectProducts] = useState(new Set());
-
+  const [isFetching, setIsFetching] = useState(false);
+  const [kNeighbors, setKNeighbors] = useState(50);
+  const [message, setMessage] = useState('');
   const searchInputRef = useRef(null);
+
+  if (error) {
+    return <ErrorPage message={error.data} code={error.code} />;
+  }
+
+  const getRelatedProducts = () => {
+
+  };
 
   return (
     <Section
       className="o-layout__item"
       title="Generate Related Products"
+      titleClass="u-h1"
       subTitle="Using Item-based KNN model to find products' neighbors."
-      contentClass="u-txt-align-center"
+      subTitleClass="u-h4 u-mb-24"
+      contentClass="u-txt-align-center u-txt-24"
     >
-      <input
-        className="c-searchbar__box u-mb-24 u-d-iblock u-w--50"
-        style={{ height: '50px' }}
-        ref={searchInputRef}
-        type="search"
-        placeholder="Search by name or ASIN or brand"
-        data-border="rounded"
-      />
-      <button
-        type="button"
-        className="c-btn c-btn--small c-btn--rounded c-btn--primary u-d-iblock"
-        onClick={() => {
-          setSearch(searchInputRef.current.value);
-          setPage(1);
-        }}
-      >
-        Search
-      </button>
+      <div className="u-w--50 u-mb-24 u-ml-auto u-mr-auto">
+        <SearchBar
+          inputStyle={{
+            height: '50px',
+          }}
+          searchHandler={(event) => {
+            event.preventDefault();
+            setSearch(searchInputRef.current.value);
+            setPage(1);
+          }}
+          inputRef={searchInputRef}
+          inputPlaceholder="Search by Name or ASIN or Brand"
+        />
+      </div>
 
       {data && (
         <p className="u-txt--light">
@@ -45,7 +55,7 @@ function RelatedProductsGenerator() {
           <span className="u-txt--bold">{` ${data.length} `}</span>
           of
           <span className="u-txt--bold">{` ${totalDataCount} `}</span>
-          users
+          products
         </p>
       )}
 
@@ -60,13 +70,38 @@ function RelatedProductsGenerator() {
       </div>
 
       <DataTable
-        className="u-ml-auto u-mr-auto u-txt-align-left u-w--33 c-datatable c-datatable--horizontal c-datatable--scrollable"
+        className="u-ml-auto u-mr-auto u-txt-align-left c-datatable--small-first-col c-datatable c-datatable--horizontal c-datatable--scrollable"
         data={data}
+        hasSelect
         selected={selectedProducts}
         select={selectProducts}
-        fields={['asin']}
+        fields={['asin', 'title', 'brand']}
         fieldToCheck="asin"
       />
+
+      <div className="u-mb-12 u-d-flex u-fd--column">
+        <label htmlFor="k" className="u-txt--light u-mr-6">
+          Number of recommendation products
+          <input
+            name="k"
+            type="number"
+            className="u-w--10 u-as--center"
+            {...setKNeighbors}
+            defaultValue={kNeighbors}
+          />
+        </label>
+      </div>
+
+      <div>{message}</div>
+
+      <button
+        type="button"
+        className="c-btn c-btn--rounded c-btn--primary u-mt-12"
+        disabled={isFetching}
+        onClick={getRelatedProducts}
+      >
+        {isFetching ? 'Generating..' : 'Generate'}
+      </button>
 
     </Section>
   );

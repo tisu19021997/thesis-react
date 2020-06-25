@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import Section from '../../Section';
 import { useDataList, useInput } from '../../../helper/hooks';
 import Pagination from '../../Pagination';
 import DataTable from '../../DataTable';
+import SearchBar from '../../SearchBar';
 
 function RecommendationGenerator() {
-  // TODO: use the UseDataList hook instead.
   const {
     data: users, totalDataCount: totalUsers, page, setPage, pages, setSearch, hasPrev, hasNext,
   } = useDataList('/management/users');
@@ -21,7 +21,7 @@ function RecommendationGenerator() {
 
   const generateRecommendations = async () => {
     // Disable the button.
-    await setFetching(true);
+    setFetching(true);
 
     await axios.post('/users/batch',
       {
@@ -53,29 +53,25 @@ function RecommendationGenerator() {
     <Section
       className="o-layout__item"
       title="Generate Recommendations for Users"
+      titleClass="u-h1"
       subTitle="Handy user recommendation generator using Incremental SVD model."
-      contentClass="u-txt-align-center"
+      subTitleClass="u-h4 u-mb-24"
+      contentClass="u-txt-align-center u-txt-24"
     >
-      <input
-        className="c-searchbar__box u-mb-24 u-d-iblock u-w--50"
-        style={{
-          height: '50px',
-        }}
-        ref={searchInputRef}
-        type="search"
-        placeholder="Search user by name or email"
-        data-border="rounded"
-      />
-      <button
-        type="button"
-        className="c-btn c-btn--small c-btn--rounded c-btn--primary u-d-iblock"
-        onClick={() => {
-          setSearch(searchInputRef.current.value);
-          setPage(1);
-        }}
-      >
-        Search
-      </button>
+      <div className="u-w--50 u-mb-24 u-ml-auto u-mr-auto">
+        <SearchBar
+          inputStyle={{
+            height: '50px',
+          }}
+          searchHandler={(event) => {
+            event.preventDefault();
+            setSearch(searchInputRef.current.value);
+            setPage(1);
+          }}
+          inputRef={searchInputRef}
+          inputPlaceholder="Search by Name or Email"
+        />
+      </div>
 
       <p className="u-txt--light">
         Showing
@@ -97,6 +93,7 @@ function RecommendationGenerator() {
 
       <DataTable
         className="u-ml-auto u-mr-auto u-txt-align-left u-w--33 c-datatable c-datatable--horizontal c-datatable--scrollable"
+        hasSelect
         selected={selectedUsers}
         select={selectUsers}
         data={users}
@@ -107,14 +104,15 @@ function RecommendationGenerator() {
       <div className="u-mb-12 u-d-flex u-fd--column">
         <label htmlFor="k" className="u-txt--light u-mr-6">
           Number of recommendation products
+          {' '}
+          <input
+            name="k"
+            type="number"
+            className="u-w--10 u-as--center"
+            {...setK}
+            defaultValue={k}
+          />
         </label>
-        <input
-          name="k"
-          type="number"
-          className="u-w--10 u-as--center"
-          {...setK}
-          defaultValue={k}
-        />
       </div>
 
       <div>{message}</div>

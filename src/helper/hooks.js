@@ -23,9 +23,12 @@ export const useDataList = (endpoint) => {
   const [search, setSearch] = useState('');
   const [hasPrev, setHasPrev] = useState(false);
   const [hasNext, setHasNext] = useState(false);
+  const [limit, setLimit] = useState(100);
+  const [sort, setSort] = useState('newest');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const query = `${endpoint}?s=${search}&page=${page}&sort=newest&limit=100`;
+    const query = `${endpoint}?s=${search}&page=${page}&sort=${sort}&limit=${limit}`;
 
     axios.get(query)
       .then((res) => {
@@ -39,10 +42,8 @@ export const useDataList = (endpoint) => {
         setHasPrev(hasPrevPage);
         setHasNext(hasNextPage);
       })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  }, [page, search]);
+      .catch((e) => e);
+  }, [endpoint, limit, page, search, sort]);
 
   return {
     data,
@@ -53,5 +54,8 @@ export const useDataList = (endpoint) => {
     setSearch,
     hasPrev,
     hasNext,
+    setLimit,
+    setSort,
+    error,
   };
 };

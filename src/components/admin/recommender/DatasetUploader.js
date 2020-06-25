@@ -4,6 +4,7 @@ import axios from 'axios';
 import { CSVReader } from 'react-papaparse';
 import * as FileSaver from 'file-saver';
 import Section from '../../Section';
+import DataTable from '../../DataTable';
 
 function DatasetUploader(props) {
   const { setDataset } = props;
@@ -13,6 +14,7 @@ function DatasetUploader(props) {
   const [message, setMessage] = useState('');
 
   const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
+  const dataset = data ? data.map((dp) => dp.data) : [];
 
   const handleOnDrop = async (results) => {
     if (!results) {
@@ -42,8 +44,6 @@ function DatasetUploader(props) {
     if (!data.length) {
       return false;
     }
-
-    const dataset = await data.map((dp) => dp.data);
 
     setSaveBtnDisabled(true);
 
@@ -83,8 +83,11 @@ function DatasetUploader(props) {
     <>
       <Section
         title="Upload New Dataset"
+        titleClass="u-h1"
         subTitle="Correct format for each row of data: <reviewerID, asin, overall>."
-        className="o-layout__item u-3/5 u-mb-36"
+        subTitleClass="u-h4"
+        className="o-layout__item u-mb-36"
+        contentClass="u-txt-align-center"
       >
         <CSVReader
           onDrop={handleOnDrop}
@@ -93,7 +96,11 @@ function DatasetUploader(props) {
             header: true,
             skipEmptyLines: true,
           }}
-          style={{ width: '80%' }}
+          style={{
+            width: '80%',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+          }}
           addRemoveButton
           onRemoveFile={handleOnRemoveFile}
         >
@@ -122,34 +129,19 @@ function DatasetUploader(props) {
       </Section>
 
       <Section
+        className="o-layout__item"
         title="Data Live Preview"
+        titleClass="u-h1"
         subTitle="A brief preview of your data will appear here."
-        className="o-layout__item u-2/5"
+        subTitleClass="u-h4"
+        contentClass={`u-txt-align-center u-txt-24 ${dataset.length ? 'u-overflow-x-scroll' : ''}`}
       >
         {data.length > 0 && (
-          <table className="c-datatable c-datatable--horizontal c-datatable--scrollable">
-            <thead>
-            <tr>
-              {dataHeader.map((item) => (
-                <th style={{ textAlign: 'left' }} key={item} scope="col">{item}</th>
-              ))}
-            </tr>
-            </thead>
-
-            <tbody style={{ maxHeight: '300px' }}>
-            {data.slice(-100)
-              .map((dataPoint) => (
-                <tr key={dataPoint.meta.cursor}>
-                  {Object.keys(dataPoint.data)
-                    .map((key) => (
-                      <td key={key}>
-                        <span>{dataPoint.data[key]}</span>
-                      </td>
-                    ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <DataTable
+            className="u-mb-0 u-ml-auto u-mr-auto u-txt-align-left c-datatable c-datatable--horizontal c-datatable--scrollable"
+            data={dataset.slice(-100)}
+            fields={dataHeader}
+          />
         )}
       </Section>
     </>
