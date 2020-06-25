@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -6,45 +6,20 @@ import Modal from 'react-modal';
 import EditProduct from './EditProduct';
 import Pagination from '../../Pagination';
 import CategoryDropDown from '../../CategoryDropDown';
+import { useDataList } from '../../../helper/hooks';
+import SearchBar from '../../SearchBar';
 
 function ProductList() {
-  // TODO: Use the UseDataList hook instead.
-  const [products, setProducts] = useState([]);
-  const [totalProducts, setTotal] = useState(0);
-  const [pages, setPages] = useState(0);
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('');
-  const [isSearching, setIsSearching] = useState(false);
-  const [sort, setSort] = useState('');
-  const [catFilter, setCatFilter] = useState('');
-  const [limit, setLimit] = useState(100);
   const [editing, setEditing] = useState('');
   const [isEditOpen, setEditModal] = useState(false);
-
-  // this state is used to prevent unnecessary calls to server,
-  // only make call to server when the product is edited.
   const [isEdited, setIsEdited] = useState(false);
 
-  useEffect(() => {
-    const query = `?s=${search}&page=${page}&limit=${limit}&sort=${sort}&${catFilter}`;
+  const searchInputRef = useRef(null);
 
-    axios.get(`/management/products${query}`)
-      .then((res) => {
-        const {
-          docs, totalPages, totalDocs,
-        } = res.data;
-
-        // update state
-        setProducts(docs);
-        setPages(totalPages);
-        setTotal(totalDocs);
-        setIsSearching(false);
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  }, [page, isSearching, limit, sort, isEdited, catFilter]);
-
+  const {
+    data: products, setData: setProducts, totalDataCount: totalProducts, pages, page, limit,
+    setPage, setSearch, setSort, setLimit, setCatFilter, hasNext, hasPrev,
+  } = useDataList('/management/products');
 
   const resetPaging = () => {
     setPage(1);
@@ -79,28 +54,21 @@ function ProductList() {
         Product List
       </div>
 
-      <input
-        style={{ width: '50%' }}
-        className="c-searchbar__box u-mb-24"
-        onChange={(event) => {
-          const { value } = event.target;
-          setSearch(value);
-        }}
-        type="search"
-        placeholder="Search"
-        data-border="rounded"
-      />
+      <div className="u-w--50 u-mb-24">
+        <SearchBar
+          inputStyle={{
+            height: '50px',
+          }}
+          searchHandler={(event) => {
+            event.preventDefault();
+            setSearch(searchInputRef.current.value);
+            setPage(1);
+          }}
+          inputRef={searchInputRef}
+          inputPlaceholder="Search by Name or ASIN or Brand"
+        />
+      </div>
 
-      <button
-        type="button"
-        className="c-btn c-btn--small c-btn--rounded c-btn--primary"
-        onClick={() => {
-          setIsSearching(true);
-          resetPaging();
-        }}
-      >
-        Search
-      </button>
 
       <div className="u-mv-24 u-txt-16">
 
@@ -160,8 +128,13 @@ function ProductList() {
           currentPage={page}
           totalPages={pages}
           setPage={setPage}
+          hasPrevPage={hasPrev}
+          hasNextPage={hasNext}
         />
       </div>
+
+      {/* {products.length > 0 && */}
+      {/* <DataTable data={products} fields={['asin', 'title', 'price', 'imUrl']} />} */}
 
       <table border={1}>
         <thead>
@@ -184,7 +157,7 @@ function ProductList() {
                     {product.title}
                   </Link>
                 </td>
-                <td>{product.price}</td>
+                <td>{`$${product.price}`}</td>
                 <td>{product.discountPrice}</td>
                 <td>
                   <img src={product.imUrl} alt={product.title} width={100} />
@@ -217,7 +190,6 @@ function ProductList() {
         }
         </tbody>
       </table>
-
 
       <Modal
         style={{

@@ -13,8 +13,6 @@ function EditProduct(props) {
   const { state: imUrl, bind: bindImUrl } = useInput(product.imUrl);
   const { state: description, bind: bindDesc } = useInput(product.description);
 
-  console.log(product.asin);
-
   const onFormSubmit = (event) => {
     event.preventDefault();
 

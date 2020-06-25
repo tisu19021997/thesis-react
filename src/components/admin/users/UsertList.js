@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -6,39 +6,21 @@ import Modal from 'react-modal';
 import EditUser from './EditUser';
 import { isoDateToString } from '../../../helper/string';
 import Pagination from '../../Pagination';
+import { useDataList } from '../../../helper/hooks';
+import SearchBar from '../../SearchBar';
 
 function UserList() {
-  const [users, setUsers] = useState([]);
-  const [totalUsers, setTotal] = useState(0);
-  const [pages, setPages] = useState(0);
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const [sort, setSort] = useState('');
-  const [limit, setLimit] = useState(50);
   const [editing, setEditing] = useState('');
   const [isEditOpen, setEditModal] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
 
-  useEffect(() => {
-    const query = `?s=${search}&page=${page}&limit=${limit}&sort=${sort}`;
+  const searchInputRef = useRef(null);
 
-    axios.get(`/management/users${query}`)
-      .then((res) => {
-        const {
-          docs, totalPages, totalDocs,
-        } = res.data;
-
-        // update state
-        setUsers(docs);
-        setPages(totalPages);
-        setTotal(totalDocs);
-        setIsSearching(false);
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  }, [page, isSearching, limit, sort, isEdited]);
+  const {
+    data: users, setData: setUsers, totalDataCount: totalUsers, pages, page, limit,
+    setPage, setSearch, setSort, setLimit, hasNext, hasPrev,
+  } = useDataList('/management/users');
 
   const resetPaging = () => {
     setPage(1);
@@ -73,28 +55,20 @@ function UserList() {
         User List
       </div>
 
-      <input
-        style={{ width: '50%' }}
-        className="c-searchbar__box u-mb-24"
-        onChange={(event) => {
-          const { value } = event.target;
-          setSearch(value);
-        }}
-        type="search"
-        placeholder="Search"
-        data-border="rounded"
-      />
-
-      <button
-        type="button"
-        className="c-btn c-btn--small c-btn--rounded c-btn--primary"
-        onClick={() => {
-          setIsSearching(true);
-          resetPaging();
-        }}
-      >
-        Search
-      </button>
+      <div className="u-w--50 u-mb-24">
+        <SearchBar
+          inputStyle={{
+            height: '50px',
+          }}
+          searchHandler={(event) => {
+            event.preventDefault();
+            setSearch(searchInputRef.current.value);
+            setPage(1);
+          }}
+          inputRef={searchInputRef}
+          inputPlaceholder="Search by Name or Email"
+        />
+      </div>
 
       <div className="u-mv-24 u-txt-16">
 
@@ -144,6 +118,8 @@ function UserList() {
           currentPage={page}
           totalPages={pages}
           setPage={setPage}
+          hasNextPage={hasNext}
+          hasPrevPage={hasPrev}
         />
       </div>
 
