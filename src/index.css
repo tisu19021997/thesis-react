@@ -4764,27 +4764,32 @@ progress::-moz-progress-bar {
   background-color: transparent;
 }
 
-/* line 37, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+/* line 35, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+.c-datatable .selected {
+  background: rgba(46, 170, 220, 0.2) none repeat scroll 0% 0%;
+}
+
+/* line 41, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
 .c-datatable--scrollable tbody {
   overflow-y: scroll;
 }
 
-/* line 41, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+/* line 45, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
 .c-datatable--scrollable thead, .c-datatable--scrollable tbody {
   display: block;
 }
 
-/* line 45, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+/* line 49, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
 .c-datatable--scrollable td, .c-datatable--scrollable th {
   width: 100%;
 }
 
-/* line 49, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+/* line 53, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
 .c-datatable--scrollable tr {
   display: flex;
 }
 
-/* line 53, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+/* line 57, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
 .c-datatable--scrollable td, .c-datatable--scrollable th {
   flex-basis: 100%;
   flex-grow: 2;
@@ -4792,13 +4797,13 @@ progress::-moz-progress-bar {
   text-align: left;
 }
 
-/* line 62, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+/* line 66, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
 .c-datatable--small-first-col td:first-child, .c-datatable--small-first-col th:first-child {
   flex-basis: 20%;
   flex-grow: 1;
 }
 
-/* line 69, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
+/* line 73, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.datatable.scss */
 .c-datatable--horizontal td, .c-datatable--horizontal th {
   border-width: 0 0 1px;
   border-bottom-width: 1px;

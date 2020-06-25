@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes, { instanceOf } from 'prop-types';
+import { concatString } from '../helper/string';
 
 function DataTable(props) {
   const {
@@ -54,7 +55,10 @@ function DataTable(props) {
       {
         data
           ? data.map((dp, index) => (
-            <tr key={index}>
+            <tr
+              className={selected.has(dp[fieldToCheck]) ? 'selected' : ''}
+              key={index.toString()}
+            >
               {hasSelect && (
                 <td>
                   <input
@@ -81,8 +85,7 @@ function DataTable(props) {
                 if (field && dp[field]) {
                   return (
                     <td key={field}>
-                      {`${dp[field].toString()
-                        .substr(0, 40)}...`}
+                      {concatString(dp[field].toString(), 40)}
                     </td>
                   );
                 }

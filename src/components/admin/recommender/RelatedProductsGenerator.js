@@ -5,6 +5,7 @@ import DataTable from '../../DataTable';
 import Pagination from '../../Pagination';
 import ErrorPage from '../../page/ErrorPage';
 import SearchBar from '../../SearchBar';
+import axios from 'axios';
 
 function RelatedProductsGenerator() {
   const {
@@ -21,8 +22,34 @@ function RelatedProductsGenerator() {
     return <ErrorPage message={error.data} code={error.code} />;
   }
 
-  const getRelatedProducts = () => {
+  const getRelatedProducts = async () => {
+    setIsFetching(true);
 
+    await axios.post('/products/batch',
+      {
+        products: Array.from(selectedProducts),
+        k: kNeighbors,
+      },
+      {
+        baseURL: 'http://127.0.0.1:5000/api/v1',
+      })
+      .then((res) => {
+        const { recommendations } = res.data;
+
+        if (!recommendations.length) {
+          return false;
+        }
+
+        return axios.patch('/management/products/batch/related', { recommendations })
+          .then((response) => {
+            setMessage(response.data.message);
+            setIsFetching(false);
+          })
+          .catch((err) => setMessage(err.message));
+      })
+      .catch((e) => setMessage(e.message));
+
+    await setIsFetching(false);
   };
 
   return (

@@ -92,11 +92,11 @@ function RecommendationGenerator() {
       </div>
 
       <DataTable
-        className="u-ml-auto u-mr-auto u-txt-align-left u-w--33 c-datatable c-datatable--horizontal c-datatable--scrollable"
+        className="u-ml-auto u-mr-auto u-txt-align-left c-datatable--small-first-col c-datatable c-datatable--horizontal c-datatable--scrollable"
+        data={users}
         hasSelect
         selected={selectedUsers}
         select={selectUsers}
-        data={users}
         fields={['username']}
         fieldToCheck="username"
       />
