@@ -93,7 +93,9 @@ function ModelTrainer(props) {
     <>
       <Section
         title="Train Your Model"
+        titleClass="u-h1"
         subTitle="Select the model, the dataset, and the parameters for training."
+        subTitleClass="u-h4"
         className="o-layout__item u-4/5 u-mb-36"
       >
         <div className="u-mb-12 u-d-flex">
@@ -197,8 +199,10 @@ function ModelTrainer(props) {
       </Section>
 
       <Section
-        title="Model Information"
+        title="Training Results"
+        titleClass="u-h1"
         subTitle="Information about your trained model will appear here."
+        subTitleClass="u-h4"
         className="o-layout__item u-1/5 u-mb-36"
       >
         {Object.keys(trainedModelInfo)

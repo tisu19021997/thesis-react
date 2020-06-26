@@ -97,7 +97,7 @@ class ProductDetail extends React.Component {
     const { match } = this.props;
     const { params } = match;
 
-    if (prevProps.match.params !== params) {
+    if (prevProps.match.params.asin !== params.asin) {
       this.pageInit();
     }
   }
@@ -618,12 +618,6 @@ class ProductDetail extends React.Component {
                           className="c-tab__header-name u-txt-14"
                           selectedClassName="active"
                         >
-                          Additional Information
-                        </Tab>
-                        <Tab
-                          className="c-tab__header-name u-txt-14"
-                          selectedClassName="active"
-                        >
                           Customer Reviews
                         </Tab>
                       </TabList>
@@ -633,53 +627,6 @@ class ProductDetail extends React.Component {
 
                         <TabPanel className="c-tab__content-item u-txt--normal u-txt-14 u-2/3">
                           {product.description}
-                        </TabPanel>
-
-                        <TabPanel className="c-tab__content-item u-txt--normal u-txt-14">
-                          {/* Example Table */}
-                          <div className="c-table">
-                            <div className="c-table__row">
-                              <div className="c-table__row-col c-table__attr">
-                                Package Dimensions
-                              </div>
-                              <div className="c-table__row-col c-table__value">
-                                13.6 x 6.6 x 1.9 inches
-                              </div>
-                            </div>
-                            <div className="c-table__row">
-                              <div className="c-table__row-col c-table__attr">
-                                Weight
-                              </div>
-                              <div className="c-table__row-col c-table__value">
-                                2.33 pounds
-                              </div>
-                            </div>
-                            <div className="c-table__row">
-                              <div className="c-table__row-col c-table__attr">
-                                Color
-                              </div>
-                              <div className="c-table__row-col c-table__value">
-                                Red/Blue/Green/Black
-                              </div>
-                            </div>
-                            <div className="c-table__row">
-                              <div className="c-table__row-col c-table__attr">
-                                Manufacturer
-                              </div>
-                              <div className="c-table__row-col c-table__value">
-                                Microsoft
-                              </div>
-                            </div>
-                            <div className="c-table__row">
-                              <div className="c-table__row-col c-table__attr">
-                                Status
-                              </div>
-                              <div className="c-table__row-col c-table__value">
-                                Out of Stock
-                              </div>
-                            </div>
-                          </div>
-                          {/* /Example Table */}
                         </TabPanel>
 
 

@@ -24,6 +24,7 @@ function RelatedProductsGenerator() {
 
   const getRelatedProducts = async () => {
     setIsFetching(true);
+    setMessage('');
 
     await axios.post('/products/batch',
       {
