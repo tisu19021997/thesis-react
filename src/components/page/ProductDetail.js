@@ -516,7 +516,7 @@ class ProductDetail extends React.Component {
                           {/* #SAME BRAND */}
 
                           {
-                            sameBrand
+                            sameBrand.length > 0
                               ? (
                                 <Section className="c-section" data="Same Brand Products">
                                   <div className="c-section__title [ c-section__title--no-margin ]">
@@ -581,7 +581,7 @@ class ProductDetail extends React.Component {
 
 
                     {/* #BUNDLE PRODUCT */}
-                    {bundleProducts.length > 1
+                    {bundleProducts.products.length > 0
                       ? (
                         <Section
                           className="u-6/10"
@@ -788,7 +788,7 @@ class ProductDetail extends React.Component {
                     {/* /Product Options */}
 
 
-                    {bundleProducts.length > 1
+                    {bundleProducts.products.length > 0
                       ? (
                         <>
                           <hr className="thick" />
