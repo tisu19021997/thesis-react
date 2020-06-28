@@ -4,7 +4,7 @@ import axios from 'axios';
 import { CSVReader } from 'react-papaparse';
 import * as FileSaver from 'file-saver';
 import Section from '../../Section';
-import DataTable from '../../DataTable';
+import DataTableWithSelection from '../../DataTableWithSelection';
 
 function DatasetUploader(props) {
   const { setDataset } = props;
@@ -28,7 +28,7 @@ function DatasetUploader(props) {
     return true;
   };
 
-  const handleOnError = (err, file, inputElem, reason) => {
+  const handleOnError = (err) => {
     setMessage(err);
   };
 
@@ -137,8 +137,8 @@ function DatasetUploader(props) {
         contentClass={`u-txt-align-center u-txt-24 ${dataset.length ? 'u-overflow-x-scroll' : ''}`}
       >
         {dataset.length > 0 && (
-          <DataTable
-            className="u-mb-0 u-ml-auto u-mr-auto u-txt-align-left c-datatable--small-first-col c-datatable c-datatable--horizontal c-datatable--scrollable"
+          <DataTableWithSelection
+            className="u-mb-0 u-ml-auto u-mr-auto u-txt-align-left c-datatable--small-first-col c-datatable--horizontal c-datatable--scrollable"
             data={dataset.slice(-100)}
             fields={dataHeader}
           />

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import Section from '../../Section';
 import { useDataList } from '../../../helper/hooks';
-import DataTable from '../../DataTable';
+import DataTableWithSelection from '../../DataTableWithSelection';
 import Pagination from '../../Pagination';
 import ErrorPage from '../../page/ErrorPage';
 import SearchBar from '../../SearchBar';
@@ -97,10 +97,9 @@ function RelatedProductsGenerator() {
         />
       </div>
 
-      <DataTable
-        className="u-ml-auto u-mr-auto u-txt-align-left c-datatable--small-first-col c-datatable c-datatable--horizontal c-datatable--scrollable"
+      <DataTableWithSelection
+        className="u-ml-auto u-mr-auto u-txt-align-left c-datatable--small-first-col c-datatable--horizontal c-datatable--scrollable"
         data={data}
-        hasSelect
         selected={selectedProducts}
         select={selectProducts}
         fields={['asin', 'title', 'brand']}
@@ -109,7 +108,7 @@ function RelatedProductsGenerator() {
 
       <div className="u-mb-12 u-d-flex u-fd--column">
         <label htmlFor="k" className="u-txt--light u-mr-6">
-          Number of recommendation products
+          Number of related products
           <input
             name="k"
             type="number"

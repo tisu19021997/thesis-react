@@ -1,53 +1,58 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import Modal from 'react-modal';
-import EditUser from './EditUser';
-import { isoDateToString } from '../../../helper/string';
 import Pagination from '../../Pagination';
 import { useDataList } from '../../../helper/hooks';
 import SearchBar from '../../SearchBar';
+import DataTableWithHandlers from '../../DataTableWithHandlers';
+import DataEditModal from '../../DataEditModal';
 
 function UserList() {
-  const [isSearching, setIsSearching] = useState(false);
-  const [editing, setEditing] = useState('');
+  const [editing, setEditing] = useState(null);
   const [isEditOpen, setEditModal] = useState(false);
-  const [isEdited, setIsEdited] = useState(false);
+  const [, setIsEdited] = useState(false);
 
   const searchInputRef = useRef(null);
 
   const {
     data: users, setData: setUsers, totalDataCount: totalUsers, pages, page, limit,
-    setPage, setSearch, setSort, setLimit, hasNext, hasPrev,
+    setPage, setSearch, setSort, setLimit, hasNext, hasPrev, triggerFetch, fetchTriggerer,
   } = useDataList('/management/users');
 
-  const resetPaging = () => {
-    setPage(1);
-  };
+  const handlers = [
+    {
+      label: 'Delete',
+      cb: (event) => {
+        const username = event.currentTarget.getAttribute('data-index');
 
-  const deleteHandle = (event) => {
-    const id = event.currentTarget.getAttribute('data-id');
+        if (window.confirm('Do you really want to delete this user?')) {
+          axios.delete(`/management/users/${username}`)
+            .then(() => {
+              return setUsers(users.filter((user) => (user.username !== username)));
+            })
+            .catch((error) => {
+              throw new Error(error);
+            });
+        }
 
-    if (window.confirm('Do you really want to delete this user?')) {
-      axios.delete(`/management/users/${id}`)
-        .then((res) => {
-          const { id: userId } = res.data;
-          setUsers(users.filter((user) => (user._id !== userId)));
-        })
-        .catch((error) => {
-          throw new Error(error);
+        return false;
+      },
+    },
+    {
+      label: 'Edit',
+      cb: (event) => {
+        const username = event.currentTarget.getAttribute('data-index');
+        const curUser = users.filter((user) => user.username === username)[0];
+        const { email, role } = curUser;
+        setEditing({
+          username,
+          email,
+          role,
         });
-    }
-
-    return false;
-  };
-
-  const editHandle = (event) => {
-    setEditing(JSON.parse(event.currentTarget.getAttribute('data-id')));
-    setEditModal(true);
-    setIsEdited(false);
-  };
+        setEditModal(true);
+        setIsEdited(false);
+      },
+    },
+  ];
 
   return (
     <div className="u-mv-24">
@@ -84,8 +89,8 @@ function UserList() {
           max={totalUsers}
           defaultValue={limit}
           onChange={(event) => {
-            setLimit(event.target.value);
-            resetPaging();
+            setLimit(parseInt(event.target.value, 10));
+            setPage(1);
           }}
           className="u-txt-20"
         />
@@ -104,7 +109,7 @@ function UserList() {
           defaultValue=""
           onChange={(event) => {
             setSort(event.target.value);
-            resetPaging();
+            setPage(1);
           }}
         >
           <option value="newest">Newest</option>
@@ -123,83 +128,59 @@ function UserList() {
         />
       </div>
 
-      <table border={1}>
-        <thead>
-        <tr>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Created At</th>
-        </tr>
-        </thead>
-        <tbody>
-        {
-          users
-            ? users.map((user) => (
-              <tr key={user.username}>
-                <td>
-                  <Link className="u-txt-underline" to={`/users/${user.username}`}>
-                    {user.username}
-                  </Link>
-                </td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td>{isoDateToString(user.createdAt)}</td>
-                <td>
-                  <button
-                    type="button"
-                    className="c-btn c-btn--rounded"
-                    data-id={user._id}
-                    onClick={deleteHandle}
-                  >
-                    <FontAwesomeIcon icon="times" size="1x" />
-                  </button>
-                </td>
-
-                <td>
-                  <button
-                    type="button"
-                    className="c-btn c-btn--rounded"
-                    data-id={JSON.stringify(user)}
-                    onClick={editHandle}
-                  >
-                    Edit
-                  </button>
-                </td>
-              </tr>
-            ))
-            : <p>Loading</p>
-        }
-        </tbody>
-      </table>
-
-
-      <Modal
-        style={{
-          content: {
-            inset: '50% auto auto 50%',
-            width: '70%',
-            height: '60%',
-            transform: 'translate(-50%, -50%)',
-          },
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, .35)',
-          },
-        }}
-        isOpen={isEditOpen}
-        onRequestClose={() => {
-          setEditModal(false);
-        }}
-      >
-        <EditUser
-          setIsEdited={setIsEdited}
-          closeModal={() => {
-            setEditModal(false);
-          }}
-          user={editing}
+      {users.length > 0 && (
+        <DataTableWithHandlers
+          handlers={handlers}
+          indexField="username"
+          fields={['username', 'email', 'role', 'createdAt']}
+          data={users}
         />
-      </Modal>
+      )}
 
+      {editing && (
+        <DataEditModal
+          isModalOpen={isEditOpen}
+          initData={editing}
+          afterEditingCallback={() => triggerFetch(!fetchTriggerer)}
+          setModalOpen={setEditModal}
+          endpoint="/management/users"
+          endpointField="username"
+          inputConfigs={
+            [
+              {
+                name: 'username',
+                type: 'text',
+                label: 'Username',
+                defaultValue: editing.username,
+                placeHolder: 'Username',
+              },
+              {
+                name: 'email',
+                type: 'email',
+                label: 'Email',
+                defaultValue: editing.email,
+                placeHolder: 'Email',
+              },
+              {
+                name: 'role',
+                type: 'radio',
+                label: 'Role',
+                choices: [
+                  {
+                    value: 'user',
+                    label: 'User',
+                  },
+                  {
+                    value: 'admin',
+                    label: 'Admin',
+                  },
+                ],
+                defaultValue: editing.role,
+              },
+            ]
+          }
+        />
+      )}
     </div>
   );
 }

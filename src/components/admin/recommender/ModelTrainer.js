@@ -43,6 +43,7 @@ function ModelTrainer(props) {
         return true;
       },
     );
+
     let dataHeader = [];
     let data = [];
 

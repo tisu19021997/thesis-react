@@ -8,6 +8,7 @@ import Pagination from '../../Pagination';
 import CategoryDropDown from '../../CategoryDropDown';
 import { useDataList } from '../../../helper/hooks';
 import SearchBar from '../../SearchBar';
+import { concatStrWithSuffix } from '../../../helper/string';
 
 function ProductList() {
   const [editing, setEditing] = useState('');
@@ -18,7 +19,7 @@ function ProductList() {
 
   const {
     data: products, setData: setProducts, totalDataCount: totalProducts, pages, page, limit,
-    setPage, setSearch, setSort, setLimit, setCatFilter, hasNext, hasPrev,
+    setPage, setSearch, setSort, setLimit, setCatFilter, hasNext, hasPrev, fetchTriggerer, triggerFetch,
   } = useDataList('/management/products');
 
   const resetPaging = () => {
@@ -133,30 +134,31 @@ function ProductList() {
         />
       </div>
 
-      {/* {products.length > 0 && */}
-      {/* <DataTable data={products} fields={['asin', 'title', 'price', 'imUrl']} />} */}
-
-      <table border={1}>
+      <table className="c-datatable c-datatable--scrollable c-datatable--horizontal">
         <thead>
         <tr>
           <th>ASIN</th>
           <th>Name</th>
+          <th>Brand</th>
           <th>Price</th>
           <th>Disc. Price</th>
           <th>Image</th>
+          <th />
+          <th />
         </tr>
         </thead>
-        <tbody>
+        <tbody style={{ maxHeight: '500px' }}>
         {
-          products
+          products.length > 0
             ? products.map((product) => (
               <tr key={product.asin}>
                 <td>{product.asin}</td>
                 <td>
                   <Link className="u-txt-underline" to={`/products/${product.asin}`}>
-                    {product.title}
+                    {concatStrWithSuffix(product.title || '', 40)}
                   </Link>
                 </td>
+                <td>{product.brand}</td>
                 <td>{`$${product.price}`}</td>
                 <td>{product.discountPrice}</td>
                 <td>
@@ -186,7 +188,7 @@ function ProductList() {
                 </td>
               </tr>
             ))
-            : <p>Loading</p>
+            : ''
         }
         </tbody>
       </table>
@@ -209,7 +211,9 @@ function ProductList() {
         }}
       >
         <EditProduct
-          setIsEdited={setIsEdited}
+          afterEditingCallback={() => {
+            triggerFetch(!fetchTriggerer);
+          }}
           closeModal={() => {
             setEditModal(false);
           }}

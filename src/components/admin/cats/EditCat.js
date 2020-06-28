@@ -10,10 +10,11 @@ function EditCat(props) {
   const { state: iconClass, bind: bindIcon } = useInput(cat.iconClass);
   const { state: imUrl, bind: bindImUrl } = useInput(cat.imUrl);
 
+  // TODO: Fix editing will turn category's name into String but it is actually Array.
   const onFormSubmit = (event) => {
     event.preventDefault();
 
-    axios.patch(`/management/cats/${cat._id}`, {
+    axios.patch(`/management/cats/${cat.id}`, {
       name,
       iconClass,
       imUrl,

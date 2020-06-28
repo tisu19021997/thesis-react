@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useInput } from '../../../helper/hooks';
 
 function EditProduct(props) {
-  const { product, closeModal, setIsEdited } = props;
+  const { product, closeModal, afterEditingCallback } = props;
 
   const { state: asin, bind: bindAsin } = useInput(product.asin);
   const { state: title, bind: bindName } = useInput(product.title);
@@ -26,7 +26,7 @@ function EditProduct(props) {
     })
       .then(() => {
         closeModal();
-        setIsEdited(true);
+        afterEditingCallback();
       })
       .catch((error) => {
         throw new Error(error.message);
@@ -99,10 +99,9 @@ function EditProduct(props) {
 
         <div className="u-mb-12">
           <span className="u-txt--bold">Description:</span>
-          <input
+          <textarea
             className="u-w--100"
             {...bindDesc}
-            type="text"
             placeholder="description"
             defaultValue={description}
           />
@@ -122,7 +121,8 @@ function EditProduct(props) {
 
 EditProduct.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  setIsEdited: PropTypes.func.isRequired,
+  afterEditingCallback: PropTypes.func.isRequired,
+  product: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default EditProduct;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { concatStrWithSuffix } from '../helper/string';
 
 // TODO: Do not use read more when text length is smaller than a number
 function ReadMore(props) {
@@ -13,7 +14,7 @@ function ReadMore(props) {
 
   return (
     <>
-      {isShown || text.length < maxLength ? text : `${text.substr(0, maxLength)}...`}
+      {isShown || text.length < maxLength ? text : concatStrWithSuffix(text, maxLength)}
       <button
         type="button"
         className="u-float-right u-txt-10 u-txt-underline"

@@ -1,69 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import EditCat from './EditCat';
 import Pagination from '../../Pagination';
+import { useDataList } from '../../../helper/hooks';
+import SearchBar from '../../SearchBar';
+import DataTableWithHandlers from '../../DataTableWithHandlers';
 
 function CatList() {
-  const [cats, setCats] = useState([]);
-  const [totalCats, setTotal] = useState(0);
-  const [pages, setPages] = useState(0);
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('');
-  const [isSearching, setIsSearching] = useState(false);
-  const [limit, setLimit] = useState(50);
+  const {
+    data: cats, setData: setCats, totalDataCount: totalCats, pages, page, limit,
+    setPage, setSearch, setLimit, hasNext, hasPrev,
+  } = useDataList('/management/cats');
+
+  const searchInputRef = useRef(null);
+
   const [editing, setEditing] = useState('');
   const [isEditOpen, setEditModal] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
 
-  useEffect(() => {
-    const query = `?s=${search}&page=${page}&limit=${limit}`;
+  const handlers = [
+    {
+      label: 'Delete',
+      cb: (event) => {
+        const id = event.currentTarget.getAttribute('data-index');
 
-    axios.get(`/management/cats${query}`)
-      .then((res) => {
-        const {
-          docs, totalPages, totalDocs,
-        } = res.data;
+        if (window.confirm('Do you really want to delete this category?')) {
+          axios.delete(`/management/cats/${id}`)
+            .then((res) => {
+              const { id: catId } = res.data;
+              setCats(cats.filter((cat) => (cat._id !== catId)));
+            })
+            .catch((error) => {
+              throw new Error(error);
+            });
+        }
 
-        // update state
-        setCats(docs);
-        setPages(totalPages);
-        setTotal(totalDocs);
-        setIsSearching(false);
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  }, [page, isSearching, limit, isEdited]);
+        return false;
+      },
+    },
+    {
+      label: 'Edit',
+      cb: (event) => {
+        const id = event.currentTarget.getAttribute('data-index');
+        const curCat = cats.filter((cat) => cat._id === id)[0];
+        const { name, iconClass, imUrl } = curCat;
 
-  const resetPaging = () => {
-    setPage(1);
-  };
-
-  const deleteHandle = (event) => {
-    const id = event.currentTarget.getAttribute('data-id');
-
-    if (window.confirm('Do you really want to delete this category?')) {
-      axios.delete(`/management/cats/${id}`)
-        .then((res) => {
-          const { id: catId } = res.data;
-          setCats(cats.filter((cat) => (cat._id !== catId)));
-        })
-        .catch((error) => {
-          throw new Error(error);
+        setEditing({
+          id,
+          name,
+          iconClass,
+          imUrl,
         });
-    }
-
-    return false;
-  };
-
-  const editHandle = (event) => {
-    setEditing(JSON.parse(event.currentTarget.getAttribute('data-id')));
-    setEditModal(true);
-    setIsEdited(false);
-  };
+        setEditModal(true);
+        setIsEdited(false);
+      },
+    },
+  ];
 
   return (
     <div className="u-mv-24">
@@ -71,28 +66,19 @@ function CatList() {
         Category List
       </div>
 
-      <input
-        style={{ width: '50%' }}
-        className="c-searchbar__box u-mb-24"
-        onChange={(event) => {
-          const { value } = event.target;
-          setSearch(value);
-        }}
-        type="search"
-        placeholder="Search"
-        data-border="rounded"
-      />
-
-      <button
-        type="button"
-        className="c-btn c-btn--small c-btn--rounded c-btn--primary"
-        onClick={() => {
-          setIsSearching(true);
-          resetPaging();
-        }}
-      >
-        Search
-      </button>
+      <div className="u-w--50 u-mb-24">
+        <SearchBar
+          inputStyle={{
+            height: '50px',
+          }}
+          searchHandler={(event) => {
+            event.preventDefault();
+            setSearch(searchInputRef.current.value);
+            setPage(1);
+          }}
+          inputRef={searchInputRef}
+        />
+      </div>
 
       <div className="u-mv-24 u-txt-16">
 
@@ -108,8 +94,8 @@ function CatList() {
           max={totalCats}
           defaultValue={limit}
           onChange={(event) => {
-            setLimit(event.target.value);
-            resetPaging();
+            setLimit(parseInt(event.target.value, 10));
+            setPage(1);
           }}
           className="u-txt-20"
         />
@@ -121,57 +107,25 @@ function CatList() {
 
       </div>
 
-      <table border={1}>
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Icon</th>
-          <th>Category Image</th>
-        </tr>
-        </thead>
-        <tbody>
-        {
-          cats
-            ? cats.map((cat) => (
-              <tr key={cat.name}>
-                <td>
-                  <Link className="u-txt-underline" to={`/cats/${cat.name}`}>
-                    {cat.name}
-                  </Link>
-                </td>
-                <td>
-                  <FontAwesomeIcon icon={cat.iconClass} />
-                </td>
-                <td>
-                  <img src={cat.imUrl} alt={cat.name} width={200} />
-                </td>
-                <td>
-                  <button
-                    type="button"
-                    className="c-btn c-btn--rounded"
-                    data-id={cat._id}
-                    onClick={deleteHandle}
-                  >
-                    <FontAwesomeIcon icon="times" size="1x" />
-                  </button>
-                </td>
 
-                <td>
-                  <button
-                    type="button"
-                    className="c-btn c-btn--rounded"
-                    data-id={JSON.stringify(cat)}
-                    onClick={editHandle}
-                  >
-                    Edit
-                  </button>
-                </td>
-              </tr>
-            ))
-            : <p>Loading</p>
-        }
-        </tbody>
-      </table>
+      <div className="u-mb-24">
+        <Pagination
+          currentPage={page}
+          totalPages={pages}
+          setPage={setPage}
+          hasNextPage={hasNext}
+          hasPrevPage={hasPrev}
+        />
+      </div>
+
+      {cats.length > 0 && (
+        <DataTableWithHandlers
+          handlers={handlers}
+          indexField="_id"
+          fields={['name', 'imUrl', 'iconClass']}
+          data={cats}
+        />
+      )}
 
       <Pagination
         currentPage={page}

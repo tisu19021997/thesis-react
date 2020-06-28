@@ -3,7 +3,7 @@ import axios from 'axios';
 import Section from '../../Section';
 import { useDataList, useInput } from '../../../helper/hooks';
 import Pagination from '../../Pagination';
-import DataTable from '../../DataTable';
+import DataTableWithSelection from '../../DataTableWithSelection';
 import SearchBar from '../../SearchBar';
 
 function RecommendationGenerator() {
@@ -91,10 +91,9 @@ function RecommendationGenerator() {
         />
       </div>
 
-      <DataTable
-        className="u-ml-auto u-mr-auto u-txt-align-left c-datatable--small-first-col c-datatable c-datatable--horizontal c-datatable--scrollable"
+      <DataTableWithSelection
+        className="u-ml-auto u-mr-auto u-txt-align-left c-datatable--small-first-col c-datatable--horizontal c-datatable--scrollable"
         data={users}
-        hasSelect
         selected={selectedUsers}
         select={selectUsers}
         fields={['username']}

@@ -28,6 +28,9 @@ export const useDataList = (endpoint) => {
   const [error, setError] = useState(null);
   const [catFilter, setCatFilter] = useState('');
 
+  // Useful for triggering a fetch to server to renew data.
+  const [fetchTriggerer, triggerFetch] = useState(false);
+
   useEffect(() => {
     const query = `${endpoint}?s=${search}&page=${page}&sort=${sort}&limit=${limit}&${catFilter}`;
 
@@ -44,7 +47,7 @@ export const useDataList = (endpoint) => {
         setHasNext(hasNextPage);
       })
       .catch((e) => e);
-  }, [endpoint, limit, page, search, sort, catFilter]);
+  }, [endpoint, limit, page, search, sort, catFilter, fetchTriggerer]);
 
   return {
     data,
@@ -62,5 +65,7 @@ export const useDataList = (endpoint) => {
     error,
     setError,
     setCatFilter,
+    triggerFetch,
+    fetchTriggerer,
   };
 };
