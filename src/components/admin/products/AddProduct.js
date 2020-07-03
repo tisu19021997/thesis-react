@@ -24,9 +24,7 @@ function AddProduct() {
       description,
       categories: [[cat]],
     })
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => setMessage(res.data.message))
       .catch((error) => {
         setMessage(`Error ${error.response.status}: ${error.response.data.message}`);
       });

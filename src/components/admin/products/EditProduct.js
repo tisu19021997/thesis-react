@@ -122,7 +122,9 @@ function EditProduct(props) {
 EditProduct.propTypes = {
   closeModal: PropTypes.func.isRequired,
   afterEditingCallback: PropTypes.func.isRequired,
-  product: PropTypes.objectOf(PropTypes.string).isRequired,
+  product: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string, PropTypes.array, PropTypes.object, PropTypes.number,
+  ])).isRequired,
 };
 
 export default EditProduct;

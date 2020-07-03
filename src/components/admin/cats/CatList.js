@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import EditCat from './EditCat';
 import Pagination from '../../Pagination';
@@ -12,14 +10,13 @@ import DataTableWithHandlers from '../../DataTableWithHandlers';
 function CatList() {
   const {
     data: cats, setData: setCats, totalDataCount: totalCats, pages, page, limit,
-    setPage, setSearch, setLimit, hasNext, hasPrev,
+    setPage, setSearch, setLimit, hasNext, hasPrev, triggerFetch, fetchTriggerer,
   } = useDataList('/management/cats');
 
   const searchInputRef = useRef(null);
 
-  const [editing, setEditing] = useState('');
+  const [editing, setEditing] = useState({});
   const [isEditOpen, setEditModal] = useState(false);
-  const [isEdited, setIsEdited] = useState(false);
 
   const handlers = [
     {
@@ -55,7 +52,7 @@ function CatList() {
           imUrl,
         });
         setEditModal(true);
-        setIsEdited(false);
+        triggerFetch(!fetchTriggerer);
       },
     },
   ];
@@ -133,7 +130,6 @@ function CatList() {
         setPage={setPage}
       />
 
-
       <Modal
         style={{
           content: {
@@ -152,7 +148,8 @@ function CatList() {
         }}
       >
         <EditCat
-          setIsEdited={setIsEdited}
+          callback={triggerFetch}
+          callbackParam={fetchTriggerer}
           closeModal={() => {
             setEditModal(false);
           }}

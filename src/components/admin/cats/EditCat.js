@@ -4,24 +4,23 @@ import PropTypes from 'prop-types';
 import { useInput } from '../../../helper/hooks';
 
 function EditCat(props) {
-  const { cat, closeModal, setIsEdited } = props;
+  const { cat, closeModal, callback, callbackParam } = props;
 
-  const { state: name, bind: bindCatName } = useInput(cat.name);
+  const { state: name, bind: bindCatName } = useInput(cat.name.join(','));
   const { state: iconClass, bind: bindIcon } = useInput(cat.iconClass);
   const { state: imUrl, bind: bindImUrl } = useInput(cat.imUrl);
 
-  // TODO: Fix editing will turn category's name into String but it is actually Array.
   const onFormSubmit = (event) => {
     event.preventDefault();
 
     axios.patch(`/management/cats/${cat.id}`, {
-      name,
+      name: name.split(','),
       iconClass,
       imUrl,
     })
       .then(() => {
         closeModal();
-        setIsEdited(true);
+        callback(!callbackParam);
       })
       .catch((error) => {
         throw new Error(error.message);
@@ -82,7 +81,9 @@ function EditCat(props) {
 
 EditCat.propTypes = {
   closeModal: PropTypes.func.isRequired,
-  setIsEdited: PropTypes.func.isRequired,
+  cat: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.array])).isRequired,
+  callback: PropTypes.func.isRequired,
+  callbackParam: PropTypes.bool.isRequired,
 };
 
 export default EditCat;

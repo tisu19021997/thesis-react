@@ -22,6 +22,8 @@ function ImportUser() {
       return false;
     }
 
+    console.log(file)
+
     axios.post('/management/users/batch', file)
       .then((res) => {
         setMessage(res.data.message);

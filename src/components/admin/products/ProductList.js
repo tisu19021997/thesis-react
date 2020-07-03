@@ -11,9 +11,8 @@ import SearchBar from '../../SearchBar';
 import { concatStrWithSuffix } from '../../../helper/string';
 
 function ProductList() {
-  const [editing, setEditing] = useState('');
+  const [editing, setEditing] = useState({});
   const [isEditOpen, setEditModal] = useState(false);
-  const [isEdited, setIsEdited] = useState(false);
 
   const searchInputRef = useRef(null);
 
@@ -46,8 +45,48 @@ function ProductList() {
   const editHandle = (event) => {
     setEditing(JSON.parse(event.currentTarget.getAttribute('data-id')));
     setEditModal(true);
-    setIsEdited(false);
   };
+
+  const productsList = products.length > 0
+    ? products.map((product) => (
+      <tr key={product.asin}>
+        <td>{product.asin}</td>
+        <td>
+          <Link className="u-txt-underline" to={`/products/${product.asin}`}>
+            {concatStrWithSuffix(product.title || '', 40)}
+          </Link>
+        </td>
+        <td>{product.brand}</td>
+        <td>{`$${product.price}`}</td>
+        <td>{product.discountPrice}</td>
+        <td>
+          <img src={product.imUrl} alt={product.title} width={100} />
+        </td>
+
+        <td>
+          <button
+            type="button"
+            className="c-btn c-btn--rounded"
+            data-id={product._id}
+            onClick={deleteHandle}
+          >
+            <FontAwesomeIcon icon="times" size="1x" />
+          </button>
+        </td>
+
+        <td>
+          <button
+            type="button"
+            className="c-btn c-btn--rounded"
+            data-id={JSON.stringify(product)}
+            onClick={editHandle}
+          >
+            Edit
+          </button>
+        </td>
+      </tr>
+    ))
+    : null;
 
   return (
     <div className="u-mv-24">
@@ -136,61 +175,18 @@ function ProductList() {
 
       <table className="c-datatable c-datatable--scrollable c-datatable--horizontal">
         <thead>
-        <tr>
-          <th>ASIN</th>
-          <th>Name</th>
-          <th>Brand</th>
-          <th>Price</th>
-          <th>Disc. Price</th>
-          <th>Image</th>
-          <th />
-          <th />
-        </tr>
+          <tr>
+            <th>ASIN</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Price</th>
+            <th>Disc. Price</th>
+            <th>Image</th>
+            <th />
+            <th />
+            </tr>
         </thead>
-        <tbody style={{ maxHeight: '500px' }}>
-        {
-          products.length > 0
-            ? products.map((product) => (
-              <tr key={product.asin}>
-                <td>{product.asin}</td>
-                <td>
-                  <Link className="u-txt-underline" to={`/products/${product.asin}`}>
-                    {concatStrWithSuffix(product.title || '', 40)}
-                  </Link>
-                </td>
-                <td>{product.brand}</td>
-                <td>{`$${product.price}`}</td>
-                <td>{product.discountPrice}</td>
-                <td>
-                  <img src={product.imUrl} alt={product.title} width={100} />
-                </td>
-
-                <td>
-                  <button
-                    type="button"
-                    className="c-btn c-btn--rounded"
-                    data-id={product._id}
-                    onClick={deleteHandle}
-                  >
-                    <FontAwesomeIcon icon="times" size="1x" />
-                  </button>
-                </td>
-
-                <td>
-                  <button
-                    type="button"
-                    className="c-btn c-btn--rounded"
-                    data-id={JSON.stringify(product)}
-                    onClick={editHandle}
-                  >
-                    Edit
-                  </button>
-                </td>
-              </tr>
-            ))
-            : ''
-        }
-        </tbody>
+        <tbody style={{ maxHeight: '500px' }}>{productsList}</tbody>
       </table>
 
       <Modal

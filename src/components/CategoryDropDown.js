@@ -28,7 +28,6 @@ function CategoryDropDown(props) {
       }
       onChange={onChange}
     >
-      <option value="">All</option>
       {
         cats
           ? cats.map((cat) => {
