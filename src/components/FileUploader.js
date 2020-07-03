@@ -4,11 +4,20 @@ import PropTypes from 'prop-types';
 function FileUploader(props) {
   let fileInput;
 
-  const { callback, accept } = props;
+  const { accept, setContent, setError } = props;
+
+  const parseFile = (fileContent) => {
+    try {
+      const json = JSON.parse(fileContent);
+      return setContent(json);
+    } catch (e) {
+      return setError(e.message);
+    }
+  };
 
   const handleFileRead = () => {
     const content = fileInput.result;
-    callback(content);
+    parseFile(content);
   };
 
   const handleFileUpload = (file) => {
@@ -29,12 +38,13 @@ function FileUploader(props) {
 }
 
 FileUploader.propTypes = {
-  callback: PropTypes.func.isRequired,
   accept: PropTypes.string,
+  setContent: PropTypes.func.isRequired,
+  setError: PropTypes.func.isRequired,
 };
 
 FileUploader.defaultProps = {
-  accept: '',
+  accept: '.json,.csv',
 };
 
 export default FileUploader;

@@ -36,16 +36,6 @@ function ImportProduct() {
     return true;
   };
 
-  const parseFile = (fileContent) => {
-    try {
-      const json = JSON.parse(fileContent);
-      return setFile(json);
-    } catch (e) {
-      setError(e.message);
-      return false;
-    }
-  };
-
   return (
     <div className="u-mv-24">
       <Section
@@ -59,7 +49,8 @@ function ImportProduct() {
         <span className="u-txt--light">Upload your JSON file here: </span>
 
         <FileUploader
-          callback={parseFile}
+          setContent={setFile}
+          setError={setError}
           accept="application/json"
         />
 

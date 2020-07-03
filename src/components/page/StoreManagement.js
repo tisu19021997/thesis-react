@@ -5,11 +5,14 @@ import {
 import AddProduct from '../admin/products/AddProduct';
 import ProductList from '../admin/products/ProductList';
 import ImportProduct from '../admin/products/ImportProduct';
+
 import UserList from '../admin/users/UsertList';
 import ImportUser from '../admin/users/ImportUser';
 import AddUser from '../admin/users/AddUser';
+
 import CatList from '../admin/cats/CatList';
 import AddCat from '../admin/cats/AddCat';
+import ImportCat from '../admin/cats/ImportCat';
 
 function StoreManagement() {
   const navActiveStyle = {
@@ -105,6 +108,14 @@ function StoreManagement() {
                 Category List
               </NavLink>
             </div>
+            <div>
+              <NavLink
+                to="/management/cats/import"
+                activeStyle={navActiveStyle}
+              >
+                Import/Export
+              </NavLink>
+            </div>
           </div>
           {/* /CATS */}
 
@@ -175,6 +186,14 @@ function StoreManagement() {
               path="/management/cats/new"
               render={(props) => (
                 <AddCat {...props} />
+              )}
+            />
+
+            <Route
+              exact
+              path="/management/cats/import"
+              render={(props) => (
+                <ImportCat {...props} />
               )}
             />
 

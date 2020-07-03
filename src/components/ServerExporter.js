@@ -6,21 +6,20 @@ import axios from 'axios';
 function ServerExporter(props) {
   const { fileName, fileType, endpoint } = props;
 
-  const exportAll = () => {
-    axios.get(`${endpoint}?type=${fileType}`, {
-      responseType: fileType === 'csv' ? 'blob' : 'json',
-    })
-      .then((res) => {
-        // The response is a Blob object when the file type is CSV and
-        // a JSON object when the file type is JSON.
-        const blob = fileType === 'csv'
-          ? res.data
-          : new Blob([JSON.stringify(res.data)],
-            { type: 'text/plain;charset=utf-8' });
+  const exportAll = () => axios.get(`${endpoint}?type=${fileType}`, {
+    responseType: fileType === 'csv' ? 'blob' : 'json',
+  })
+    .then((res) => {
+      // The response is a Blob object when the file type is CSV and
+      // a JSON object when the file type is JSON.
+      const blob = fileType === 'csv'
+        ? res.data
+        : new Blob([JSON.stringify(res.data)],
+          { type: 'text/plain;charset=utf-8' });
 
-        FileSaver.saveAs(blob, `${fileName}.${fileType}`);
-      });
-  };
+      FileSaver.saveAs(blob, `${fileName}.${fileType}`);
+    })
+    .catch((e) => console.log(e));
 
   return (
     <button

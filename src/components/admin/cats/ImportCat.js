@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import FileUploader from '../../FileUploader';
-import { useInput } from '../../../helper/hooks';
-import Section from '../../Section';
 import ServerExporter from '../../ServerExporter';
+import Section from '../../Section';
+import { useInput } from '../../../helper/hooks';
 
-function ImportUser() {
+function ImportCat() {
   const [file, setFile] = useState(null);
   const { state: fileType, bind: setFileType } = useInput('csv');
   const [error, setError] = useState('');
@@ -13,16 +13,14 @@ function ImportUser() {
 
   const importFile = () => {
     if (!file) {
-      setError('Please select one JSON file from your computer.');
-      return false;
+      return setError('Please select one JSON file from your computer.');
     }
 
     if (!file.length) {
-      setError('Please check your JSON file again. The valid format of JSON file must be an array of users.');
-      return false;
+      return setError('Please check your JSON file again. The valid format of JSON file must be an array of products.');
     }
 
-    axios.post('/management/users/batch', file)
+    return axios.post('/management/cats/batch', file)
       .then((res) => {
         setMessage(res.data.message);
         setError('');
@@ -30,17 +28,13 @@ function ImportUser() {
       .catch((e) => {
         setError(e.message);
       });
-
-    return true;
   };
 
   return (
     <div className="u-mv-24">
-
       <Section
-        title="Import Users"
-        subTitle="Valid format for JSON file is array of users."
-        titleClass="u-txt-40"
+        title="Import Categories"
+        titleClass="u-txt-40 u-txt--bold u-mb-24"
       >
         <div style={{ color: 'red' }}>{error}</div>
 
@@ -57,15 +51,16 @@ function ImportUser() {
         <button
           type="button"
           onClick={importFile}
-          className="c-btn c-btn--primary c-btn--rounded u-float-right"
+          className="c-btn c-btn--primary c-btn--rounded"
         >
           Import
         </button>
+
       </Section>
 
       <Section
-        title="Export Users"
-        subTitle="Export all users into a CSV file."
+        title="Export Categories"
+        subTitle="Export all products into a CSV file."
         titleClass="u-txt-40"
       >
         <div style={{ color: 'red' }}>{error}</div>
@@ -84,8 +79,8 @@ function ImportUser() {
         </select>
 
         <ServerExporter
-          endpoint="/management/users/batch"
-          fileName="users"
+          endpoint="/management/cats/batch"
+          fileName="cats"
           fileType={fileType}
         />
 
@@ -95,4 +90,4 @@ function ImportUser() {
   );
 }
 
-export default ImportUser;
+export default ImportCat;
