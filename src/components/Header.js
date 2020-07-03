@@ -951,11 +951,9 @@ class Header extends React.Component {
                                   </button>
                                 </form>
                               )
-                              : ''}
+                              : null}
 
-
-                            <div className="u-ml-6 u-mb-6">Sign-up</div>
-                            <div className="u-ml-6 u-mb-6">Order</div>
+                            <Link to="/orders" className="u-ml-6 u-mb-6">My Orders</Link>
                             <div className="u-ml-6 u-mb-6">History</div>
                           </div>
                         </div>

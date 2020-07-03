@@ -3630,6 +3630,7 @@ progress::-moz-progress-bar {
 .c-product__img > img {
   width: auto;
   height: auto;
+  object-fit: contain;
 }
 
 @media (max-width: 46.24em) {
@@ -3646,12 +3647,12 @@ progress::-moz-progress-bar {
   }
 }
 
-/* line 108, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 109, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__img .c-btn {
   opacity: 0;
 }
 
-/* line 113, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 114, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__img:hover .c-btn {
   opacity: 1;
   transition: opacity 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -3661,19 +3662,19 @@ progress::-moz-progress-bar {
   -o-transition: opacity 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-/* line 125, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 126, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__rating {
   line-height: 1;
 }
 
 @media (max-width: 61.24em) {
-  /* line 128, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 129, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__rating > span {
     display: block;
   }
 }
 
-/* line 136, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 137, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product__discount,
 .c-product__date {
   position: absolute;
@@ -3684,7 +3685,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 136, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 137, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__discount,
   .c-product__date {
     visibility: hidden;
@@ -3698,7 +3699,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 20em) {
-  /* line 136, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 137, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__discount,
   .c-product__date {
     padding: 2px 4px;
@@ -3709,7 +3710,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 46.25em) {
-  /* line 136, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 137, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product__discount,
   .c-product__date {
     padding: 6px 12px;
@@ -3720,24 +3721,24 @@ progress::-moz-progress-bar {
 }
 
 /* Direction variations */
-/* line 172, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 173, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--horizontal {
   margin-top: 12px;
 }
 
-/* line 175, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 176, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--horizontal .c-product__name {
   margin-top: 0;
 }
 
 /* Position variations */
-/* line 185, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 186, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--secondary {
   margin-top: 12px;
 }
 
 @media (min-width: 61.25em) {
-  /* line 188, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 189, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product--secondary .c-product__name {
     font-size: 12px;
     line-height: 1.25;
@@ -3746,13 +3747,13 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 197, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+  /* line 198, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
   .c-product--secondary .c-product__img {
     height: auto;
   }
 }
 
-/* line 204, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
+/* line 205, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product.scss */
 .c-product--secondary .c-product__rating [class^="fa"] {
   font-size: 10px;
 }
@@ -3826,6 +3827,8 @@ progress::-moz-progress-bar {
   border: 0.5px solid #dfe1e5;
   padding: 6px;
   width: 25%;
+  height: 100px;
+  object-fit: contain;
 }
 
 @media (max-width: 61.24em) {
@@ -3835,7 +3838,7 @@ progress::-moz-progress-bar {
   }
 }
 
-/* line 67, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product-bundle.scss */
+/* line 69, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product-bundle.scss */
 .c-bundle__separator {
   position: absolute;
   top: 0;
@@ -3844,7 +3847,7 @@ progress::-moz-progress-bar {
 }
 
 @media (max-width: 61.24em) {
-  /* line 67, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product-bundle.scss */
+  /* line 69, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product-bundle.scss */
   .c-bundle__separator {
     top: 50%;
     transform: translateY(-50%);
@@ -3856,7 +3859,7 @@ progress::-moz-progress-bar {
 }
 
 @media (min-width: 61.25em) {
-  /* line 67, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product-bundle.scss */
+  /* line 69, ../../../../../Users/minhquang/Desktop/projects/thesis/html/asset/css/components/_components.product-bundle.scss */
   .c-bundle__separator {
     margin: 0;
   }

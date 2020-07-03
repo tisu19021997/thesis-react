@@ -243,6 +243,7 @@ class ProductDetail extends React.Component {
         });
         // update the user history
         this.historyTracking();
+        window.scrollTo(0, 0);
       })
       .catch((error) => {
         // TODO: Eror 404 Page.
@@ -531,6 +532,10 @@ class ProductDetail extends React.Component {
                                           className="o-media c-product [ c-product--secondary ]"
                                         >
                                           <img
+                                            style={{
+                                              maxHeight: '50px',
+                                              objectFit: 'contain',
+                                            }}
                                             src={p.imUrl}
                                             className="o-media__img c-product__img u-w--30 u-mr-6 u-border-all-blur"
                                             alt="Product 1"

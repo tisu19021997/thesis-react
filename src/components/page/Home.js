@@ -10,6 +10,7 @@ import ProductSlider from '../slider/ProductSlider';
 import local from '../../helper/localStorage';
 import { UserContext } from '../../context/user';
 import { Desktop, Mobile } from '../../helper/mediaQuery';
+import Slider from 'react-slick';
 
 class Home extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class Home extends React.Component {
       history: [],
       recommendProducts: [],
       promotion: [],
+      cats: [],
     };
 
     this.getUserData = this.getUserData.bind(this);
@@ -40,14 +42,15 @@ class Home extends React.Component {
     if (user) {
       axios.get(`/home/users/${user}`)
         .then((res) => {
-          const { history, promotion } = res.data;
-
-          const { svd: recommendProducts } = res.data;
+          const {
+            history, promotion, cats, svd: recommendProducts,
+          } = res.data;
 
           this.setState({
             history,
             recommendProducts,
             promotion,
+            cats,
             ready: true,
           });
         })
@@ -65,10 +68,11 @@ class Home extends React.Component {
 
       axios.get('/home')
         .then((res) => {
-          const { promotion } = res.data;
+          const { promotion, cats } = res.data;
 
           this.setState({
             promotion,
+            cats,
             ready: true,
           });
         });
@@ -76,7 +80,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { ready, history, recommendProducts, promotion } = this.state;
+    const { ready, history, recommendProducts, promotion, cats } = this.state;
 
     if (!ready) {
       return false;
@@ -92,6 +96,20 @@ class Home extends React.Component {
       dots: true,
       dotsClass: 'c-section__dots slick-dots',
       arrows: true,
+      draggable: true,
+      prevArrow: <PrevArrow />,
+      nextArrow: <NextArrow />,
+    };
+
+    const catSliderSettings = {
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      adaptiveHeight: false,
+      infinite: cats.length > 100, // fix slick slider bug auto duplicate
+      dots: true,
+      dotsClass: 'c-section__dots slick-dots',
+      arrows: true,
+      draggable: true,
       prevArrow: <PrevArrow />,
       nextArrow: <NextArrow />,
     };
@@ -106,6 +124,35 @@ class Home extends React.Component {
       draggable: true,
     };
 
+    const catSlider = cats.map((cat) => (
+      <React.Fragment key={cat._id}>
+        <div className="u-pos-relative">
+
+          <Link
+            to={`/categories/${cat._id}`}
+            className="u-pos-absolute u-txt-24 u-txt--bold u-ml-12 u-mt-12 u-w--50"
+          >
+            {cat.name[cat.name.length - 1]}
+          </Link>
+          <Link
+            to={`/categories/${cat._id}`}
+            className="u-pos-absolute u-pos-bot-0 u-txt-14 u-txt-underline u-txt--light u-ml-12 u-mb-12"
+          >
+            More
+          </Link>
+          <img
+            style={{
+              height: '260px',
+              objectFit: 'cover',
+            }}
+            className="u-w--100"
+            src={cat.imUrl}
+            alt={cat.name}
+          />
+        </div>
+      </React.Fragment>
+    ));
+
     return (
       <UserContext.Consumer>
         {() => (
@@ -113,18 +160,28 @@ class Home extends React.Component {
 
             <Desktop>
 
-              {historyProducts.length
+              {cats.length > 0 && (
+                <Section title="Categories that may fit you">
+                  <Slider
+                    {...catSliderSettings}
+                    className="c-slider c-slider--small-gut c-slider--same-h c-slider--right-dots"
+                  >
+                    {catSlider}
+                  </Slider>
+                </Section>
+              )}
+
+              {promotion.length
                 ? (
-                  <Section title="Pick up where you left off" data="History">
+                  <Section title="Today's Deal" data="Random">
                     <ProductSlider
-                      products={historyProducts}
+                      products={promotion}
                       settings={sliderSettings}
                       className="c-slider [  c-slider--tiny-gut c-slider--right-dots ] u-ph-48"
                     />
                   </Section>
                 )
-                : ''}
-
+                : null}
 
               {recommendProducts.length
                 ? (
@@ -137,46 +194,65 @@ class Home extends React.Component {
                   </Section>
 
                 )
-                : ''}
+                : null}
 
-
-              {promotion.length
+              {historyProducts.length
                 ? (
-                  <Section title="Today's Deal" data="Random">
+                  <Section title="Pick up where you left off" data="History">
                     <ProductSlider
-                      products={promotion}
+                      products={historyProducts}
                       settings={sliderSettings}
                       className="c-slider [  c-slider--tiny-gut c-slider--right-dots ] u-ph-48"
                     />
                   </Section>
                 )
-                : ''}
+                : null}
+
 
             </Desktop>
 
 
             <Mobile>
-              <Section
-                className="u-pl-6"
-                title="Pick up where you left off"
-                titleClass="c-section__title [ c-section__title--no-margin ] u-m-0"
-                subTitle={(
-                  <div className="c-section__sub-title u-txt-underline">
-                    <Link to="/">See all</Link>
-                  </div>
-                )}
-              >
+              {promotion.length
+                ? (
+                  <Section
+                    className="u-pl-6"
+                    title="Today's Deal"
+                    data="Random"
+                    titleClass="c-section__title [ c-section__title--no-margin ] u-m-0"
+                    subTitle={(
+                      <div className="c-section__sub-title u-txt-underline">
+                        <Link to="/">See all</Link>
+                      </div>
+                    )}
+                  >
+                    <ProductSlider
+                      products={promotion}
+                      settings={sliderMobileSettings}
+                    />
+                  </Section>
+                )
+                : ''}
 
-                {historyProducts.length
-                  ? (
+              {historyProducts.length
+                ? (
+                  <Section
+                    className="u-pl-6"
+                    title="Pick up where you left off"
+                    titleClass="c-section__title [ c-section__title--no-margin ] u-m-0"
+                    subTitle={(
+                      <div className="c-section__sub-title u-txt-underline">
+                        <Link to="/">See all</Link>
+                      </div>
+                    )}
+                  >
                     <ProductSlider
                       products={historyProducts}
                       settings={sliderMobileSettings}
                     />
-                  )
-                  : ''}
-
-              </Section>
+                  </Section>
+                )
+                : null}
 
               {recommendProducts.length
                 ? (
@@ -196,7 +272,8 @@ class Home extends React.Component {
                     />
                   </Section>
                 )
-                : ''}
+                : null}
+
 
             </Mobile>
 
