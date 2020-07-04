@@ -33,7 +33,6 @@ function Rating(props) {
       });
   }, [page, asin]);
 
-
   const newRating = async (event) => {
     event.preventDefault();
 
@@ -125,7 +124,7 @@ function Rating(props) {
 
           {/* RATING CONTENT */}
           <div className="u-txt-14 u-mt-6">
-            <ReadMore text={rating.reviewText} maxLength={300}/>
+            <ReadMore text={rating.reviewText} maxLength={300} />
           </div>
 
         </div>

@@ -1,53 +1,46 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function Button(props) {
+function AsyncButton(props) {
   const {
-    className, buttonText, onClick, disableOnClick, buttonProps,
+    className, buttonText, buttonTextOnFetch, asyncCallback, buttonProps,
   } = props;
-  const [disability, disable] = useState(false);
+  const [disabled, disable] = useState(false);
 
-  const onButtonClick = async (event) => {
+  const onClick = async (event) => {
     event.preventDefault();
 
-    if (disableOnClick) {
-      await disable(true);
-      await onClick();
-      await disable(false);
-
-      return true;
-    }
-
-    return onClick();
+    disable(true);
+    await asyncCallback();
+    disable(false);
   };
 
   return (
     <button
       type="button"
       className={className}
-      onClick={onButtonClick}
-      disabled={disability}
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      onClick={onClick}
+      disabled={disabled}
       {...buttonProps}
     >
-      {buttonText}
+      {disabled ? buttonTextOnFetch : buttonText}
     </button>
   );
 }
 
-Button.propTypes = {
+AsyncButton.propTypes = {
   className: PropTypes.string,
   buttonText: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
-  disableOnClick: PropTypes.bool,
+  buttonTextOnFetch: PropTypes.string,
+  asyncCallback: PropTypes.func.isRequired,
   buttonProps: PropTypes.objectOf(PropTypes.string),
 };
 
-Button.defaultProps = {
+AsyncButton.defaultProps = {
   className: 'c-btn',
   buttonText: 'Confirm',
-  disableOnClick: false,
+  buttonTextOnFetch: 'Confirming...',
   buttonProps: {},
 };
 
-export default Button;
+export default AsyncButton;

@@ -25,6 +25,7 @@ import { UserContext } from '../../context/user';
 import { Desktop, Mobile } from '../../helper/mediaQuery';
 import Rating from '../Rating';
 import ReadMore from '../ReadMore';
+import Error from './Error';
 
 class ProductDetail extends React.Component {
   /**
@@ -77,6 +78,7 @@ class ProductDetail extends React.Component {
       sameBrand: {},
       ready: false,
       quantity: 1,
+      error: null,
     };
 
     this.purchaseHandle = this.purchaseHandle.bind(this);
@@ -240,18 +242,27 @@ class ProductDetail extends React.Component {
           sameCategory,
           sameBrand,
           ready: true,
+          error: null,
         });
         // update the user history
         this.historyTracking();
         window.scrollTo(0, 0);
       })
       .catch((error) => {
-        // TODO: Eror 404 Page.
-        throw new Error(error.message);
+        this.setState({ error: error.response });
       });
   }
 
   render() {
+    const { error } = this.state;
+
+    if (error) {
+      return (
+        <Wrapper>
+          <Error error={error} />
+        </Wrapper>
+      );
+    }
     const { ready } = this.state;
 
     // stop the rendering if data has not been fetched yet
@@ -617,23 +628,18 @@ class ProductDetail extends React.Component {
                           className="c-tab__header-name u-txt-14"
                           selectedClassName="active"
                         >
-                          Description
+                          Customer Reviews
                         </Tab>
                         <Tab
                           className="c-tab__header-name u-txt-14"
                           selectedClassName="active"
                         >
-                          Customer Reviews
+                          Description
                         </Tab>
                       </TabList>
 
 
                       <div className="c-tab__content">
-
-                        <TabPanel className="c-tab__content-item u-txt--normal u-txt-14 u-2/3">
-                          {product.description}
-                        </TabPanel>
-
 
                         <TabPanel className="c-tab__content-item u-txt-14 u-w--80">
 
@@ -641,6 +647,10 @@ class ProductDetail extends React.Component {
 
                           <hr />
 
+                        </TabPanel>
+
+                        <TabPanel className="c-tab__content-item u-txt--normal u-txt-14 u-2/3">
+                          {product.description}
                         </TabPanel>
 
                       </div>
@@ -836,7 +846,6 @@ ProductDetail.contextType = UserContext;
 
 ProductDetail.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
-  currentUser: PropTypes.string.isRequired,
   updateCart: PropTypes.func.isRequired,
   onBundlePurchase: PropTypes.func.isRequired,
   // eslint-disable-next-line react/require-default-props

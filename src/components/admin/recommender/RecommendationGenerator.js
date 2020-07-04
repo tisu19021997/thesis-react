@@ -5,6 +5,7 @@ import { useDataList, useInput } from '../../../helper/hooks';
 import Pagination from '../../Pagination';
 import DataTableWithSelection from '../../DataTableWithSelection';
 import SearchBar from '../../SearchBar';
+import AsyncButton from '../../AsyncButton';
 
 function RecommendationGenerator() {
   const {
@@ -13,40 +14,40 @@ function RecommendationGenerator() {
 
   const [selectedUsers, selectUsers] = useState(new Set());
   const [message, setMessage] = useState('');
-  const [isFetching, setFetching] = useState(false);
-
   const { state: k, bind: setK } = useInput(50);
 
   const searchInputRef = useRef(null);
 
   const generateRecommendations = async () => {
-    // Disable the button.
-    setFetching(true);
+    if (!selectedUsers.size) {
+      return setMessage('Error: Please select some users!');
+    }
 
-    await axios.post('/users/batch',
-      {
-        users: Array.from(selectedUsers),
-        k,
-      },
-      {
-        baseURL: 'http://127.0.0.1:5000/api/v1',
-      })
-      .then((res) => {
-        const { recommendations } = res.data;
+    try {
+      const res = await axios.post('/users/batch',
+        {
+          users: Array.from(selectedUsers),
+          k,
+        },
+        {
+          baseURL: 'http://127.0.0.1:5000/api/v1',
+        });
+      const { recommendations } = res.data;
 
-        if (!recommendations.length) {
-          return false;
-        }
+      if (!recommendations.length) {
+        return false;
+      }
 
-        return axios.patch('/management/users/batch/recommendations', { recommendations })
-          .then((response) => {
-            setMessage(response.data.message);
-          })
-          .catch((err) => setMessage(err.message));
-      })
-      .catch((e) => setMessage(e.message));
+      return axios.patch('/management/users/batch/recommendations', { recommendations })
+        .then((response) => {
+          setMessage(response.data.message);
+        })
+        .catch((err) => setMessage(err.message));
+    } catch (e) {
+      setMessage(e.message);
+    }
 
-    await setFetching(false);
+    return false;
   };
 
   return (
@@ -116,14 +117,13 @@ function RecommendationGenerator() {
 
       <div>{message}</div>
 
-      <button
-        type="button"
+      <AsyncButton
+        asyncCallback={generateRecommendations}
         className="c-btn c-btn--rounded c-btn--primary u-mt-12"
-        disabled={isFetching}
-        onClick={generateRecommendations}
-      >
-        {isFetching ? 'Generating..' : 'Generate'}
-      </button>
+        buttonText="Generate"
+        buttonTextOnFetch="Generating.."
+      />
+
 
     </Section>
   );

@@ -1,11 +1,12 @@
 import React, { useRef, useState } from 'react';
+import axios from 'axios';
 import Section from '../../Section';
 import { useDataList } from '../../../helper/hooks';
 import DataTableWithSelection from '../../DataTableWithSelection';
 import Pagination from '../../Pagination';
-import ErrorPage from '../../page/ErrorPage';
+import ErrorPage from '../../page/Error';
 import SearchBar from '../../SearchBar';
-import axios from 'axios';
+import AsyncButton from '../../AsyncButton';
 
 function RelatedProductsGenerator() {
   const {
@@ -23,34 +24,32 @@ function RelatedProductsGenerator() {
   }
 
   const getRelatedProducts = async () => {
-    setIsFetching(true);
     setMessage('');
 
-    await axios.post('/products/batch',
-      {
-        products: Array.from(selectedProducts),
-        k: kNeighbors,
-      },
-      {
-        baseURL: 'http://127.0.0.1:5000/api/v1',
-      })
-      .then((res) => {
-        const { recommendations } = res.data;
+    try {
+      const res = await axios.post('/products/batch',
+        {
+          products: Array.from(selectedProducts),
+          k: kNeighbors,
+        },
+        {
+          baseURL: 'http://127.0.0.1:5000/api/v1',
+        });
+      const { recommendations } = res.data;
 
-        if (!recommendations.length) {
-          return false;
-        }
+      if (!recommendations.length) {
+        return false;
+      }
 
-        return axios.patch('/management/products/batch/related', { recommendations })
-          .then((response) => {
-            setMessage(response.data.message);
-            setIsFetching(false);
-          })
-          .catch((err) => setMessage(err.message));
-      })
-      .catch((e) => setMessage(e.message));
-
-    await setIsFetching(false);
+      return axios.patch('/management/products/batch/related', { recommendations })
+        .then((response) => {
+          setMessage(response.data.message);
+          setIsFetching(false);
+        })
+        .catch((err) => setMessage(err.message));
+    } catch (e) {
+      return setMessage(e.message);
+    }
   };
 
   return (
@@ -121,14 +120,12 @@ function RelatedProductsGenerator() {
 
       <div>{message}</div>
 
-      <button
-        type="button"
+      <AsyncButton
         className="c-btn c-btn--rounded c-btn--primary u-mt-12"
-        disabled={isFetching}
-        onClick={getRelatedProducts}
-      >
-        {isFetching ? 'Generating..' : 'Generate'}
-      </button>
+        asyncCallback={getRelatedProducts}
+        buttonText="Generate"
+        buttonTextOnFetch="Generating..."
+      />
 
     </Section>
   );

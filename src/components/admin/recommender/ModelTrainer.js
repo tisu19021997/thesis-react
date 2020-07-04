@@ -5,6 +5,7 @@ import * as FileSaver from 'file-saver';
 import Section from '../../Section';
 import { modelsConfig } from '../../../helper/constant';
 import { useInput } from '../../../helper/hooks';
+import AsyncButton from '../../AsyncButton';
 
 function ModelTrainer(props) {
   const { state: model, bind: bindModel } = useInput('insvd');
@@ -15,7 +16,7 @@ function ModelTrainer(props) {
   const [modelParams, setModelParams] = useState({});
   const [saveOnServer, setSaveOnServer] = useState(false);
   const [saveOnLocal, setSaveOnLocal] = useState(false);
-  const [trainBtnDisabled, setTrainBtnDisabled] = useState(false);
+  const [isTraining, setIsTraining] = useState(false);
   const [trainedModelInfo, setTrainedModelInfo] = useState([]);
 
   const { dataset } = props;
@@ -32,8 +33,6 @@ function ModelTrainer(props) {
   };
 
   const train = async () => {
-    setTrainBtnDisabled(true);
-
     // If a param is not set, set it to default value.
     const modelDefaults = {};
 
@@ -54,33 +53,34 @@ function ModelTrainer(props) {
 
     // Send direct POST request to recommender system. Receive the response as blob.
     // Then use the blob to save as a zip file.
-    axios.post('/models', {
-      dataset: data,
-      dataHeader,
-      model,
-      params: modelDefaults,
-      trainType,
-      saveOnServer,
-      saveOnLocal,
-    }, {
-      baseURL: 'http://127.0.0.1:5000/api/v1',
-      responseType: saveOnLocal ? 'blob' : 'json',
-    })
-      .then(async (res) => {
-        const modelInfo = saveOnLocal ? JSON.parse(res.headers['x-model-info']) : res.data;
-
-        if (modelInfo) {
-          setTrainedModelInfo(modelInfo);
-        }
-
-        if (saveOnLocal) {
-          FileSaver.saveAs(res.data, 'model.zip');
-        }
-        setTrainBtnDisabled(false);
-      })
-      .catch((e) => {
-        console.log(e.message);
+    try {
+      const res = await axios.post('/models', {
+        dataset: data,
+        dataHeader,
+        model,
+        params: modelDefaults,
+        trainType,
+        saveOnServer,
+        saveOnLocal,
+      }, {
+        baseURL: 'http://127.0.0.1:5000/api/v1',
+        responseType: saveOnLocal ? 'blob' : 'json',
       });
+
+      const modelInfo = saveOnLocal ? JSON.parse(res.headers['x-model-info']) : res.data;
+
+      if (modelInfo) {
+        setTrainedModelInfo(modelInfo);
+      }
+
+      if (saveOnLocal) {
+        FileSaver.saveAs(res.data, 'model.zip');
+      }
+    } catch (e) {
+      console.log(e.message);
+    }
+
+    return null;
   };
 
   useEffect(() => {
@@ -189,13 +189,12 @@ function ModelTrainer(props) {
           </label>
         </div>
 
-        <button
-          disabled={trainBtnDisabled}
+        <AsyncButton
+          asyncCallback={train}
           className="c-btn c-btn--primary c-btn--rounded u-ml-6"
-          onClick={train}
-        >
-          {trainBtnDisabled ? 'Training...' : 'Train Model'}
-        </button>
+          buttonText="Train Model"
+          buttonTextOnFetch="Training..."
+        />
 
       </Section>
 

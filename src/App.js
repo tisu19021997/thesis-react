@@ -41,6 +41,7 @@ import ProductCategory from './components/page/ProductCategory';
 import Checkout from './components/page/Checkout';
 import OrderTracking from './components/page/OrderTracking';
 import Recommender from './components/admin/recommender/Recommender';
+import Error from './components/page/Error';
 
 // create font-awesome icons library
 library.add(fab, faSearch, faGlobe, faUser, faShoppingCart, faAngleLeft, faAngleRight, faApple,
@@ -131,7 +132,8 @@ export default class App extends React.Component {
                     render={(props) => (
                       <StoreManagement {...props} />
                     )}
-                  />)
+                  />
+                )
                 : ''}
 
               {isAdmin
@@ -142,7 +144,8 @@ export default class App extends React.Component {
                     render={(props) => (
                       <Recommender {...props} />
                     )}
-                  />)
+                  />
+                )
                 : ''}
 
 
@@ -211,6 +214,11 @@ export default class App extends React.Component {
                       {...props}
                     />
                   )}
+                />
+
+                <Route
+                  path="*"
+                  component={Error}
                 />
 
               </Switch>

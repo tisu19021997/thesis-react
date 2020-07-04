@@ -5,6 +5,7 @@ import { CSVReader } from 'react-papaparse';
 import * as FileSaver from 'file-saver';
 import Section from '../../Section';
 import DataTableWithSelection from '../../DataTableWithSelection';
+import AsyncButton from '../../AsyncButton';
 
 function DatasetUploader(props) {
   const { setDataset } = props;
@@ -12,8 +13,9 @@ function DatasetUploader(props) {
   const [data, setData] = useState([]);
   const [dataHeader, setDataHeader] = useState([]);
   const [message, setMessage] = useState('');
+  const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
+  const [fetchButtonDisabled, setFetchButtonDisabled] = useState(false);
 
-  const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
   const dataset = data ? data.map((dp) => dp.data) : [];
 
   const handleOnDrop = async (results) => {
@@ -23,7 +25,6 @@ function DatasetUploader(props) {
     await setData(results);
     await setDataset(results);
     await setDataHeader(results[0].meta.fields);
-    await setSaveBtnDisabled(false);
 
     return true;
   };
@@ -36,7 +37,6 @@ function DatasetUploader(props) {
     setData([]);
     setDataset([]);
     setDataHeader([]);
-    setSaveBtnDisabled(true);
     setMessage('');
   };
 
@@ -44,8 +44,6 @@ function DatasetUploader(props) {
     if (!data.length) {
       return false;
     }
-
-    setSaveBtnDisabled(true);
 
     if (window.confirm('The old dataset may get lost. Please back-up the old dataset first. Still proceed?')) {
       axios.post('/dataset', {
@@ -55,13 +53,14 @@ function DatasetUploader(props) {
         baseURL: 'http://127.0.0.1:5000/api/v1',
       })
         .then((res) => {
-          setSaveBtnDisabled(false);
-          setMessage(res.data.message);
+          return setMessage(res.data.message);
         })
         .catch((e) => {
           setMessage(e.message);
         });
     }
+
+    return false;
   };
 
   const backup = () => {
@@ -110,21 +109,18 @@ function DatasetUploader(props) {
         <div className="u-mt-24">{message}</div>
 
         <div className="u-mt-24">
-          <button
-            type="button"
-            onClick={saveToServer}
-            disabled={saveBtnDisabled}
+          <AsyncButton
+            asyncCallback={saveToServer}
             className="c-btn c-btn--primary c-btn--rounded"
-          >
-            Upload to server
-          </button>
-
-          <button
+            buttonText="Upload to server"
+            buttonTextOnFetch="Uploading..."
+          />
+          <AsyncButton
+            asyncCallback={backup}
             className="c-btn c-btn--primary c-btn--rounded u-ml-6"
-            onClick={backup}
-          >
-            Back-up from server
-          </button>
+            buttonText="Back-up from server"
+            buttonTextOnFetch="Fetching..."
+          />
         </div>
       </Section>
 
