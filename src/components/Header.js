@@ -106,7 +106,7 @@ class Header extends React.Component {
           updateCart(cart);
         })
         .catch((error) => {
-          throw new Error(error.message);
+          console.log(error);
         });
     } else {
       // get the cart from local storage (if there is any)

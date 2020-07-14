@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import Pagination from '../../Pagination';
+import Pagination from '../../../components/Pagination';
 import { useDataList } from '../../../helper/hooks';
-import SearchBar from '../../SearchBar';
-import DataTableWithHandlers from '../../DataTableWithHandlers';
-import DataEditModal from '../../DataEditModal';
+import SearchBar from '../../../components/SearchBar';
+import DataTableWithHandlers from '../../../components/DataTableWithHandlers';
+import DataEditModal from '../../../components/DataEditModal';
 
 function UserList() {
   const [editing, setEditing] = useState(null);

@@ -3,9 +3,9 @@ import {
   Tab, TabList, TabPanel, Tabs,
 } from 'react-tabs';
 import DatasetUploader from './DatasetUploader';
-import Wrapper from '../../Wrapper';
+import Wrapper from '../../../components/Wrapper';
 import ModelTrainer from './ModelTrainer';
-import Section from '../../Section';
+import Section from '../../../components/Section';
 import RecommendationGenerator from './RecommendationGenerator';
 import RelatedProductsGenerator from './RelatedProductsGenerator';
 

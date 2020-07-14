@@ -5,11 +5,11 @@ import axios from 'axios';
 import { useModal } from 'react-modal-hook';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ReactModal from 'react-modal';
-import Pagination from '../Pagination';
-import { Desktop, Mobile } from '../../helper/mediaQuery';
-import CheckboxList from '../CheckboxList';
-import Product from '../Product';
-import { sortList, mobileCenteredModalStyles } from '../../helper/constant';
+import Pagination from '../components/Pagination';
+import { Desktop, Mobile } from '../helper/mediaQuery';
+import CheckboxList from '../components/CheckboxList';
+import Product from '../components/Product';
+import { sortList, mobileCenteredModalStyles } from '../helper/constant';
 
 function ProductCategory(props) {
   const [hasPrev, setHasPrev] = useState(false);

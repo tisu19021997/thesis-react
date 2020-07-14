@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
 import axios from 'axios';
-import Section from '../../Section';
+import Section from '../../../components/Section';
 import { useDataList } from '../../../helper/hooks';
-import DataTableWithSelection from '../../DataTableWithSelection';
-import Pagination from '../../Pagination';
-import ErrorPage from '../../page/Error';
-import SearchBar from '../../SearchBar';
-import AsyncButton from '../../AsyncButton';
+import DataTableWithSelection from '../../../components/DataTableWithSelection';
+import Pagination from '../../../components/Pagination';
+import ErrorPage from '../../Error';
+import SearchBar from '../../../components/SearchBar';
+import AsyncButton from '../../../components/AsyncButton';
 
 function RelatedProductsGenerator() {
   const {

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { CSVReader } from 'react-papaparse';
 import * as FileSaver from 'file-saver';
-import Section from '../../Section';
-import DataTableWithSelection from '../../DataTableWithSelection';
-import AsyncButton from '../../AsyncButton';
+import Section from '../../../components/Section';
+import DataTableWithSelection from '../../../components/DataTableWithSelection';
+import AsyncButton from '../../../components/AsyncButton';
 
 function DatasetUploader(props) {
   const { setDataset } = props;
@@ -13,8 +13,6 @@ function DatasetUploader(props) {
   const [data, setData] = useState([]);
   const [dataHeader, setDataHeader] = useState([]);
   const [message, setMessage] = useState('');
-  const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
-  const [fetchButtonDisabled, setFetchButtonDisabled] = useState(false);
 
   const dataset = data ? data.map((dp) => dp.data) : [];
 

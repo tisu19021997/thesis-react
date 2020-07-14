@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Wrapper from '../Wrapper';
-import Section from '../Section';
-import PrevArrow from '../slider/PrevArrow';
-import NextArrow from '../slider/NextArrow';
-import ProductSlider from '../slider/ProductSlider';
-import local from '../../helper/localStorage';
-import { UserContext } from '../../context/user';
-import { Desktop, Mobile } from '../../helper/mediaQuery';
+import Wrapper from '../components/Wrapper';
+import Section from '../components/Section';
+import PrevArrow from '../components/slider/PrevArrow';
+import NextArrow from '../components/slider/NextArrow';
+import ProductSlider from '../components/slider/ProductSlider';
+import local from '../helper/localStorage';
+import { UserContext } from '../context/user';
+import { Desktop, Mobile } from '../helper/mediaQuery';
 import Slider from 'react-slick';
 
 class Home extends React.Component {
@@ -196,7 +196,7 @@ class Home extends React.Component {
                 )
                 : null}
 
-              {historyProducts.length
+              {historyProducts.length > 0
                 ? (
                   <Section title="Pick up where you left off" data="History">
                     <ProductSlider
@@ -207,7 +207,6 @@ class Home extends React.Component {
                   </Section>
                 )
                 : null}
-
 
             </Desktop>
 

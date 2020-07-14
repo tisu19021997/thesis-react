@@ -6,12 +6,12 @@ import axios from 'axios';
 import ReactModal from 'react-modal';
 import { useModal } from 'react-modal-hook';
 import { Link } from 'react-router-dom';
-import Wrapper from '../Wrapper';
-import Section from '../Section';
-import { UserContext } from '../../context/user';
-import { Desktop, Mobile } from '../../helper/mediaQuery';
-import { useInput } from '../../helper/hooks';
-import Product from '../Product';
+import Wrapper from '../components/Wrapper';
+import Section from '../components/Section';
+import { UserContext } from '../context/user';
+import { Desktop, Mobile } from '../helper/mediaQuery';
+import { useInput } from '../helper/hooks';
+import Product from '../components/Product';
 
 function Checkout(props) {
   const {

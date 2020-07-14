@@ -2,10 +2,10 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import EditCat from './EditCat';
-import Pagination from '../../Pagination';
+import Pagination from '../../../components/Pagination';
 import { useDataList } from '../../../helper/hooks';
-import SearchBar from '../../SearchBar';
-import DataTableWithHandlers from '../../DataTableWithHandlers';
+import SearchBar from '../../../components/SearchBar';
+import DataTableWithHandlers from '../../../components/DataTableWithHandlers';
 
 function CatList() {
   const {

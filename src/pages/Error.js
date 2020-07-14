@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Wrapper from '../Wrapper';
+import Wrapper from '../components/Wrapper';
 
 function Error(props) {
   const { error } = props;

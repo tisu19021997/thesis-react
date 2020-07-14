@@ -4,10 +4,10 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Modal from 'react-modal';
 import EditProduct from './EditProduct';
-import Pagination from '../../Pagination';
-import CategoryDropDown from '../../CategoryDropDown';
+import Pagination from '../../../components/Pagination';
+import CategoryDropDown from '../../../components/CategoryDropDown';
 import { useDataList } from '../../../helper/hooks';
-import SearchBar from '../../SearchBar';
+import SearchBar from '../../../components/SearchBar';
 import { concatStrWithSuffix } from '../../../helper/string';
 
 function ProductList() {
@@ -175,16 +175,16 @@ function ProductList() {
 
       <table className="c-datatable c-datatable--scrollable c-datatable--horizontal">
         <thead>
-          <tr>
-            <th>ASIN</th>
-            <th>Name</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Disc. Price</th>
-            <th>Image</th>
-            <th />
-            <th />
-            </tr>
+        <tr>
+          <th>ASIN</th>
+          <th>Name</th>
+          <th>Brand</th>
+          <th>Price</th>
+          <th>Disc. Price</th>
+          <th>Image</th>
+          <th />
+          <th />
+        </tr>
         </thead>
         <tbody style={{ maxHeight: '500px' }}>{productsList}</tbody>
       </table>

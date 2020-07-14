@@ -5,9 +5,9 @@ import axios from 'axios';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from 'react-modal';
-import Product from '../Product';
-import { sortList, mobileCenteredModalStyles } from '../../helper/constant';
-import { Desktop, Mobile } from '../../helper/mediaQuery';
+import Product from '../components/Product';
+import { sortList, mobileCenteredModalStyles } from '../helper/constant';
+import { Desktop, Mobile } from '../helper/mediaQuery';
 
 class ProductSearch extends React.Component {
   constructor(props) {

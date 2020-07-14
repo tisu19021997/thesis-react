@@ -5,10 +5,10 @@ import Product from '../Product';
 
 const ProductSlider = (props) => {
   const { products, settings, className } = props;
+
   const productList = products.map((product) => (
     <Product key={product.asin} product={product} />
   ));
-
 
   return (
     <Slider

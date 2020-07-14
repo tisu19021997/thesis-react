@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import Section from '../../Section';
+import Section from '../../../components/Section';
 import { useDataList, useInput } from '../../../helper/hooks';
-import Pagination from '../../Pagination';
-import DataTableWithSelection from '../../DataTableWithSelection';
-import SearchBar from '../../SearchBar';
-import AsyncButton from '../../AsyncButton';
+import Pagination from '../../../components/Pagination';
+import DataTableWithSelection from '../../../components/DataTableWithSelection';
+import SearchBar from '../../../components/SearchBar';
+import AsyncButton from '../../../components/AsyncButton';
 
 function RecommendationGenerator() {
   const {

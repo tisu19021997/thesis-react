@@ -3,10 +3,10 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import Wrapper from '../Wrapper';
-import Section from '../Section';
-import { Desktop, Mobile } from '../../helper/mediaQuery';
-import Product from '../Product';
+import Wrapper from '../components/Wrapper';
+import Section from '../components/Section';
+import { Desktop, Mobile } from '../helper/mediaQuery';
+import Product from '../components/Product';
 
 function OrderTracking(props) {
   const { user } = props;

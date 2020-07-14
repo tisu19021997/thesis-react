@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useInput } from '../../../helper/hooks';
-import CategoryDropDown from '../../CategoryDropDown';
+import CategoryDropDown from '../../../components/CategoryDropDown';
 
 function AddProduct() {
   const { state: asin, bind: bindAsin } = useInput('');

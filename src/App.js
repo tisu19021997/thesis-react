@@ -33,15 +33,15 @@ import { UserContext } from './context/user';
 import local from './helper/localStorage';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Home from './components/page/Home';
-import ProductDetail from './components/page/ProductDetail';
-import ProductSearch from './components/page/ProductSearch';
-import StoreManagement from './components/page/StoreManagement';
-import ProductCategory from './components/page/ProductCategory';
-import Checkout from './components/page/Checkout';
-import OrderTracking from './components/page/OrderTracking';
-import Recommender from './components/admin/recommender/Recommender';
-import Error from './components/page/Error';
+import Home from './pages/Home';
+import ProductDetail from './pages/ProductDetail';
+import ProductSearch from './pages/ProductSearch';
+import StoreManagement from './pages/StoreManagement';
+import ProductCategory from './pages/ProductCategory';
+import Checkout from './pages/Checkout';
+import OrderTracking from './pages/OrderTracking';
+import Recommender from './pages/admin/recommender/Recommender';
+import Error from './pages/Error';
 
 // create font-awesome icons library
 library.add(fab, faSearch, faGlobe, faUser, faShoppingCart, faAngleLeft, faAngleRight, faApple,
@@ -49,6 +49,7 @@ library.add(fab, faSearch, faGlobe, faUser, faShoppingCart, faAngleLeft, faAngle
   faChevronRight, faChevronLeft, faBars, faFilter, faSortAmountUpAlt, faBorderAll, faStar);
 
 // axios default configurations
+// axios.defaults.baseURL = 'https://thesis-nodeapi.herokuapp.com/api/v1';
 axios.defaults.baseURL = process.env.NODE_SERVER || 'http://localhost:8081/api/v1';
 axios.defaults.maxContentLength = 100000000;
 axios.defaults.maxBodyLength = 100000000;
@@ -216,10 +217,14 @@ export default class App extends React.Component {
                   )}
                 />
 
-                <Route
-                  path="*"
-                  component={Error}
-                />
+                {
+                  isAdmin ? null : (
+                    <Route
+                      path="*"
+                      component={Error}
+                    />
+                  )
+                }
 
               </Switch>
 

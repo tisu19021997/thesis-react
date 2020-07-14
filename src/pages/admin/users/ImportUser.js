@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import FileUploader from '../../FileUploader';
+import FileUploader from '../../../components/FileUploader';
 import { useInput } from '../../../helper/hooks';
-import Section from '../../Section';
-import ServerExporter from '../../ServerExporter';
+import Section from '../../../components/Section';
+import ServerExporter from '../../../components/ServerExporter';
 
 function ImportUser() {
   const [file, setFile] = useState(null);

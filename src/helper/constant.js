@@ -4,20 +4,12 @@ export const sortList = [
     value: 'featured',
   },
   {
-    label: 'New Arrivals',
-    value: 'newest',
-  },
-  {
     label: 'Low Price',
     value: 'price-asc',
   },
   {
     label: 'High Price',
     value: 'price-desc',
-  },
-  {
-    label: 'Sale Off',
-    value: 'sale',
   },
 ];
 

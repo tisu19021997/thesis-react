@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import FileUploader from '../../FileUploader';
-import ServerExporter from '../../ServerExporter';
-import Section from '../../Section';
+import FileUploader from '../../../components/FileUploader';
+import ServerExporter from '../../../components/ServerExporter';
+import Section from '../../../components/Section';
 import { useInput } from '../../../helper/hooks';
 
 function ImportCat() {

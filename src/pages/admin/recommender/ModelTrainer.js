@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import * as FileSaver from 'file-saver';
-import Section from '../../Section';
+import Section from '../../../components/Section';
 import { modelsConfig } from '../../../helper/constant';
 import { useInput } from '../../../helper/hooks';
-import AsyncButton from '../../AsyncButton';
+import AsyncButton from '../../../components/AsyncButton';
 
 function ModelTrainer(props) {
   const { state: model, bind: bindModel } = useInput('insvd');
