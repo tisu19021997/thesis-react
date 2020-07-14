@@ -22,7 +22,6 @@ const modalStyles = {
   },
 };
 
-
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -68,7 +67,7 @@ class Header extends React.Component {
         });
       })
       .catch((error) => {
-        throw new Error(error.message);
+        console.log(error.message);
       });
 
     this.updateCartHandle();
