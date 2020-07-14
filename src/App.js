@@ -50,7 +50,7 @@ library.add(fab, faSearch, faGlobe, faUser, faShoppingCart, faAngleLeft, faAngle
 
 // axios default configurations
 // axios.defaults.baseURL = 'https://thesis-nodeapi.herokuapp.com/api/v1';
-axios.defaults.baseURL = process.env.NODE_SERVER || 'http://localhost:8081/api/v1';
+axios.defaults.baseURL = process.env.NODE_SERVER || 'https://thesis-nodeapi.herokuapp.com/api/v1';
 axios.defaults.maxContentLength = 100000000;
 axios.defaults.maxBodyLength = 100000000;
 
