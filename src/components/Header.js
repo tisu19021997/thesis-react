@@ -45,7 +45,6 @@ class Header extends React.Component {
     this.deleteCartItem = this.deleteCartItem.bind(this);
     this.productQtyHandle = this.productQtyHandle.bind(this);
 
-
     this.openMenu = this.openMenu.bind(this);
     this.closeMenu = this.closeMenu.bind(this);
 

@@ -48,7 +48,7 @@ function DatasetUploader(props) {
         data: dataset,
         header: dataHeader,
       }, {
-        baseURL: 'http://127.0.0.1:5000/api/v1',
+        baseURL: 'https://thesis-recsys.herokuapp.com/api/v1',
       })
         .then((res) => {
           return setMessage(res.data.message);
@@ -64,7 +64,7 @@ function DatasetUploader(props) {
   const backup = () => {
     axios.get('/dataset',
       {
-        baseURL: 'http://127.0.0.1:5000/api/v1',
+        baseURL: 'https://thesis-recsys.herokuapp.com/api/v1',
       })
       .then(async (res) => {
         const { data: backupData } = res;
