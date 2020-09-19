@@ -6,6 +6,7 @@ import Pagination from '../../../components/Pagination';
 import { useDataList } from '../../../helper/hooks';
 import SearchBar from '../../../components/SearchBar';
 import DataTableWithHandlers from '../../../components/DataTableWithHandlers';
+import { centeredModalStyles } from '../../../helper/constant';
 
 function CatList() {
   const {
@@ -131,17 +132,7 @@ function CatList() {
       />
 
       <Modal
-        style={{
-          content: {
-            inset: '50% auto auto 50%',
-            width: '70%',
-            height: '60%',
-            transform: 'translate(-50%, -50%)',
-          },
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, .35)',
-          },
-        }}
+        style={centeredModalStyles}
         isOpen={isEditOpen}
         onRequestClose={() => {
           setEditModal(false);

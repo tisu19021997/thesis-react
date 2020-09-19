@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import axios from 'axios';
 import InputsFromConfig from './InputsFromConfig';
+import { centeredModalStyles } from '../helper/constant';
 
 function DataEditModal(props) {
   const {
@@ -36,17 +37,7 @@ function DataEditModal(props) {
 
   return (
     <Modal
-      style={{
-        content: {
-          inset: '50% auto auto 50%',
-          width: '70%',
-          height: '60%',
-          transform: 'translate(-50%, -50%)',
-        },
-        overlay: {
-          backgroundColor: 'rgba(0, 0, 0, .35)',
-        },
-      }}
+      style={centeredModalStyles}
       isOpen={isModalOpen}
       onRequestClose={() => {
         setModalOpen(false);

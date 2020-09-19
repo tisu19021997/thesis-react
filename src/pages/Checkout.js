@@ -12,6 +12,7 @@ import { UserContext } from '../context/user';
 import { Desktop, Mobile } from '../helper/mediaQuery';
 import { useInput } from '../helper/hooks';
 import Product from '../components/Product';
+import { centeredModalStyles } from '../helper/constant';
 
 function Checkout(props) {
   const {
@@ -26,18 +27,6 @@ function Checkout(props) {
   // const { state: shippingMethod, bind: bindShippingMethod } = useInput('cod');
   // total value of cart
   let cartTotal = 0;
-
-  const modalStyles = {
-    content: {
-      inset: '50% auto auto 50%',
-      width: '40%',
-      height: '25%',
-      transform: 'translate(-50%, -50%)',
-    },
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, .35)',
-    },
-  };
 
   const [showModal, hideModal] = useModal(() => (
     // eslint-disable-next-line react/jsx-filename-extension
@@ -86,7 +75,7 @@ function Checkout(props) {
 
       <Desktop>
         <ReactModal
-          style={modalStyles}
+          style={centeredModalStyles}
           isOpen
         >
           <div className="u-txt-align-center">

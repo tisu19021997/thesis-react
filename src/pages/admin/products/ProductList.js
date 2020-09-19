@@ -9,6 +9,7 @@ import CategoryDropDown from '../../../components/CategoryDropDown';
 import { useDataList } from '../../../helper/hooks';
 import SearchBar from '../../../components/SearchBar';
 import { concatStrWithSuffix } from '../../../helper/string';
+import {centeredModalStyles} from '../../../helper/constant';
 
 function ProductList() {
   const [editing, setEditing] = useState({});
@@ -190,17 +191,7 @@ function ProductList() {
       </table>
 
       <Modal
-        style={{
-          content: {
-            inset: '50% auto auto 50%',
-            width: '70%',
-            height: '60%',
-            transform: 'translate(-50%, -50%)',
-          },
-          overlay: {
-            backgroundColor: 'rgba(0, 0, 0, .35)',
-          },
-        }}
+        style={centeredModalStyles}
         isOpen={isEditOpen}
         onRequestClose={() => {
           setEditModal(false);
