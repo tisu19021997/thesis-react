@@ -41,6 +41,10 @@ class ProductDetail extends React.Component {
    */
   static saveHistory(token, product, user = local.get('user') || '') {
     if (user) {
+      if (user === 'admin') {
+        return false;
+      }
+
       axios.patch(`/users/${user}/history`, product)
         .then(() => true)
         .catch((error) => {

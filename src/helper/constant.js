@@ -1,6 +1,6 @@
 export const sortList = [
   {
-    label: 'Featured',
+    label: 'None',
     value: 'featured',
   },
   {
@@ -84,6 +84,22 @@ export const mobileCenteredModalStyles = {
     overflowY: 'auto',
     padding: '12px',
     maxHeight: '300px',
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+  },
+};
+
+export const centeredModalStyles = {
+  content: {
+    position: 'absolute',
+    top: '25%',
+    left: '25%',
+    backgroundColor: 'rgba(255, 255, 255)',
+    maxHeight: '500px',
+    width: '50%',
+    overflow: 'auto',
+    padding: '20px',
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, .7)',

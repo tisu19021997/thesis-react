@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Slider from 'react-slick';
 import Wrapper from '../components/Wrapper';
 import Section from '../components/Section';
 import PrevArrow from '../components/slider/PrevArrow';
@@ -10,7 +11,6 @@ import ProductSlider from '../components/slider/ProductSlider';
 import local from '../helper/localStorage';
 import { UserContext } from '../context/user';
 import { Desktop, Mobile } from '../helper/mediaQuery';
-import Slider from 'react-slick';
 
 class Home extends React.Component {
   constructor(props) {

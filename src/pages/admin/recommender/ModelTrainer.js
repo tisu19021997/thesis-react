@@ -9,7 +9,7 @@ import AsyncButton from '../../../components/AsyncButton';
 
 function ModelTrainer(props) {
   const { state: model, bind: bindModel } = useInput('insvd');
-  const { state: trainType, bind: bindTrainType } = useInput('full');
+  const { state: trainType, bind: bindTrainType } = useInput('82');
   const { state: datasetType, bind: bindDatasetType } = useInput('server');
 
   const [paramsConfig, setParamsConfig] = useState(modelsConfig[model].params);
@@ -125,8 +125,8 @@ function ModelTrainer(props) {
               defaultValue={trainType}
               {...bindTrainType}
             >
-              <option value="full">Full Trainset</option>
               <option value="82">80:20</option>
+              <option value="full">Full Trainset</option>
             </select>
           </div>
 

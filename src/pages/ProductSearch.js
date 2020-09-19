@@ -150,11 +150,11 @@ class ProductSearch extends React.Component {
     const paginationButtons = [];
     let firstPage = 1;
 
-    if (page > 4) {
-      firstPage = page - 4;
+    if (page > 3) {
+      firstPage = page - 2;
     }
 
-    for (let i = firstPage; i <= page + 4 && i < totalPages; i += 1) {
+    for (let i = firstPage; i <= page + 2 && i < totalPages; i += 1) {
       paginationButtons.push(
         <Link
           to={{

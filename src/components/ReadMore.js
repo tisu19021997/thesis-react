@@ -11,15 +11,22 @@ function ReadMore(props) {
     setIsShown(!isShown);
   };
 
+  let displayText = text;
+
+  if (text) {
+    if (!isShown && text.length >= maxLength) {
+      displayText = concatStrWithSuffix(text, maxLength);
+    }
+  }
   return (
     <>
-      {isShown || text.length < maxLength ? text : concatStrWithSuffix(text, maxLength)}
+      {displayText}
       <button
         type="button"
         className="u-float-right u-txt-10 u-txt-underline"
         onClick={toggle}
       >
-        {text.length > maxLength
+        {text && text.length > maxLength
           ? (
             <span>
               <i className="fas fa-caret-down" />

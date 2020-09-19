@@ -24,6 +24,10 @@ function RelatedProductsGenerator() {
   }
 
   const getRelatedProducts = async () => {
+    if (!selectedProducts.size) {
+      return setMessage('Error: Please select some products!');
+    }
+
     setMessage('');
 
     try {

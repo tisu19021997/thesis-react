@@ -7,20 +7,9 @@ import axios from 'axios';
 import local from '../helper/localStorage';
 import { UserContext } from '../context/user';
 import { Mobile, Desktop } from '../helper/mediaQuery';
+import { centeredModalStyles } from '../helper/constant';
 
 Modal.setAppElement('#root');
-
-const modalStyles = {
-  content: {
-    inset: '50% auto auto 50%',
-    width: '55%',
-    height: '45%',
-    transform: 'translate(-50%, -50%)',
-  },
-  overlay: {
-    backgroundColor: 'rgba(0, 0, 0, .35)',
-  },
-};
 
 class Header extends React.Component {
   constructor(props) {
@@ -698,7 +687,7 @@ class Header extends React.Component {
                 {!currentUser
                   ? (
                     <Modal
-                      style={modalStyles}
+                      style={centeredModalStyles}
                       isOpen={isLoginModalOpen}
                       onRequestClose={this.closeModal}
                     >

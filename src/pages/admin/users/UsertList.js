@@ -112,8 +112,8 @@ function UserList() {
             setPage(1);
           }}
         >
-          <option value="newest">Newest</option>
-          <option value="oldest">Oldest</option>
+          <option value="newest">None</option>
+          <option value="oldest">Newest</option>
           <option value="role">Role</option>
         </select>
       </div>
