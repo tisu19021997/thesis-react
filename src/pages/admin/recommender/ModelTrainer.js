@@ -164,7 +164,7 @@ function ModelTrainer(props) {
           <input
             type="checkbox"
             name="save"
-            defaultChecked={(value) => value === saveOnServer}
+            checked={saveOnServer}
             onChange={(event) => setSaveOnServer(event.target.checked)}
           />
           <label htmlFor="save">
@@ -181,7 +181,7 @@ function ModelTrainer(props) {
           <input
             type="checkbox"
             name="save"
-            defaultChecked={(value) => value === saveOnLocal}
+            checked={saveOnLocal}
             onChange={(event) => setSaveOnLocal(event.target.checked)}
           />
           <label htmlFor="save">
