@@ -44,35 +44,51 @@ function DatasetUploader(props) {
     }
 
     if (window.confirm('The old dataset may get lost. Please back-up the old dataset first. Still proceed?')) {
-      axios.post('/dataset', {
-        data: dataset,
-        header: dataHeader,
-      }, {
-        baseURL: 'https://thesis-recsys.herokuapp.com/api/v1',
-      })
-        .then((res) => {
-          return setMessage(res.data.message);
-        })
-        .catch((e) => {
-          setMessage(e.message);
+      try {
+        const res = await axios.post('/dataset', {
+          data: dataset,
+          header: dataHeader,
+        }, {
+          baseURL: 'https://thesis-recsys.herokuapp.com/api/v1',
         });
+
+        setMessage(res.data.message);
+      } catch (e) {
+        setMessage(`${e.message} - This function is currently not available.`);
+      }
     }
 
-    return false;
+    return null;
   };
 
-  const backup = () => {
-    axios.get('/dataset',
-      {
-        baseURL: 'https://thesis-recsys.herokuapp.com/api/v1',
-      })
-      .then(async (res) => {
-        const { data: backupData } = res;
-        const filename = 'data-backup.csv';
-        const file = new File([backupData], filename, { type: 'text/csv;charset=utf-8' });
-        FileSaver.saveAs(file);
-      })
-      .catch((e) => setMessage(`[ERROR] ${e.message}`));
+  const backup = async () => {
+    try {
+      const res = await axios.get('/dataset',
+        {
+          baseURL: 'https://thesis-recsys.herokuapp.com/api/v1',
+        });
+
+      const { data: backupData } = res;
+      const filename = 'data-backup.csv';
+      const file = new File([backupData], filename, { type: 'text/csv;charset=utf-8' });
+      FileSaver.saveAs(file);
+    } catch (e) {
+      setMessage(`[ERROR] ${e.message}`);
+    }
+
+    // axios.get('/dataset',
+    //   {
+    //     baseURL: 'https://thesis-recsys.herokuapp.com/api/v1',
+    //   })
+    //   .then(async (res) => {
+    //     const { data: backupData } = res;
+    //     const filename = 'data-backup.csv';
+    //     const file = new File([backupData], filename, { type: 'text/csv;charset=utf-8' });
+    //     FileSaver.saveAs(file);
+    //   })
+    //   .catch((e) => setMessage(`[ERROR] ${e.message}`));
+
+    return null;
   };
 
   return (

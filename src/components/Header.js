@@ -7,7 +7,7 @@ import axios from 'axios';
 import local from '../helper/localStorage';
 import { UserContext } from '../context/user';
 import { Mobile, Desktop } from '../helper/mediaQuery';
-import { centeredModalStyles } from '../helper/constant';
+import { centeredModalStyles, centeredModalStylesSmall } from '../helper/constant';
 
 Modal.setAppElement('#root');
 
@@ -23,6 +23,7 @@ class Header extends React.Component {
       cartCounter: 0,
       openLoginForm: false,
       userRole: '',
+      isDemoPopupOpen: true,
     };
 
     this.openModal = this.openModal.bind(this);
@@ -39,6 +40,7 @@ class Header extends React.Component {
 
     this.searchProduct = this.searchProduct.bind(this);
 
+    this.demoLogin = this.demoLogin.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.register = this.register.bind(this);
@@ -67,7 +69,7 @@ class Header extends React.Component {
       if (userRole === 'admin') {
         const { history } = this.props;
 
-        history.push('/management');
+        history.push('/recommender');
       }
     }
   }
@@ -186,6 +188,58 @@ class Header extends React.Component {
    * @param event
    * @returns {boolean}
    */
+  demoLogin(usernameLogin, passwordLogin) {
+    const { login, updateCart } = this.props;
+
+    if (usernameLogin && passwordLogin) {
+      axios.post('/login', {
+        username: usernameLogin,
+        password: passwordLogin,
+      })
+        .then((res) => {
+          const { data } = res;
+          const { status, message } = data;
+          // login failed
+          if (status === 401) {
+            this.setState({
+              loginMessage: message,
+            });
+
+            return false;
+          }
+
+          // login success
+          const { user, token } = data;
+
+          this.setState({
+            usernameLogin: 'A2GKMXRLI7KLFP',
+            passwordLogin: '123',
+            isDemoPopupOpen: false,
+          });
+
+          this.setState({
+            userRole: user.role,
+          });
+
+          // close the modal
+          this.closeModal();
+          // update username and token to local
+          login(user, token);
+
+          // update the cart
+          if (user.products) {
+            updateCart(user.products);
+          }
+          return true;
+        })
+        .catch((error) => {
+          throw new Error(error.message);
+        });
+    }
+
+    return false;
+  }
+
   login(event) {
     event.preventDefault();
 
@@ -255,6 +309,9 @@ class Header extends React.Component {
     });
 
     updateCart(cart);
+    this.setState({
+      isDemoPopupOpen: true,
+    });
 
     return true;
   }
@@ -352,7 +409,8 @@ class Header extends React.Component {
 
   render() {
     const {
-      categories, isLoginModalOpen, isCartOpen, isMenuOpen, openLoginForm, message, loginMessage,
+      categories, isLoginModalOpen, isCartOpen, isMenuOpen,
+      openLoginForm, message, loginMessage, isDemoPopupOpen,
     } = this.state;
     const { cart } = this.props;
     let { cartCounter } = this.state;
@@ -683,6 +741,74 @@ class Header extends React.Component {
                   </div>
 
                 </div>
+
+                {!currentUser ? (
+                  <Modal
+                    style={centeredModalStylesSmall}
+                    isOpen={isDemoPopupOpen}
+                    shouldCloseOnOverlayClick={false}
+                    onRequestClose={() => this.setState({ isDemoPopupOpen: !isDemoPopupOpen })}
+                  >
+                    <div className="o-layout o-layout--flush">
+
+                      <div className="o-layout__item">
+                        <div
+                          className="modal-title u-txt-40 u-txt--hairline u-mt-12 u-mb-36 u-txt-align-center"
+                        >
+                          Demo Log-in
+                        </div>
+
+                        <button
+                          type="button"
+                          className="c-btn c-btn--primary c-btn--rounded u-d-iblock u-txt-12 u-mt-36 u-1/3"
+                          onClick={() => {
+                            this.demoLogin('A2GKMXRLI7KLFP', '123');
+                          }}
+                        >
+                          As a customer
+                        </button>
+                        <button
+                          type="button"
+                          className="c-btn c-btn--primary c-btn--rounded u-float-right u-d-iblock u-txt-12 u-mt-36 u-1/3"
+                          onClick={async (event) => {
+                            await this.setState({
+                              usernameLogin: 'admin',
+                              passwordLogin: 'admin',
+                            });
+                            await this.login(event);
+                            await this.setState({
+                              isDemoPopupOpen: !isDemoPopupOpen,
+                            });
+                          }}
+                        >
+                          As an admin
+                        </button>
+
+                      </div>
+
+                      <div className="u-txt-align-center u-mt-24">
+                        <a href="https://github.com/tisu19021997/thesis-recsys" target="_blank">
+                          <svg
+                            className="octicon octicon-mark-github v-align-middle"
+                            height="32"
+                            viewBox="0 0 16 16"
+                            version="1.1"
+                            width="32"
+                            aria-hidden="true"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                          </svg>
+                          <span className="u-txt-14 u-txt-underline">About this project</span>
+                        </a>
+                      </div>
+
+
+                    </div>
+                  </Modal>
+                ) : null}
+
 
                 {!currentUser
                   ? (

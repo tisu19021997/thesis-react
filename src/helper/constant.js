@@ -27,7 +27,7 @@ export const modelsConfig = {
         name: 'n_epochs',
         label: 'Number of epochs',
         type: 'number',
-        default: 100,
+        default: 10,
       },
       {
         name: 'lr_all',
@@ -97,6 +97,22 @@ export const centeredModalStyles = {
     left: '25%',
     backgroundColor: 'rgba(255, 255, 255)',
     maxHeight: '500px',
+    width: '50%',
+    overflow: 'auto',
+    padding: '20px',
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, .7)',
+  },
+};
+
+export const centeredModalStylesSmall = {
+  content: {
+    position: 'absolute',
+    top: '25%',
+    left: '25%',
+    backgroundColor: 'rgba(255, 255, 255)',
+    maxHeight: '300px',
     width: '50%',
     overflow: 'auto',
     padding: '20px',

@@ -160,6 +160,7 @@ function ModelTrainer(props) {
 
         </div>
 
+        {/*
         <div className="u-mt-24 u-mb-6">
           <input
             type="checkbox"
@@ -176,6 +177,7 @@ function ModelTrainer(props) {
           </span>
           </label>
         </div>
+        */}
 
         <div className="u-mb-6">
           <input
@@ -185,7 +187,7 @@ function ModelTrainer(props) {
             onChange={(event) => setSaveOnLocal(event.target.checked)}
           />
           <label htmlFor="save">
-            Save model to your computer.
+             Save model to your computer.
           </label>
         </div>
 

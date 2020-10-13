@@ -29,7 +29,8 @@ function RelatedProductsGenerator() {
     }
 
     setMessage('');
-
+    const addtionalMessage = '- Feature not available due to Heroku time-out is only 30 seconds ' +
+      'the Item-based KNN model need more time since its size is very large.';
     try {
       const res = await axios.post('/products/batch',
         {
@@ -50,9 +51,9 @@ function RelatedProductsGenerator() {
           setMessage(response.data.message);
           setIsFetching(false);
         })
-        .catch((err) => setMessage(err.message));
+        .catch((err) => setMessage(err.message + addtionalMessage));
     } catch (e) {
-      return setMessage(e.message);
+      return setMessage(e.message + addtionalMessage);
     }
   };
 
